@@ -1,0 +1,23 @@
+function mergesort(a, prvi, zadnji):
+    if zadnji - prvi < 2: return
+    srednji = (prvi + zadnji) / 2
+    mergesort(a, prvi, srednji)
+    mergesort(a, srednji + 1, zadnji)
+    merge(a, prvi, srednji, zadnji)
+
+function merge(a, prvi, srednji, zadnji):
+    /* naredimo prazno polje rezultat */
+    i = prvi, j = srednji;
+    while i < srednji and j < zadnji:
+        if a[i] < a[j]:
+            /* dodaj a[i] v polje rezultat */
+            i++;
+        else:
+            /* dodaj a[j] v polje rezultat */
+            j++;
+    while i < srednji:
+        /* dodaj a[i] v rezultat */
+    while j < zadnji:
+        /*  dodaj a[j] v rezultat */
+
+    /* kopiraj rezultat nazaj v polje */ 

@@ -1,0 +1,8 @@
+function insertionsort(a, prvi, zadnji):
+    for i = prvi + 1 to zadnji:
+        x = a[i];
+        j = i - 1;
+        while x < a[j] and j >= 0:
+            a[j+1] = a[j];
+            j = j - 1;
+        a[j+1] = x;
