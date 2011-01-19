@@ -437,30 +437,60 @@ i = 1, 2, \ldots, n$. Z matriko sosednosti $A := (a_{ij})$ bomo graf predstavili
 \right. %% wtf?
 \]
  
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[height=25mm]{slike/graf1.png}
+    \end{center}
+    \caption{Primer grafa.}
+    \label{fig:graf1}
+\end{figure}
+
+Predstavitev grafa na sliki \ref{fig:graf1} z matriko sosednosti bi bila sledeča:
+
+\[
+A = \left(
+\begin{array}{ccccc}
+  0 & 1 & 1 & 1 & 0 \\
+  0 & 0 & 1 & 0 & 0 \\
+  0 & 1 & 0 & 1 & 0 \\
+  1 & 0 & 0 & 0 & 0 \\
+  0 & 1 & 0 & 1 & 0 \\
+\end{array}
+\right)
+\]
 
 Predstavitev z matriko nam ponuja še možnost shranjevanja dodatne informacije. Vzemimo, da
 za vsako povezavo v grafu poznamo še en podatek, na primer dolžino ali vrednost povezave.
 Dolžino lahko zapišemo kar v matriko, če se le dogovorimo, kakšno dolžino imajo povezave,
 ki jih ni. Najpogosteje bomo uporabili dogovor, da je dolžina neskončna.
+\pagebreak
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[height=25mm]{slike/graf2.png}
+    \end{center}
+    \caption{Primer grafa s podanimi dolžinami povezav.}
+    \label{fig:graf2}
+\end{figure}
 
-%% slika grafa
-Graf na sliki bi z matriko predstavili tako:
+
+Graf na sliki \ref{fig:graf2} bi z matriko predstavili tako:
 
 \[
 A = \left(
 \begin{array}{ccccc}
-  \infty & \infty & \infty & \infty & \infty \\
-  \infty & \infty & \infty & \infty & \infty \\
-  \infty & \infty & \infty & \infty & \infty \\
-  \infty & \infty & \infty & \infty & \infty \\
-  \infty & \infty & \infty & \infty & \infty \\
+  \infty & 5      & \infty & 9      & \infty \\
+  \infty & \infty & 8      & \infty & \infty \\
+  \infty & 8      & \infty & 1      & \infty \\
+  9      & \infty & \infty & \infty & \infty \\
+  \infty & 6      & \infty & 7      & \infty \\
 \end{array}
 \right)
 \]
 
+Prostorska zahtevnost predstavitve grafa na tak način je $O(n^2)$. Zato bo primerna
+predvsem tedaj, ko je graf blizu polnemu in imamo res $O(n^2)$ podatkov.
+
 Turnirji so zanimivi.
-
-
 
 \subsection{Nameni in cilji}
 \subsection{Hipoteze}
@@ -469,6 +499,29 @@ Turnirji so zanimivi.
     posamezen algoritem.
 \end{enumerate}
 \section{Metode dela}
+Za preverjanje hipotez(e) sem si izbral eksperiment, saj se mi zdi da je to edina metoda
+dela, s katero je hipotezo sploh mogoče preverjati in pa delo z viri, ki sem jih
+potreboval pri pripravi eksperimenta.
+Za izvedbo eksperimenta sem implementiral vse v teoretičnem delu opisane sortirne
+algoritme. Za implementacijo sem si izbral programski jezik C++, predvsem zaradi njegove
+hitrosti in še česa. %% hja česa?
+
+Vsak izmed sortirnih algoritmov je implementiran kot funkcija z dvema parametorma.
+Vsaka funkcija sprejme dva Random Access iteratorja, %%
+ki kažeta na prvi element, ki ga sortiramo in na prvi element za tistim, ki ga sortiramo
+zadnjega. Slednji je lahko neveljaven v polju (kaže preko njenega konca).
+Tako obliko funkcij sem si izbral predvsem zato, ker je v sladu z zapisom, ki ga uporablja
+C++-ov header algortihm. Drugi razlog je, da s tem zapisom dosežemo minimalno število
+parametrov pri trenutni funkcionalnosti. Če bi želeli le en parameter, bi bilo to
+izvedljivo, vendar bi se morali odpovedati zmožnosti, da lahko sedaj sortiramo le željeni
+del polja. V primeru zgolj enega parametra to ne bi bilo možno, vedno bi se
+sortiralo celotno polje.
+
+% more to be written
+%
+% problem s stringi
+
+
 \section{Rezultati}
 \section{Ugotovitve in razprava}
 \section{Sklep}
