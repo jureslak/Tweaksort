@@ -1,0 +1,7 @@
+function selectionsort(a, prvi, zadnji):
+    for i = prvi to zadnji:
+        x = i;
+        for j = i + 1 to zadnji:
+            if a[j] < a[x]:
+                x = j;
+        swap(a[x], a[i]);

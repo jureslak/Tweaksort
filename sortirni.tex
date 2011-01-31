@@ -7,6 +7,9 @@
 \usepackage[usenames]{color}
 \usepackage[reqno]{amsmath}
 \usepackage{amssymb}
+\usepackage{fancybox}
+\usepackage{fancyhdr}
+\usepackage{listings}
 \usepackage[bookmarks, colorlinks=true, %
 linkcolor=black, anchorcolor=black, citecolor=black, filecolor=black,%
 menucolor=black, runcolor=black, urlcolor=black%
@@ -35,15 +38,40 @@ menucolor=black, runcolor=black, urlcolor=black%
 }
 }
 
-\usepackage{listings}
 
 \def\R{\mathbb R}
 \def\N{\mathbb N}
 \def\Z{\mathbb Z}
 \def\C{\mathbb C}
 \def\Q{\mathbb Q}
+\mathchardef\mhyphen="2D
 
-\usepackage{fancyhdr}
+\newenvironment{BNF}{
+    \\
+    \Sbox
+    \minipage{12cm}
+}{
+    \endminipage
+    \endSbox
+    \minipage{\textwidth}
+    \vspace*{5pt}
+    \begin{center}
+        \fcolorbox{white}{white}{
+            \TheSbox
+        }
+    \end{center}
+    \vspace*{5pt}
+    \endminipage
+}
+
+\def\:{\,::=\,}
+\def\&:{\,::=&\,}
+\def\para{\ensuremath{\,|\,}}
+\newcommand{\q}[1]{\text{``}#1\text{''}}
+\newcommand{\ntm}[1]{\ensuremath{<\!\!\text{#1}\!\!>}}
+\newcommand{\bnf}[2]{\ensuremath{\ntm{#1} \: #2}}
+\newcommand{\abnf}[2]{\ensuremath{\ntm{#1} \&: #2}}
+
 \pagestyle{fancy}
 
 \title{Iskanje optimalnega splošnega kompozitnega sortirnega algoritma}
@@ -56,13 +84,26 @@ menucolor=black, runcolor=black, urlcolor=black%
 }
 \renewcommand\refname{}
 
-\lstset{language=c++, morekeywords={function, swap, to}}
+\lstset{language=c++, morekeywords={function, swap, to, conf_t}}
 
 %% naslovnica
-\maketitle
 \thispagestyle{empty}
+
+\begin{center}{\large
+  Gimnazija Vič
+  \vfill
+  Jure Slak\\[2mm]
+  {\bf Iskanje optimalnega splošnega kompozitnega sortirnega algoritma}\\[10mm]
+  Raziskovalna naloga\\[1cm]
+  Mentor: prof. Klemen Bajec \\[2mm]
+  Mentor: Gašper Ažman, dipl. mat.}
+  \vfill
+  \vfill
+  \large Ljubljana, 2011
+\end{center}
 \pagebreak
 
+\thispagestyle{empty}
 \tableofcontents
 \pagebreak
 
@@ -176,8 +217,8 @@ shranjevanje celotnega polja, kjer $n$ predstavlja število elementov v polju, a
 $zadnji - prvi$. 
 
 \subsubsection{Urejanje z navadnim vstavljanjem}
-Urejanje z navadnim vstavljanjem\footnote{vir: IJS-jev slovar računalniških izrazov
-\url{http://www.ijs.si/cgi-bin/rac-slovar}} (\emph{angl.} insertion sort) je metoda,
+\label{chapter:insertionsort}
+Urejanje z navadnim vstavljanjem (\emph{angl.} insertion sort) je metoda,
 podobna tisti, ki jo na široko uporabljajo igralci kart. Je primerjalni sortirni algoritem.
 
 Zaporedje $a_1, a_2, \ldots, a_n$ razdelimo na že urejeni del $a_1, a_2, \ldots, a_{i-1}$
@@ -194,12 +235,13 @@ zaporedju.
     \begin{center}
         \includegraphics[height=45mm]{slike/insertionsort.png}
     \end{center}
+    \vspace{-0.7cm}
     \caption{Grafična predstavitev urejanja z navadnim vstavljanjem.}
-    \label{fig:insertion-sort-predst}
+    \label{fig:insertionsortimage}
 \end{figure}
 
 Postopek sortiranja z navadnim vstavljanjem je prikazan na primeru osmih naključno
-izbranih števil (glej sliko \ref{fig:insertion-sort-predst}). Algoritem navadnega
+izbranih števil (glej sliko \ref{fig:insertionsortimage}). Algoritem navadnega
 vstavljanja lahko zapišemo v psevdokodi nekako tako (sortira se vse na intervalu
 $\left[prvi, zadnji\right)$):
 
@@ -233,9 +275,59 @@ skoraj sortiranih poljih, saj se s tem približujemo obnašanju v najboljšem pr
 Zaradi kvadratne časovne zahtevnosti je urejanje z navadnim vstavljanjem zelo neučinkovito na
 dolgih poljih, če ta niso že skoraj urejena.
 
+\subsubsection{Urejanje z izbiranjem}
+\label{chapter:selectionsort}
+Urejanje z izbiranjem (\emph{angl.} selection sort) je eden najenostavnejših primerjalnih sortirnih
+algoritmov.
+
+Algoritem deluje tako:
+\begin{enumerate}
+  \item najdi element z najmanjšim ključem
+  \item zamenjaj ga z prvim elementom
+  \item ponovi zgornja koraka za ostanek polja
+\end{enumerate}
+
+Polje je med sortiranjem razdeljeno na dva dela: podpolje že urejenih elementov, ki se
+nahaja na začetku in podpolje elementov, ki jih je še potrebno sortirati in zasedajo
+preostali del polja.
+Postopek urejanja z izbiranjem je prikazan na sliki \ref{fig:selectionsortimage}.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[height=40mm]{slike/selectionsort.png}
+    \end{center}
+    \vspace{-0.7cm}
+    \caption{Grafična predstavitev urejanja z navadnim vstavljanjem.}
+    \label{fig:selectionsortimage}
+\end{figure}
+
+V psevdokodi bi zapisali urejanje z izbiranjem tako (sortira vse na intervalu
+$\left[prvi, zadnji\right]$):
+
+\lstinputlisting{selectionsort.code}
+
+\textbf{Časovna in prostorska zahtevnost}. \\
+Časovna zahtevnost je v 
+\begin{itemize}
+  \item najboljšem primeru $O(n^2)$
+  \item povprečnem primeru $O(n^2)$
+  \item najslabšem primeru $O(n^2)$
+\end{itemize}
+
+Prostorska zahtevnost je v najboljšem in povprečnem primeru $O(1)$, 
+saj algoritem opravlja vse premene na mestu.
+
+Ker ima urejanje z izbiranjem v vsakem primeru kvadratno časovno zahtevnost je neprimerno
+za daljša polja. Urejanje z izbiranjem tudi ni odvisno od že morebitne urejenosti polja,
+saj mora za iskanje najmanjšega elementa vedno pregledati cel ostanek polja na enkrat.
+Njegova prednost je v tem, da stori zelo malo zamenjav elementov, kar je še posebej
+primerno takrat, ko je premikanje elementov drago (imamo velike elemente).
+%% pa še to da se ti ne more zgodit worstcase -> je najbolj zanesljiv
+
 \subsubsection{Hitro urejanje}
+\label{chapter:quicksort}
 Hitro urejanje ali urejanje s porazdelitvami\footnote{vir: IJS-jev slovar računalniških izrazov
-\url{http://www.ijs.si/cgi-bin/rac-slovar}} (\emph{angl.} quicksort) je eden izmed
+\url{http://www.ijs.si/cgi-bin/rac-slovar}}(\emph{angl.} quicksort) je eden izmed
 najučinkovitejših sortirnih algoritmov, ki jih poznamo, razvil pa ga je C. A. R. Hoare.
 Je primerjalni sortirni algoritem, ki uporablja metodo deli in vladaj.
 
@@ -261,7 +353,7 @@ implementaciji za pivot vzel mediano prvega, srednjega in zadnjega elementa ozir
 mediano treh. Pogosta izbira je tudi naključni pivot. 
 
 Postopek sortiranja s porazdelitvami je prikazan na primeru devetih naključno
-izbranih števil (glej sliko \ref{fig:quick-sort-predst}). Izbrani pivoti so obarvani sivo.
+izbranih števil (glej sliko \ref{fig:quicksortimage}). Izbrani pivoti so obarvani sivo.
 Vsaka vrstica predstavlja svojo globino rekurzije.
 
 %% definicija rekurzije ?kam, kje jo dobim?
@@ -270,8 +362,9 @@ Vsaka vrstica predstavlja svojo globino rekurzije.
     \begin{center}
         \includegraphics[height=45mm]{slike/quicksort.jpg}
     \end{center}
+    \vspace{-0.7cm}
     \caption{Grafična predstavitev urejanja s porazdelitvami.}
-    \label{fig:quick-sort-predst}
+    \label{fig:quicksortimage}
 \end{figure}
 
 V psevdokodi bi zapisali algoritem urejanja s porazdelitvami
@@ -301,8 +394,8 @@ porazdeljenih podatkih, a kljub pazljivemu izbiranju pivotov obstaja možnost ne
 najslabšega primera, čeprav je zelo neverjetna. 
 
 \subsubsection{Urejanje s kopico}
-Urejanje s kopico\footnote{vir: IJS-jev slovar računalniških izrazov
-\url{http://www.ijs.si/cgi-bin/rac-slovar}} (\emph{angl.} heapsort) je sortirni algoritem,
+\label{chapter:heapsort}
+Urejanje s kopico (\emph{angl.} heapsort) je sortirni algoritem,
 ki si pri sortiranju pomaga s kopico.
 \newline
 
@@ -323,7 +416,7 @@ maksimalno kopico na preostanku elementov in zopet odstrani korenski element ter
 zamenja s tistim na predzadnjem mestu. To se ponavlja dokler ni kopica dolga le en
 element. 
 
-Urejanje s kopico je prikazano na sliki \ref{fig:heap-sort-predst}.
+Urejanje s kopico je prikazano na sliki \ref{fig:heapsortimage}.
 Vsaka črta predstavlja svoj element, večji ko je element, temnejša je črta.
 Do rdečega zaznamka na dnu slike poteka urejanje podatkov v kopico, nato pa odstranjevanje
 največjega elementa in ponovna vzpostavitev kopice vse ko konca.
@@ -331,8 +424,9 @@ največjega elementa in ponovna vzpostavitev kopice vse ko konca.
     \begin{center}
         \includegraphics[height=45mm]{slike/Heap.png}
     \end{center}
+    \vspace{-0.7cm}
     \caption{Grafična predstavitev urejanja s kopico.}
-    \label{fig:heap-sort-predst}
+    \label{fig:heapsortimage}
 \end{figure}
 
 
@@ -356,6 +450,7 @@ na manjših poljih ni tako uspešen, je pa čedalje bolj uspešen, ko se dolžin
 povečuje.
 
 \subsubsection{Urejanje z zlivanjem}
+\label{chapter:mergesort}
 Urejanje z zlivanjem (\emph{angl.} merge sort) je primerjalni sortirni algoritem, ki
 uporablja metodo deli in vladaj. Odkril ga je John von Neumann leta 1945.
 Urejanje z zlivanjem uporablja idejo, da je v sortirano polje hitreje združiti dve že
@@ -368,7 +463,7 @@ Algoritem urejanja z zlivanjem ureja tako:
   \item Združi podpolji nazaj v celotno sortirano polje.
 \end{enumerate}
 
-Algoritem je grafično prikazan na sliki \ref{fig:merge-sort-predst} na primeru sedmih
+Algoritem je grafično prikazan na sliki \ref{fig:mergesortimage} na primeru sedmih
 naključno izbranih števil.
 Vsaka vrstica števil predstavlja svojo globino rekurzije, vse dokler niso polja dolga le
 po en element. Nato se začne izvajati četrta točka algoritma, ponazorjena z vrsticami
@@ -378,8 +473,9 @@ nižje od črtkane črte, ki združi podpolja v sortirano polje.
     \begin{center}
         \includegraphics[height=55mm]{slike/merge_sort.png}
     \end{center}
+    \vspace{-0.7cm}
     \caption{Grafična predstavitev urejanja z zlivanjem.}
-    \label{fig:merge-sort-predst}
+    \label{fig:mergesortimage}
 \end{figure}
 
 V psevdokodi bi ta algoritem zapisali nekako tako (sortira se vse na intervalu
@@ -396,101 +492,6 @@ neurejenosti podatkov v polju. V praksi je urejanje z zlivanjem najbolj učinkov
 sekvenčnih medijih kot na primer tračnih enotah ali podatkovnih strukturah, ki nimajo hitrega
 neposrednega dostopa do nekega elementa z njegovim indeksom, kot na primer povezani seznami.
 
-\subsubsection{Bisekcija}
-Bisekcija je postopek za iskanje ničel zveznih funkcij. Podrobneje je opisana v
-\cite{bib:bohte91}.
-Če imamo zvezno funkcijo, ki je v točki $a$ pozitivna, v točki $b$ pa
-negativna nam izrek o bisekciji zagotavlja, da ima funkcija na tem 
-intervalu vsaj eno ničlo. To ničlo poiščemo rekurzivno:
-pogledamo, kakšnega predznaka je funkcija v točki $\frac{a+b}{2}$. Če smo našli
-ničlo, smo končali. Če je funkcija pozitivna, nadaljujemo na intervalu
-$\left[\frac{a+b}{2}, b\right]$, če ne, pa na intervalu $\left[a, \frac{a+b}{2}\right]$, saj ta
-interval izpolnjuje pogoje izreka. Končamo, ko je $\left(a-b\right)$ manjša od želene natančnosti.
-
-\subsubsection{Graf}
-\textbf{Graf} sestavljata dve množici, $V$ in $P$. $V$ je končna neprazna množica vozlišč
-ali točk, $P$ pa množica parov vozlišč. Elementom množice $P$ pravimo povezave, celotni
-graf pa označimo z $G = (V, P)$.
-
-Graf je lahko \textbf{neusmerjen} ali \textbf{usmerjen}. V prvem primeru par vozlišč, ki sestavljata
-povezavo, ni urejen, v drugem pa je prvo od vozlišč začetek, drugo pa konec povezave.
-Neusmerjenemu grafu, v katerem je poljubno vozlišče povezano z vsemi ostalimi, pravimo
-polni graf. 
-
-\textbf{Pot} je zaporedje povezav $\left(v_{i_1}, v_{i_2}\right), \left(v_{i_2},
-v_{i_3}\right), \ldots, \left(v_{i_{r-1}}, v_{i_r}\right)$. Naslednja povezava v poti se
-začenja tam, kjer se je prejšnja končala. Pot je \textbf{enostavna}, če gre skozi vsako
-vmesno vozlišče le enkrat. Zaključena enostavna pot je \textbf{cikel}.
-Grafu v katerem ni ciklov pravimo \textbf{acikličen}. Graf je \textbf{povezan}, če obstaja
-pot iz poljubnega vozlišča v poljubno drugo vozlišče.
-
-Graf lahko predstavimo z matriko sosednosti in s seznamom sosedov.
-Naj $n$ označi število vozlišč v grafu. Vozlišča najpreprosteje označimo kar z indeksom $i,
-i = 1, 2, \ldots, n$. Z matriko sosednosti $A := (a_{ij})$ bomo graf predstavili z 
-
-\[ a_{ij} := 
-\left\{
-\begin{array}{ll}
-  1,& (i, j) \in P, \\
-  0,& (i, j) \notin P, i, j = 1, 2, \ldots, n. 
-\end{array}
-\right. %% wtf?
-\]
- 
-\begin{figure}[h]
-    \begin{center}
-        \includegraphics[height=25mm]{slike/graf1.png}
-    \end{center}
-    \caption{Primer grafa.}
-    \label{fig:graf1}
-\end{figure}
-
-Predstavitev grafa na sliki \ref{fig:graf1} z matriko sosednosti bi bila sledeča:
-
-\[
-A = \left(
-\begin{array}{ccccc}
-  0 & 1 & 1 & 1 & 0 \\
-  0 & 0 & 1 & 0 & 0 \\
-  0 & 1 & 0 & 1 & 0 \\
-  1 & 0 & 0 & 0 & 0 \\
-  0 & 1 & 0 & 1 & 0 \\
-\end{array}
-\right)
-\]
-
-Predstavitev z matriko nam ponuja še možnost shranjevanja dodatne informacije. Vzemimo, da
-za vsako povezavo v grafu poznamo še en podatek, na primer dolžino ali vrednost povezave.
-Dolžino lahko zapišemo kar v matriko, če se le dogovorimo, kakšno dolžino imajo povezave,
-ki jih ni. Najpogosteje bomo uporabili dogovor, da je dolžina neskončna.
-\pagebreak
-\begin{figure}[h]
-    \begin{center}
-        \includegraphics[height=25mm]{slike/graf2.png}
-    \end{center}
-    \caption{Primer grafa s podanimi dolžinami povezav.}
-    \label{fig:graf2}
-\end{figure}
-
-
-Graf na sliki \ref{fig:graf2} bi z matriko predstavili tako:
-
-\[
-A = \left(
-\begin{array}{ccccc}
-  \infty & 5      & \infty & 9      & \infty \\
-  \infty & \infty & 8      & \infty & \infty \\
-  \infty & 8      & \infty & 1      & \infty \\
-  9      & \infty & \infty & \infty & \infty \\
-  \infty & 6      & \infty & 7      & \infty \\
-\end{array}
-\right)
-\]
-
-Prostorska zahtevnost predstavitve grafa na tak način je $O(n^2)$. Zato bo primerna
-predvsem tedaj, ko je graf blizu polnemu in imamo res $O(n^2)$ podatkov.
-
-Turnirji so zanimivi.
 
 \subsection{Nameni in cilji}
 \subsection{Hipoteze}
@@ -506,8 +507,9 @@ Za izvedbo eksperimenta sem implementiral vse v teoretičnem delu opisane sortir
 algoritme. Za implementacijo sem si izbral programski jezik C++, predvsem zaradi njegove
 hitrosti in še česa. %% hja česa?
 
+\subsection{Implementacija sortirnih algoritmov}
 Vsak izmed sortirnih algoritmov je implementiran kot funkcija z dvema parametorma.
-Vsaka funkcija sprejme dva Random Access iteratorja, %%
+Vsaka funkcija sprejme dva Random Access iteratorja, %% iteratorja z naključnim dostopom
 ki kažeta na prvi element, ki ga sortiramo in na prvi element za tistim, ki ga sortiramo
 zadnjega. Slednji je lahko neveljaven v polju (kaže preko njenega konca).
 Tako obliko funkcij sem si izbral predvsem zato, ker je v sladu z zapisom, ki ga uporablja
@@ -517,9 +519,56 @@ izvedljivo, vendar bi se morali odpovedati zmožnosti, da lahko sedaj sortiramo 
 del polja. V primeru zgolj enega parametra to ne bi bilo možno, vedno bi se
 sortiralo celotno polje.
 
+Vsak sortirni algoritem, ki sem ga implementiral, sortira zgolj s uporabo operatorja $<$
+(``je manjše''), ki se obnaša enako kot operator linearne urejenosti $\leq$. Vsak
+algoritem je definiran kot funkcija tipa \emph{void}, kar pomeni da ne vrne ničesar in
+torej spremeni vrstni red elementov polja, ki ji ga podamo.
+
+\subsection{Implementacija kompozitnega sortirnega algoritma}
+\label{chapter:tweaksort}
+Ker so sortirni algoritmi vsak zase dobri na zgolj nekaterih dolžinah polj in se pri tej
+lastnosti razlikujejo, nas to privede do zamisli, da bi pri dani dolžini $n$ uporabili tisti
+sortirni algoritem, ki je pri tem $n$ najboljši. Torej moramo vedeti pri katerem $n$ je
+potrebno uporabiti kateri sortirni algoritem, kar pa si bomo morali nekam zapomniti. Za ta
+namen sem definiral tip $conf\_t$, v katerem je shranjena konfiguracija kompozitnega
+sortirnega algoritma. 
+
+Konfiguracija pove kateri sortirni algoritem naj se uporablja pri
+katerem $n$. Konfiguracijo se lahko predstavi kot niz znakov z zelo preprostimi
+pravili. Tolmač konfiguracije iz niza znakov v conf\_t dopušča bolj ohlapna pravila, kot so
+definirana v slovnici. Slovnica konfiguracije v notaciji
+BNF\footnote{http://www.cui.unige.ch/db-research/Enseignement/analyseinfo/AboutBNF.html}
+je definirana sledeče:
+\\
+\begin{BNF} %% zakaj maš ti kle ~BNF
+  \begin{align*}
+    \abnf{sort}{\q{i} | \q{s} | \q{q} | \q{h} | \q{m}}\\ %% presledki me matrajo
+    \abnf{stevilo}{\in \N | \q{-1}} \\
+    \abnf{token}{\q{:}\ntm{sort}\q{\mbox{--}~\mbox{--}\mbox{$>$}}\ntm{stevilo}}\\
+    \abnf{konfiguracija}{\ntm{token} | \ntm{konfiguracija}\ntm{token}}
+  \end{align*}
+\end{BNF}
+
+Kompozitni sortirni algoritem torej vedno uporabi tisti sortirni algoritem, ki je zapisan
+v konfiguraciji za trenutni $n$. Tako spremenjen algoritem za urejanje, bi torej vhodno
+polje vedno uredil s čimbolj optimalnim sortirnim algoritmom (če je bilo tako seveda
+zapisano v konfiguraciji). Vendar imajo nekateri algoritmi za urejanje zaradi metode deli in vladaj,
+ki jo uporabljajo pri urejanju, še to lepo lastnost, da polja delijo na manjša polja. Za
+ta manjša polja pa lahko spet pogledamo v konfiguracijo, kateri sortirni algoritem je
+najbolj zaželen in podpolje uredimo z le-tem. To nam prinese možnost veliko hitrejšega
+urejanja polj, saj se lahko odločimo kateri sortirni algoritem bomo
+uporabili, ne le za vhodno polje, temveč tudi za nekatera podpolja, ki jih ustvarijo
+sortirni algoritmi kot na primer hitro urejanje ali urejanje z zlivanjem.
+
+Kompozitni sortirni algoritem mora torej pri svoji implementaciji poleg dve RAI-jev
+sprejeti tudi konfiguracijo. Proceduro \emph{sort}, ki predstavlja kompozitni sortirni
+algoritem sem definiral sledeče: \&
+\begin{lstlisting}
+  void sort(RAI firts, RAI last, const conf_t\amp conf);
+\end{lstlisting}
+
 % more to be written
 %
-% problem s stringi
 
 
 \section{Rezultati}
@@ -532,8 +581,6 @@ Zadeva je uporabna.
 \subsection{Literatura}
 \vspace{-1cm}
 \begin{thebibliography}{99}
-  \bibitem[BOH91]{bib:boh91} {Z. Bohte, \emph{Numerične metode, 4.\ ponatis}. DMFA Slovenije, Ljubljana 1991.}
-    %% tega nimam in nevem kje nej dobim
   \bibitem[KOZ86]{bib:koz86} {J. Kozak, \emph{Podatkovne strukture in algoritmi}. DMFA SRS, Ljubljana 1986. }
 \end{thebibliography}
 \subsection{Priloge}
