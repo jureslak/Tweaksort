@@ -44,7 +44,17 @@ menucolor=black, runcolor=black, urlcolor=black%
 \def\Z{\mathbb Z}
 \def\C{\mathbb C}
 \def\Q{\mathbb Q}
+\def\ali{\;|\;}
 \mathchardef\mhyphen="2D
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\algnewcommand\algorithmicto{\textbf{to}}
+\algnewcommand\algorithmicswap{\textbf{swap}}
+\algnewcommand\Swap[2]{\State \ensuremath{\algorithmicswap(#1,\ #2)}}
+\algrenewtext{For}[3]%
+{$\algorithmicfor\ #1 \gets #2\ \algorithmicto\ #3\ \algorithmicdo$}
 
 \newenvironment{BNF}{
     \\
@@ -86,7 +96,6 @@ menucolor=black, runcolor=black, urlcolor=black%
 
 \lstset{language=c++, morekeywords={function, swap, to, conf_t}}
 
-%% naslovnica
 \thispagestyle{empty}
 
 \begin{center}{\large
@@ -127,6 +136,9 @@ aritmetike.
 %ima večina neko prednost pred ostalimi.
 
 %% opis psevdokode
+% pri psevdokodi bom uporabljal while zanke, for zanke, vejitve in klice funkcij,
+% prireditvene stavke in osnovno matematiko. Za polja a[j] pomeni element polja na indeksu
+% j, polja se začnejo z indeksom 0.
 
 \subsubsection{Definicija algoritma}
 
@@ -245,7 +257,22 @@ izbranih števil (glej sliko \ref{fig:insertionsortimage}). Algoritem navadnega
 vstavljanja lahko zapišemo v psevdokodi nekako tako (sortira se vse na intervalu
 $\left[prvi, zadnji\right)$):
 
-\lstinputlisting{insertionsort.code}
+\begin{algorithm}
+  \caption{Insertion sort}\label{algo:insertionsort}
+  \begin{algorithmic}[1]
+    \Function{insertionsort}{a, prvi, zadnji}
+        \For{i}{prvi + 1}{zadnji}
+            \State $x \gets a[i]$
+            \State $j \gets i - 1$
+            \While{$x < a[j] \wedge j \geq 0$}
+                \State $a[j+1] \gets a[j]$
+                \State $j \gets j - 1$
+            \EndWhile
+            \State $a[j+1] = x$
+        \EndFor
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
 
 Med postopkom iskanja pravega mesta je dobro sproti premikati elemente med izvajanji
 primerjanj. Z drugimi besedami, pustiti $x$, da se ``pogrezne'' tako, da $x$
@@ -304,7 +331,23 @@ Postopek urejanja z izbiranjem je prikazan na sliki \ref{fig:selectionsortimage}
 V psevdokodi bi zapisali urejanje z izbiranjem tako (sortira vse na intervalu
 $\left[prvi, zadnji\right]$):
 
-\lstinputlisting{selectionsort.code}
+
+\begin{algorithm}
+  \caption{Selection sort}\label{algo:selectionsort}
+  \begin{algorithmic}[1]
+    \Function{selectionsort}{a, prvi, zadnji}
+        \For{i}{prvi}{zadnji}
+            \State $x \gets i$
+            \For{j}{i + 1}{zadnji}
+                \If{$a[j] < a[x]$}
+                    \State $x \gets j$
+                \EndIf
+            \EndFor
+            \Swap{a[x]}{a[i]}
+        \EndFor
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
 
 \textbf{Časovna in prostorska zahtevnost}. \\
 Časovna zahtevnost je v 
@@ -317,12 +360,11 @@ $\left[prvi, zadnji\right]$):
 Prostorska zahtevnost je v najboljšem in povprečnem primeru $O(1)$, 
 saj algoritem opravlja vse premene na mestu.
 
-Ker ima urejanje z izbiranjem v vsakem primeru kvadratno časovno zahtevnost je neprimerno
-za daljša polja. Urejanje z izbiranjem tudi ni odvisno od že morebitne urejenosti polja,
-saj mora za iskanje najmanjšega elementa vedno pregledati cel ostanek polja na enkrat.
+Ker ima urejanje z izbiranjem v vsakem primeru kvadratno časovno zahtevnost, je neprimerno
+za daljša polja. Urejanje z izbiranjem tudi ni odvisno od prvotnega vrstnega reda,
+saj mora za iskanje najmanjšega elementa vedno pregledati celoten ostanek polja.
 Njegova prednost je v tem, da stori zelo malo zamenjav elementov, kar je še posebej
 primerno takrat, ko je premikanje elementov drago (imamo velike elemente).
-%% pa še to da se ti ne more zgodit worstcase -> je najbolj zanesljiv
 
 \subsubsection{Hitro urejanje}
 \label{chapter:quicksort}
@@ -356,7 +398,7 @@ Postopek sortiranja s porazdelitvami je prikazan na primeru devetih naključno
 izbranih števil (glej sliko \ref{fig:quicksortimage}). Izbrani pivoti so obarvani sivo.
 Vsaka vrstica predstavlja svojo globino rekurzije.
 
-%% definicija rekurzije ?kam, kje jo dobim?
+%% definicija rekurzije ?kam, kje jo dobim? prevedi wikipedijo, ne navedi vira
 
 \begin{figure}[h]
     \begin{center}
@@ -372,7 +414,44 @@ nekako tako (sortira se vse na intervalu
 $\left[prvi, zadnji\right)$):
 Predpostavimo, da obstaja funkcija \emph{swap}, ki zamenja vrednosti dveh spremenljivk.
 
-\lstinputlisting{quicksort.code}
+\begin{algorithm}
+  \caption{Quick sort}\label{algo:quicksort}
+  \begin{algorithmic}[1]
+    \Function{quciksort}{a, prvi, zadnji}
+        \If{$zadnji - prvi < 2$} \Return \EndIf
+        \State $s \gets first$
+        \State $e \gets last - 1$
+        \State $m \gets \lfloor(s+e)/2\rfloor$
+
+        \If{$a[m] < a[s] < a[e] \vee a[e] < a[s] < a[m]$}
+            \Swap{a[s]}{a[e]}
+            \Comment{a[s] je mediana treh}
+        \ElsIf{$a[e] < a[m] < a[s] \vee a[s] < a[m] < a[e]$}
+            \Swap{a[m]}{a[e]}
+            \Comment{a[m] je mediana treh}
+        \EndIf
+
+        \State $pivot \gets a[e]$
+        \State $e \gets e - 1$
+
+        \While{$s \leq e$}
+            \While{$s \leq e \wedge a[s] < pivot$}
+                \State $s \gets s + 1$
+            \EndWhile
+            \While{$s \leq e \wedge \neg(a[e] < pivot)$}
+                \State $e \gets e - 1$
+            \EndWhile
+            \If{$s < e$}
+                \Swap{a[s]}{a[m]}
+            \EndIf
+        \EndWhile
+        \State $a[zadnji - 1] \gets a[s]$
+        \State $a[s] \gets pivot$
+        \State $QUICKSORT(a, prvi, s)$
+        \State $QUICKSORT(a, s + 1, zadnji)$
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
 
 \textbf{Časovna in prostorska zahtevnost}. \\
 Časovna zahtevnost je v 
@@ -406,7 +485,7 @@ velja
   h_i &\geq h_{2i} \\
   h_i &\geq h_{2i+1}
 \end{align*}
-pri vseh $i = 1 \ldots n/2$. %% r sem zamenjal z n?? pa tudi tu je treba vzeti celi del n/2
+pri vseh $i = 1 \ldots \lfloor n/2 \rfloor$. %% r sem zamenjal z n?? pa tudi tu je treba vzeti celi del n/2
 Kopico lahko predstavimo v polju, kjer je koren kopice na mestu 1, in velja, da sta otroka
 starša na mestu $i$, na mestih $2i$ in $2i + 1$.
 
@@ -434,8 +513,7 @@ V psevdokodi bi algoritem urejanja s kopico izgledal nekako tako (sortira se vse
 $\left[prvi, zadnji\right)$):
 Predpostavimo, da obstaja funkcija \emph{swap}, ki zamenja vrednosti dveh spremenljivk.
 
-\lstinputlisting{heapsort.code}
-
+%% todo code
 %% zakaj ni čšž-jev
 
 \textbf{Časovna in prostorska zahtevnost}. \\
@@ -480,7 +558,8 @@ nižje od črtkane črte, ki združi podpolja v sortirano polje.
 
 V psevdokodi bi ta algoritem zapisali nekako tako (sortira se vse na intervalu
 $\left[prvi, zadnji\right)$):
-\lstinputlisting{mergesort.code}
+
+%% todo code
 
 \textbf{Časovna in prostorska zahtevnost}. \\
 Časovna zahtevnost je v najboljšem, povprečnem in najslabšem primeru $O(n\log_2 n)$.
@@ -505,7 +584,7 @@ dela, s katero je hipotezo sploh mogoče preverjati in pa delo z viri, ki sem ji
 potreboval pri pripravi eksperimenta.
 Za izvedbo eksperimenta sem implementiral vse v teoretičnem delu opisane sortirne
 algoritme. Za implementacijo sem si izbral programski jezik C++, predvsem zaradi njegove
-hitrosti in še česa. %% hja česa?
+hitrosti in še česa. Ker se program prevede v strojno kodo in je zato najhitrejši možen. %% hja česa?
 
 \subsection{Implementacija sortirnih algoritmov}
 Vsak izmed sortirnih algoritmov je implementiran kot funkcija z dvema parametorma.
@@ -513,7 +592,7 @@ Vsaka funkcija sprejme dva Random Access iteratorja, %% iteratorja z naključnim
 ki kažeta na prvi element, ki ga sortiramo in na prvi element za tistim, ki ga sortiramo
 zadnjega. Slednji je lahko neveljaven v polju (kaže preko njenega konca).
 Tako obliko funkcij sem si izbral predvsem zato, ker je v sladu z zapisom, ki ga uporablja
-C++-ov header algortihm. Drugi razlog je, da s tem zapisom dosežemo minimalno število
+C++-ova knjižnica \emph{algortihm}. Drugi razlog je, da s tem zapisom dosežemo minimalno število
 parametrov pri trenutni funkcionalnosti. Če bi želeli le en parameter, bi bilo to
 izvedljivo, vendar bi se morali odpovedati zmožnosti, da lahko sedaj sortiramo le željeni
 del polja. V primeru zgolj enega parametra to ne bi bilo možno, vedno bi se
@@ -542,10 +621,10 @@ je definirana sledeče:
 \\
 \begin{BNF} %% zakaj maš ti kle ~BNF
   \begin{align*}
-    \abnf{sort}{\q{i} | \q{s} | \q{q} | \q{h} | \q{m}}\\ %% presledki me matrajo
-    \abnf{stevilo}{\in \N | \q{-1}} \\
+    \abnf{sort}{\q{i} \ali \q{s} \ali \q{q} \ali \q{h} \ali \q{m}}\\ %% presledki me matrajo
+    \abnf{stevilo}{\in \N \ali \q{-1}} \\
     \abnf{token}{\q{:}\ntm{sort}\q{\mbox{--}~\mbox{--}\mbox{$>$}}\ntm{stevilo}}\\
-    \abnf{konfiguracija}{\ntm{token} | \ntm{konfiguracija}\ntm{token}}
+    \abnf{konfiguracija}{\ntm{token} \ali \ntm{konfiguracija}\ntm{token}}
   \end{align*}
 \end{BNF}
 
@@ -562,7 +641,7 @@ sortirni algoritmi kot na primer hitro urejanje ali urejanje z zlivanjem.
 
 Kompozitni sortirni algoritem mora torej pri svoji implementaciji poleg dve RAI-jev
 sprejeti tudi konfiguracijo. Proceduro \emph{sort}, ki predstavlja kompozitni sortirni
-algoritem sem definiral sledeče: \&
+algoritem sem definiral sledeče: 
 \begin{lstlisting}
   void sort(RAI firts, RAI last, const conf_t\amp conf);
 \end{lstlisting}
