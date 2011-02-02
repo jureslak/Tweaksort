@@ -607,8 +607,34 @@ $\left[prvi, zadnji\right)$):
   \caption{Merge sort}\label{algo:mergesort}
   \begin{algorithmic}[1]
     \Function{mergesort}{a, prvi, zadnji}
-    \If{$zadnji - prvi < 2$} \Return \EndIf
-    \State $srednji \gets \lfloor(prvi + zadnji) / 2\rfloor$
+        \If{$zadnji - prvi < 2$} \Return \EndIf
+        \State $srednji \gets \lfloor(prvi + zadnji) / 2\rfloor$
+        \textsc{mergesort}$(a, prvi, srednji)$
+        \textsc{mergesort}$(a, srednji + 1, zadnji)$
+        \textsc{merge}$(a, prvi, srednji, zadnji)$
+    \EndFunction
+  \end{algorithmic}
+  
+  \begin{algorithmic}[1]
+    \Function{merge}{a, prvi, srednji, zadnji}
+        \State $i \gets prvi$
+        \State $j \gets srednji$
+        \State $rezultat = []$ \Comment{Naredimo prazno polje rezultat}
+        \While{$i < srednji \wedge j < zadnji$}
+            \If{$a[i] < a[j]$}
+                \State $rezultat.append(a[i])$ \Comment{Dodamo a[i] v polje rezultat}
+                \State $i \gets i + 1$
+            \Else
+                \State $rezultat.append(a[j])$ \Comment{Dodamo a[j] v polje rezultat}
+                \State $j \gets j + 1$
+            \EndIf
+        \EndWhile
+        \While{$i < srednji$}
+            \State $rezultat.append(a[i])$ \Comment{Dodamo a[i] v polje rezultat}
+        \EndWhile
+        \While{$j < srednjj$}
+            \State $rezultat.append(a[j])$ \Comment{Dodamo a[j] v polje rezultat}
+        \EndWhile
     \EndFunction
   \end{algorithmic}
 \end{algorithm}

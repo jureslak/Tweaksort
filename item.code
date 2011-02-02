@@ -1,6 +1,0 @@
-struct item {
-    cmp_t key;
-    /* ostale komponente */
-};
-
-// vim: filetype=cpp
