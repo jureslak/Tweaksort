@@ -447,8 +447,8 @@ Predpostavimo, da obstaja funkcija \emph{swap}, ki zamenja vrednosti dveh spreme
         \EndWhile
         \State $a[zadnji - 1] \gets a[s]$
         \State $a[s] \gets pivot$
-        \State $QUICKSORT(a, prvi, s)$
-        \State $QUICKSORT(a, s + 1, zadnji)$
+        \State \textsc{quicksort}$(a, prvi, s)$
+        \State \textsc{quicksort}$(a, s + 1, zadnji)$
     \EndFunction
   \end{algorithmic}
 \end{algorithm}
@@ -513,8 +513,52 @@ V psevdokodi bi algoritem urejanja s kopico izgledal nekako tako (sortira se vse
 $\left[prvi, zadnji\right)$):
 Predpostavimo, da obstaja funkcija \emph{swap}, ki zamenja vrednosti dveh spremenljivk.
 
-%% todo code
-%% zakaj ni čšž-jev
+\begin{algorithm}
+  \caption{Heap sort}\label{algo:heapsort}
+  \begin{algorithmic}[1]
+    \Function{heapsort}{a, prvi, zadnji}
+        \State \textsc{nakopiči}$(a, prvi, zadnji)$
+        \While{$prvi < zadnji$}
+            \Swap{a[prvi]}{a[zadnji]};
+            \State $zadnji \gets zadnji - 1$
+            \State \textsc{pogrezni}$(a, prvi, prvi, zadnji)$
+        \EndWhile
+    \EndFunction
+  \end{algorithmic}
+
+  \begin{algorithmic}[1]
+    \Function{nakopiči}{a, prvi, zadnji}
+        \State $zacetek \gets \lfloor(prvi + zadnji) / 2\rfloor - 1$
+        \While{$zacetek \geq prvi$} \Comment{Pogreznemo vse elemente, ki imajo otroke}
+            \State \textsc{pogrezni}$(a, prvi, zacetek, zadnji)$
+            \State $zadnji \gets zadnji - 1$
+        \EndWhile
+    \EndFunction
+  \end{algorithmic}
+
+  \begin{algorithmic}[1]
+    \Function{pogrezni}{a, prvi, koren, zadnji}
+        \State $odmik \gets koren - prvi$
+        \While{$koren + odmik < zadnji$} \Comment{Dokler ima koren vsaj enega otroka}
+            \State $otrok \gets koren + odmik + 1$
+            \State $zamenjava \gets koren$ \Comment{Zapomnimo si, s čim je potrebno
+            zamenjati koren}
+            \If{$a[koren] < a[otrok]$} \Comment{Če je otrok večji od korena}
+            \State $zamenjava = otrok$\Comment{Potem moramo zamenjati prvega otroka}
+            \EndIf \Comment{Če drugi otrok obstaja in je večji od trenutne zamenjave}
+            \If{$otrok + 1 \leq zadnji \wedge zamenjava < a[otrok + 1]$}
+                \State $zamenjava = otrok + 1$\Comment{Potem zamenjamo njega}
+            \EndIf
+            \If{$zamenjava \neq koren$}
+                \Swap{a[zam]}{a[koren]}
+                \State $koren \gets zamenjava$
+            \Else \Return 
+            \State $odmik \gets koren - prvi$
+            \EndIf
+        \EndWhile
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
 
 \textbf{Časovna in prostorska zahtevnost}. \\
 Časovna zahtevnost je v najboljšem, povprečnem in najslabšem primeru $O(n\log_2 n)$.
@@ -559,7 +603,15 @@ nižje od črtkane črte, ki združi podpolja v sortirano polje.
 V psevdokodi bi ta algoritem zapisali nekako tako (sortira se vse na intervalu
 $\left[prvi, zadnji\right)$):
 
-%% todo code
+\begin{algorithm}
+  \caption{Merge sort}\label{algo:mergesort}
+  \begin{algorithmic}[1]
+    \Function{mergesort}{a, prvi, zadnji}
+    \If{$zadnji - prvi < 2$} \Return \EndIf
+    \State $srednji \gets \lfloor(prvi + zadnji) / 2\rfloor$
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
 
 \textbf{Časovna in prostorska zahtevnost}. \\
 Časovna zahtevnost je v najboljšem, povprečnem in najslabšem primeru $O(n\log_2 n)$.
