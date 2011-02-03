@@ -135,11 +135,6 @@ aritmetike.
 %ki imajo vsi isti namen, od katerih so mnogi optimalni v nekem pomenu, in od katerih
 %ima večina neko prednost pred ostalimi.
 
-%% opis psevdokode
-% pri psevdokodi bom uporabljal while zanke, for zanke, vejitve in klice funkcij,
-% prireditvene stavke in osnovno matematiko. Za polja a[j] pomeni element polja na indeksu
-% j, polja se začnejo z indeksom 0.
-
 \subsubsection{Definicija algoritma}
 
 
@@ -228,6 +223,54 @@ navedena zgolj dodatna poraba pomnilnika, saj vsi algoritmi porabijo $O(n)$ pomn
 shranjevanje celotnega polja, kjer $n$ predstavlja število elementov v polju, ali razliko
 $zadnji - prvi$. 
 
+\subsubsection{Rekurzija}
+\textbf{Rekurzija} je proces ponavljanja elementov na nek samopodoben način.
+V matematiki in računalništvu se nanaša na način definiranja funkcij.
+Rekurzivna funkcija je tista, ki se v svoji definiciji sklicuje sama nase.
+Če želimo da je taka definicija sploh smiselna, moramo podati vsaj en osnoven
+nerekurziven primer in še množico pravil, ki vse ostale primere prevedejo v osnovni
+primer.
+
+Poglejmo si primer definicije fakultete\footnote{Bolj običajno se fakulteto definira kot:
+$n! = \displaystyle\prod_{k=1}^{n} k$}. Fakulteta naravnega števila $n$ je v matematiki
+funkcija, ki določa zmnožek celih števil, manjših ali enakih $n$. Označi se jo z $n!$.
+\[
+n! = \left\{ 
+\begin{array}{rl}
+     1 &\mbox{ če $n = 1$} \\
+     n \cdot (n-1)!&
+\end{array} \right.
+\]
+Pri fakulteti imamo definiran en osnovni primer ($1! = 1$), vsi ostali primeri pa se prej
+ali slej pretvorijo v ta primer. Poglejmo si primer števila 4.
+\begin{enumerate}
+  \item Ker 4 ni enako 1 gledamo drugo pravilo za izračun fakultete: $4!$ je torej $4
+    \cdot (4 - 1)!$
+  \item V izračunu imamo še vedno fakulteto, torej pogledamo kako se izračuna $3!$, da
+    lahko izračunamo $4 \cdot 3!$.
+  \item 3 ni enako 1, torej gledamo drugo pravilo, $3! = 3 \cdot 2!$. Iz tega sledi $4! =
+    4 \cdot 3 \cdot 2!$. V računu nastopa $2!$, izračunamo jo po drugem pravilu.
+  \item $2!$ izračunamo kot $2 \cdot 1!$, $4! = 4 \cdot 3 \cdot 2 \cdot 1!$. V računu
+  \item $1!$ je po prvem pravilu enaka $1$. $4!$ smo prevedli v $4 \cdot 3 \cdot 2 \cdot
+    1$. Zdaj lahko brez problemov izračunamo $4!$
+  \item Zmnožimo in dobimo rezultat $4! = 24$.
+\end{enumerate}
+
+\subsubsection{Psevdokoda}
+Psevdokoda je neformalen zapis nekega algoritma, ki uporablja strukture iz programskih
+jezikov in je pomensko pravilen, namenjen predvsem lažjemu razumevanju algoritma.
+
+Pri opisu algoritmov v psevdokodi bom uporabljal prireditve (označene s $\gets$), \textbf{while} zanke, \textbf{for} zanke,
+vejitve (\textbf{if} stavke), klice funkcij in osnovne  matematične ($+, -, \cdot, :$) in
+logične operatorje ($=, \neq, \wedge, \vee, \neg$). Za polja $a[i]$ pomeni
+element polja na indeksu $i$, polja se začnejo z indeksom $0$.
+
+%% opis psevdokode
+% pri psevdokodi bom uporabljal while zanke, for zanke, vejitve in klice funkcij,
+% prireditvene stavke in osnovno matematiko. Za polja a[j] pomeni element polja na indeksu
+% j, polja se začnejo z indeksom 0.
+
+
 \subsubsection{Urejanje z navadnim vstavljanjem}
 \label{chapter:insertionsort}
 Urejanje z navadnim vstavljanjem (\emph{angl.} insertion sort) je metoda,
@@ -268,7 +311,7 @@ $\left[prvi, zadnji\right)$):
                 \State $a[j+1] \gets a[j]$
                 \State $j \gets j - 1$
             \EndWhile
-            \State $a[j+1] = x$
+            \State $a[j+1] \gets x$
         \EndFor
     \EndFunction
   \end{algorithmic}
@@ -291,7 +334,7 @@ urejeno zaporedje, smo z urejanjem zaključili.\\
 \end{itemize}
 
 Prostorska zahtevnost je v vsakem primeru $O(1)$, saj se vse premene dogajajo na
-mestu.\newline
+mestu.\\
 
 Spodnja časovna meja ustreza primeru, ko so elementi na začetku že urejeni, zgornja pa primeru,
 ko so elementi na začetku nasprotno urejeni. Podani algoritem opisuje tudi stabilen postopek sortiranja, kajti medsebojni
@@ -397,8 +440,6 @@ mediano treh. Pogosta izbira je tudi naključni pivot.
 Postopek sortiranja s porazdelitvami je prikazan na primeru devetih naključno
 izbranih števil (glej sliko \ref{fig:quicksortimage}). Izbrani pivoti so obarvani sivo.
 Vsaka vrstica predstavlja svojo globino rekurzije.
-
-%% definicija rekurzije ?kam, kje jo dobim? prevedi wikipedijo, ne navedi vira
 
 \begin{figure}[h]
     \begin{center}
@@ -661,18 +702,20 @@ Za preverjanje hipotez(e) sem si izbral eksperiment, saj se mi zdi da je to edin
 dela, s katero je hipotezo sploh mogoče preverjati in pa delo z viri, ki sem jih
 potreboval pri pripravi eksperimenta.
 Za izvedbo eksperimenta sem implementiral vse v teoretičnem delu opisane sortirne
-algoritme. Za implementacijo sem si izbral programski jezik C++, predvsem zaradi njegove
-hitrosti in še česa. Ker se program prevede v strojno kodo in je zato najhitrejši možen. %% hja česa?
+algoritme. Za implementacijo sem si izbral programski jezik C++, predvsem zato
+ker se program prevede v strojno kodo in je zato najhitrejši možen. %% hja česa?
 
 \subsection{Implementacija sortirnih algoritmov}
+\label{chapter:sortimplementation}
 Vsak izmed sortirnih algoritmov je implementiran kot funkcija z dvema parametorma.
-Vsaka funkcija sprejme dva Random Access iteratorja, %% iteratorja z naključnim dostopom
+Vsaka funkcija sprejme dva iteratorja z naključnim dostopom (\emph{Random Access
+Iterator} ali kar \emph{RAI}),
 ki kažeta na prvi element, ki ga sortiramo in na prvi element za tistim, ki ga sortiramo
-zadnjega. Slednji je lahko neveljaven v polju (kaže preko njenega konca).
+zadnjega. Slednji je lahko neveljaven v polju (kaže preko njegovega konca).
 Tako obliko funkcij sem si izbral predvsem zato, ker je v sladu z zapisom, ki ga uporablja
 C++-ova knjižnica \emph{algortihm}. Drugi razlog je, da s tem zapisom dosežemo minimalno število
-parametrov pri trenutni funkcionalnosti. Če bi želeli le en parameter, bi bilo to
-izvedljivo, vendar bi se morali odpovedati zmožnosti, da lahko sedaj sortiramo le željeni
+parametrov pri želeni funkcionalnosti. Če bi želeli le en parameter, bi bilo to
+izvedljivo, vendar bi se morali odpovedati zmožnosti, da lahko sortiramo le željeni
 del polja. V primeru zgolj enega parametra to ne bi bilo možno, vedno bi se
 sortiralo celotno polje.
 
@@ -692,14 +735,14 @@ sortirnega algoritma.
 
 Konfiguracija pove kateri sortirni algoritem naj se uporablja pri
 katerem $n$. Konfiguracijo se lahko predstavi kot niz znakov z zelo preprostimi
-pravili. Tolmač konfiguracije iz niza znakov v conf\_t dopušča bolj ohlapna pravila, kot so
+pravili. Tolmač konfiguracije iz niza znakov v \emph{conf\_t} dopušča bolj ohlapna pravila, kot so
 definirana v slovnici. Slovnica konfiguracije v notaciji
 BNF\footnote{http://www.cui.unige.ch/db-research/Enseignement/analyseinfo/AboutBNF.html}
 je definirana sledeče:
 \\
 \begin{BNF} %% zakaj maš ti kle ~BNF
   \begin{align*}
-    \abnf{sort}{\q{i} \ali \q{s} \ali \q{q} \ali \q{h} \ali \q{m}}\\ %% presledki me matrajo
+    \abnf{sort}{\q{i} \ali \q{s} \ali \q{q} \ali \q{h} \ali \q{m}}\\
     \abnf{stevilo}{\in \N \ali \q{-1}} \\
     \abnf{token}{\q{:}\ntm{sort}\q{\mbox{--}~\mbox{--}\mbox{$>$}}\ntm{stevilo}}\\
     \abnf{konfiguracija}{\ntm{token} \ali \ntm{konfiguracija}\ntm{token}}
@@ -717,15 +760,17 @@ urejanja polj, saj se lahko odločimo kateri sortirni algoritem bomo
 uporabili, ne le za vhodno polje, temveč tudi za nekatera podpolja, ki jih ustvarijo
 sortirni algoritmi kot na primer hitro urejanje ali urejanje z zlivanjem.
 
-Kompozitni sortirni algoritem mora torej pri svoji implementaciji poleg dve RAI-jev
-sprejeti tudi konfiguracijo. Proceduro \emph{sort}, ki predstavlja kompozitni sortirni
-algoritem sem definiral sledeče: 
+Kompozitni sortirni algoritem mora torej pri svoji implementaciji poleg dveh 
+iteratorjev z naključnim dostopom sprejeti tudi konfiguracijo. Proceduro \emph{sort},
+ki predstavlja kompozitni sortirni algoritem sem definiral sledeče: 
+
+%% & problem conf_t& conf
+
 \begin{lstlisting}
-  void sort(RAI firts, RAI last, const conf_t\amp conf);
+  void sort(RAI firts, RAI last, const conf_t conf);
 \end{lstlisting}
 
 % more to be written
-%
 
 
 \section{Rezultati}
