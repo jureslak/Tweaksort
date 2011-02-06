@@ -947,6 +947,49 @@ Objekt $Compare$ je definiran tako:
 \end{itemize}
 Vsi parametri so podani kot konstantni, saj se znotraj funkcije ne smejo spreminjati. 
 
+\subsection{Merjenje časa izvajanja posameznih algoritmov}
+Merjenje časa izvajanja posameznih sortirnih algoritmov je pravzaprav edini način za
+primerjanje njihove uspešnosti in zato temu delu naloge namenil veliko pozornosti.
+Zaželeno je, da se meri zgolj čas, ki ga algoritem porabi za urejanje polja in ne na
+primer tudi ustvarjanje ali njegovo mešanje. Da pa bi povečali natančnost meritve, se mora
+pri določeni dolžini polja opraviti več meritev, iz katerih se nato izračuna povprečno
+vrednost. Če pa želimo, da merimo zgolj čas, ko algoritem ureja, moramo pred tem shraniti
+zmešana polja shraniti v pomnilnik. Uporabnik nam poda 3 parametre, parameter, ki pove,
+koliko iteracij naj se naredi na vsaki dolžini, preden izračunamo rezultat posameznega
+algoritma, parameter limit, ki pove, koliko elementov nam je dovoljeno imeti v pomnilniku,
+in veliko podatkov, iz katerih bomo ustvarjali nova polja.
+Čas izvajanja bom meril z funkcijo \emph{clock\_gettime}, ki ima od vseh znanih
+funkcij največjo natančnost (meri do nanosekunde natančno), ki pa je tudi dovolj
+velika za naše potrebe.
+Algoritem, ki meri čas posameznega algoritma je sledeč.
+\begin{enumerate}
+  \item Definirajmo spremenljivko $\check{c}as$ in $napredek$, ter ju nastavimo na 0.
+  \item \label{time:start} Ugotovimo, koliko polj si lahko pripravimo za testiranje. To je seveda odvisno od
+    limita, ki nam ga je podal uporabnik. Pripravimo si največ $\lfloor limit/n \rfloor$
+    polj, kjer je $n$ dolžina polja. Imenujmo število polj, ki jih bomo morali pripraviti, $k$.
+    Če pripravimo samo $k$ polj zagotovo ne bomo prebili limita uporabnika.
+    Če pa je razlika med napredkom in želenim številom iteracij še manjša
+    od $k$, potem si  moramo pripraviti le toliko polj, kot je še želenih iteracij.
+  \item Pripravimo si želeno število polj. Naredimo vektor polj, ki so enakega tipa
+     kot tisto, ki nam ga je podal uporabnik kot parameter $data$. Nato polja napolnimo z
+     naključnimi elementi iz njegovega podanega polja. Z izbiro naključnih elementov in ne 
+     naključnih rezin preprečimo, da bi morda dobili drugačne nezaželene rezultate, če bi
+     uporabnik na primer pozabil zmešati polje, preden ga poda, in bi se, če bi vzemali 
+     zgolj rezine, vedno sortirala še urejena polja, kar bi dalo precej drugačne rezultate 
+     kot sicer.
+  \item Zapomnimo si trenuten čas, nato uredimo vsa predpripravljena polja z želenim
+     sortirnim algoritmom in si nato spet zapomnimo čas.
+  \item Razliko v času prištejemo spremenljivki $\check{c}as$ in povečamo napredek za $k$. 
+  \item Če je napredek večji ali enak želenemu številu ponovitev, končaj. 
+    Drugače ponovi vse korake od \ref{time:start} naprej.
+  \item Deli $\check{c}as$ s številom iteracij, ki so bile izvedene (tako dobimo čas
+    izvajanja za urejanje enega samega polja) in to je iskana vrednost.
+\end{enumerate}
+
+Tako merimo zgolj čas, ko algoritmi urejajo, hkrati pa se držimo limita v pomnilniku, ki
+nam ga je določil uporabnik. Časa, ko ustvarjamo polja tako ne upoštevamo k rezultatu, kot
+je tudi prav.
+
 \section{Rezultati}
 \section{Ugotovitve in razprava}
 \section{Sklep}
