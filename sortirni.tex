@@ -133,7 +133,7 @@ aritmetike.
 
 \subsection{Teoretični uvod}
 \label{chapter:teoreticni}
-Sortiranje je torej pogosto in pomembno opravilo in tudi zaradi tega je je skozi čas
+Sortiranje je torej pogosto in pomembno opravilo in tudi zaradi tega se je je skozi čas
 razvilo veliko različnih postopkov za čimbolj učinkovito urejanje. Eden izmed razlogov za
 veliko število postopkov je tudi ta, da ima prav vsak od njih neko prednost pred ostalimi in je
 zaradi tega morda v nekem primeru boljši od ostalih. V nadaljevanju bom opisal nekaj najbolj znanih, 
@@ -154,7 +154,7 @@ Zanj velja:
 \end{itemize}
 % citat [KOZ86], str 11
 
-
+% zakaj je 1.1. namesto 1
 \begin{definicija}
   Algoritem je \textbf{kompoziten} oziroma \textbf{sestavljen}, če je sestavljen iz večih
   drugih algoritmov.
@@ -184,8 +184,9 @@ struct item {
 };
 \end{lstlisting}
 
-Ostale komponente predstavljajo s stališča urejanja nepomembne podatke o elementih v polju
-S stališča sortirnih algoritmov je ključ \emph{edini} pomemben podatek in torej ni treba
+Ostale komponente predstavljajo s stališča urejanja nepomembne podatke o elementih v
+polju.
+S stališča sortirnih algoritmov je ključ torej \emph{edini} pomemben podatek in torej ni treba
 podrobno definirati drugih komponent.
 
 \begin{definicija}
@@ -196,7 +197,7 @@ podrobno definirati drugih komponent.
 
 \begin{definicija}
   Sortirnemu algoritmu pravimo, da je \textbf{stabilen}, če ostane po končanem sortiranju
-  relativni vrsti red elementov z istim ključem nespremenjen.
+  relativni vrstni red elementov z istim ključem nespremenjen.
   Stabilnost sortiranja je pogosto zaželena, če so elementi že urejeni po neki
   sekundarni $\leq$ relaciji, torej glede lastnosti, ki jih (primarni) ključ ne izraža.
 \end{definicija}
@@ -231,9 +232,10 @@ navedena zgolj dodatna poraba pomnilnika, saj vsi algoritmi porabijo $O(n)$ pomn
 shranjevanje celotnega polja, kjer $n$ predstavlja število elementov v polju, ali razliko
 $zadnji - prvi$. 
 
+% poravnava !!
 \subsubsection{Rekurzija}
-Rekurzija je proces ponavljanja elementov na nek samopodoben način.
-V matematiki in računalništvu se nanaša na način definiranja funkcij.
+Rekurzija je proces ponavljanja elementov na nek samopodoben način. V matematiki
+in računalništvu se nanaša na način definiranja funkcij.
 Rekurzivna funkcija je tista, ki se v svoji definiciji sklicuje sama nase.
 Če želimo da je taka definicija sploh smiselna, moramo podati vsaj en osnoven
 nerekurziven primer in še množico pravil, ki vse ostale primere prevedejo v osnovni
@@ -283,7 +285,7 @@ Urejanje z navadnim vstavljanjem (\emph{angl.} insertion sort) je metoda,
 podobna tisti, ki jo na široko uporabljajo igralci kart. Je primerjalni sortirni algoritem.
 
 Zaporedje $a_1, a_2, \ldots, a_n$ razdelimo na že urejeni del $a_1, a_2, \ldots, a_{i-1}$
-in še neurejeni del $a_i, \ldots a_n$. Na vsakem koraku začenši z $i = 2$ in
+in še neurejeni del $a_i, \ldots a_n$. Na vsakem koraku, začenši z $i = 2$ in
 prirastkom ena, vstavimo $i$-ti element začetnega zaporedja na ustrezno mesto v končnem
 zaporedju. Ko je $i$ enak 2, je prvi del trivialno sortiran, saj vsebuje le en element
 
@@ -325,7 +327,7 @@ levem robu polja. Postopek ``pogrezanja'' lahko ustavita ta dva ločena
 pogoja, kot je prikazano v zgornji \emph{while} zanki.  Ko vstavimo še zadnji element v že 
 urejeno zaporedje, smo z urejanjem zaključili.\\
 
-\textbf{Časovna in prostorska zahtevnost}. \\
+\textbf{Časovna in prostorska zahtevnost} \\
 Časovna zahtevnost je v 
 \begin{itemize}
   \item najboljšem primeru $O(n)$
@@ -353,7 +355,7 @@ algoritmov.
 Algoritem je sledeč:
 \begin{enumerate}
   \item najdi element z najmanjšim ključem
-  \item zamenjaj ga z prvim elementom
+  \item zamenjaj ga s prvim elementom
   \item ponovi zgornja koraka za ostanek polja.
 \end{enumerate}
 
@@ -393,7 +395,7 @@ V psevdokodi bi zapisali urejanje z izbiranjem tako:
   \end{algorithmic}
 \end{algorithm}
 
-\textbf{Časovna in prostorska zahtevnost}. \\
+\textbf{Časovna in prostorska zahtevnost} \\
 Časovna zahtevnost je v vsakem primeru enaka in sicer $O(n^2)$.
 
 Prostorska zahtevnost je v najboljšem, povprečnem in najslabšem primeru $O(1)$, 
@@ -448,23 +450,25 @@ Vsaka vrstica predstavlja svojo globino rekurzije.
 
 V psevdokodi bi zapisali algoritem urejanja s porazdelitvami nekako tako:
 
+%% pozicije algoritmov
+
 \begin{algorithm}
   \caption{Hitro urejanje}\label{algo:quicksort}
   \begin{algorithmic}[1]
-    \Function{quciksort}{a, prvi, zadnji}
+    \Function{quicksort}{a, prvi, zadnji}
         \If{$zadnji - prvi < 2$} \Return \EndIf
         \State $s \gets first$
         \State $e \gets last - 1$
         \State $m \gets \lfloor(s+e):2\rfloor$
+        \If{$a[m] < a[s] < a[e] \vee a[e] < a[s] < a[m]$}
+            \Swap{a[s]}{a[e]}
+            \Comment{a[s] je mediana treh}
          \algstore{quicksort}
   \end{algorithmic}
 \end{algorithm}
 \begin{algorithm}
   \begin{algorithmic}[1]
     \algrestore{quicksort}
-        \If{$a[m] < a[s] < a[e] \vee a[e] < a[s] < a[m]$}
-            \Swap{a[s]}{a[e]}
-            \Comment{a[s] je mediana treh}
         \ElsIf{$a[e] < a[m] < a[s] \vee a[s] < a[m] < a[e]$}
             \Swap{a[m]}{a[e]}
             \Comment{a[m] je mediana treh}
@@ -494,7 +498,7 @@ V psevdokodi bi zapisali algoritem urejanja s porazdelitvami nekako tako:
   \end{algorithmic}
 \end{algorithm}
 
-\textbf{Časovna in prostorska zahtevnost}. \\
+\textbf{Časovna in prostorska zahtevnost} \\
 Časovna zahtevnost je v 
 \begin{itemize}
   \item najboljšem primeru $O(n\log_2 n)$
@@ -607,7 +611,7 @@ V psevdokodi bi algoritem urejanja s kopico izgledal nekako tako:
   \end{algorithmic}
 \end{algorithm}
 
-\textbf{Časovna in prostorska zahtevnost}. \\
+\textbf{Časovna in prostorska zahtevnost} \\
 Časovna zahtevnost je v najboljšem, povprečnem in najslabšem primeru $O(n\log_2 n)$.
 
 Prostorska zahtevnost je v vsakem primeru $O(1)$, saj je kopica predstavljena kar v
@@ -681,14 +685,14 @@ V psevdokodi bi ta algoritem zapisali nekako tako:
         \While{$i < srednji$}
             \State $rezultat.append(a[i])$ \Comment{Dodamo a[i] v polje rezultat}
         \EndWhile
-        \While{$j < srednjj$}
+        \While{$j < srednji$}
             \State $rezultat.append(a[j])$ \Comment{Dodamo a[j] v polje rezultat}
         \EndWhile
     \EndFunction
   \end{algorithmic}
 \end{algorithm}
 
-\textbf{Časovna in prostorska zahtevnost}. \\
+\textbf{Časovna in prostorska zahtevnost} \\
 Časovna zahtevnost je v najboljšem, povprečnem in najslabšem primeru 
 $O(n\log_2 n)$. Časovna zahtevnost urejanja z zlivanjem ni odvisna od
 morebitne že delne urejenosti ali neurejenosti podatkov v polju. 
@@ -703,7 +707,7 @@ neposrednega dostopa do nekega elementa z njegovim indeksom, kot na primer povez
 \subsection{Nameni in cilji}
 \subsection{Hipoteze}
 \begin{enumerate}
-  \item Kompoziten algoritem se odnese boljše na različnih tipih podatkov kot vsak
+  \item Kompoziten algoritem se obnese boljše na različnih tipih podatkov kot vsak
     posamezen algoritem.
     % akj pa kakšna da bo beatov build-in sort
 \end{enumerate}
@@ -722,14 +726,14 @@ Vsaka funkcija sprejme dva iteratorja z naključnim dostopom (\emph{Random Acces
 Iterator} ali kar \emph{RAI}),
 ki kažeta na prvi element, ki ga sortiramo, in na prvi element za tistim, ki ga sortiramo
 zadnjega. Slednji je lahko neveljaven v polju (kaže preko njegovega konca).
-Tako obliko funkcij sem si izbral predvsem zato, ker je v sladu z zapisom, ki ga uporablja
+Tako obliko funkcij sem si izbral predvsem zato, ker je v skladu z zapisom, ki ga uporablja
 C++-ova knjižnica \emph{algorithm}. Drugi razlog je, da s tem zapisom dosežemo minimalno število
 parametrov pri želeni funkcionalnosti. Če bi želeli le en parameter, bi bilo to
 izvedljivo, vendar bi se morali odpovedati zmožnosti, da lahko sedaj uredimo le željeni
 del polja. V primeru zgolj enega parametra to ne bi bilo možno, vedno bi se
 urejalo celotno polje.
 
-Vsak sortirni algoritem, ki sem ga implementiral, sortira zgolj s uporabo operatorja $<$
+Vsak sortirni algoritem, ki sem ga implementiral, ureja zgolj z uporabo operatorja $<$
 (``je manjše''), ki se obnaša enako kot operator linearne urejenosti $\leq$. Vsak
 algoritem je definiran kot funkcija tipa \emph{void}, kar pomeni, da ne vrne ničesar in
 torej spremeni vrstni red elementov polja, ki ji ga podamo.
@@ -739,7 +743,7 @@ torej spremeni vrstni red elementov polja, ki ji ga podamo.
 Ker so sortirni algoritmi vsak zase dobri na zgolj nekaterih dolžinah polj in se pri tej
 lastnosti razlikujejo, nas to privede do zamisli, da bi pri dani dolžini $n$ uporabili tisti
 sortirni algoritem, ki je pri tem $n$ najboljši. Torej moramo vedeti, pri katerem $n$ je
-potrebno uporabiti kateri sortirni algoritem, kar pa si bomo morali nekam zapomniti. V ta
+potrebno uporabiti kateri sortirni algoritem, kar pa si bomo morali zapomniti. V ta
 namen sem definiral tip $conf\_t$, v katerem je shranjena konfiguracija kompozitnega
 sortirnega algoritma. 
 
@@ -767,8 +771,8 @@ predstavlja neskončno ($\infty$).
 Konfiguracija je torej sestavljena kot zaporedje ene ali več enot \ntm{vnos}. 
 Vsak \ntm{vnos} pove, do katere dolžine (vključno z napisano), naj se uporablja kateri sortirni
 algoritem. Začetek uporabe tega sortirnega algoritma pa označuje število, pri katerem se
-uporaba prejšnjega zaključi. Prvi sortirni algoritem, tisi ki ga definira prvi
-\ntm{vnos} in edini, ki nima predhodnika, se začne uporabljati pri 0, spodnji meji veljavnih dolžin
+uporaba prejšnjega zaključi. Prvi sortirni algoritem -- tisti, ki ga definira prvi
+\ntm{vnos} -- in edini, ki nima predhodnika, se začne uporabljati pri 0, spodnji meji veljavnih dolžin
 polj (negativne dolžine ne obstajajo). Ker se uporaba nekega sortirnega algoritma začne
 tam, kjer se uporaba prejšnjega konča, je tako za vse dolžine polj definirano, kateri
 algoritem naj se uporabi, če le upoštevamo, da se algoritem, ki ga določa zadnji vnos,
@@ -783,7 +787,7 @@ enolično določi spodnje meje uporabe posameznih sortirnih algoritmov.
 
 V nadaljevanju naloge bom pri vseh primerih konfiguracij zaradi večje preglednosti 
 namesto ``\konfarrow'' pisal ``\lra''.
-
+\\
 Primer smiselne konfiguracije:
 
 \[ :i \lra 20;:h \lra 45;:i \lra 123;:q \lra 7925;:m \lra -1; \]
@@ -797,7 +801,7 @@ polja z dolžinami na intervalu $\left(123, 7925\right]$ s porazdelitvami, polja
 intervala $\left(7925, \infty\right)$ oziroma tista, katerih dolžine so večje od 7925
 pa naj se ureja z zlivanjem. Tako je za prav vse možne dolžine enolično določeno, kateri
 sortirni algoritem naj bo uporabljen, kar je tudi cilj konfiguracije.
-
+\\
 Primer nesmiselne konfiguracije:
 
 \[ :i \lra 60;:h \lra 45;:i \lra -1;:q \lra 7925;:m \lra 33456; \]
@@ -805,7 +809,7 @@ Konfiguracija sicer upošteva vsa slovnična pravila, vendar je nesmiselna. Prva
 da števila niso urejena naraščajoče, s tem torej ni zagotovljena enolična določenost,
 kateri sortirni algoritem naj se uporabi. V konfiguraciji piše, da naj se polja z
 dolžinami od 0 do 60 urejajo z vstavljanjem, tista z dolžinami od 60 do 45 pa s kopico.
-Torej ni enolično definirano, s katerih algoritmom naj uredimo polja dolžine 52, na primer. 
+Torej ni enolično definirano, s katerim algoritmom naj uredimo polja dolžine 52, na primer. 
 Druga nesmiselnost je, da število $-1$, ni na koncu, torej so
 vsi vnosi za tem nepotrebni. Problem te konfiguracije je torej v tem, da ne definira
 enolično, kateri sortirni algoritem naj bo uporabljen. Nesmiselna bi bila tudi vsaka
@@ -849,16 +853,17 @@ algoritem v logaritemskem času, in ne v linearnem, z uporabo bisekcije. Tako vs
 konfiguracije malo pospešimo delovanje te procedure.
 
 \subsection{Iskanje optimalne konfiguracije}
+\label{chapter:optimalconf}
 Konfiguracija, ki je podana kompozitnemu sortirnemu algoritmu, je edini vir podatkov, ki
 proceduri \emph{sort} povedo, kdaj naj preklopi na kateri sortirni algoritem.
 Torej je iskanje optimalnega kompozitnega sortirnega algoritma pravzaprav iskanje optimalne
 konfiguracije zanj. Ker uporabnik seveda ne ve, katera konfiguracija je optimalna, sem
 napisal funkcijo, ki to eksperimentalno ugotovi namesto njega.
 
-Dva kompozitna sortirna algoritma lahko primerjamo po času izvajanja, tisti ki porabi manj
+Dva kompozitna sortirna algoritma lahko primerjamo po času izvajanja, tisti, ki porabi manj
 časa je boljši pri trenutni dolžini polja, ki sta ga urejala.
 S tem smo definirali relacijo $a$ je $n$ boljši od $b$:
-\[ a \leq_n b \Leftrightarrow a\ \text{je v povprečju na poljh dolžine $n$ boljši
+\[ a \leq_n b \Leftrightarrow a\ \text{je v povprečju na poljih dolžine $n$ boljši
 od}\ b.\]
 Tako lahko problem rešimo kar s požrešno metodo: 
 pri posamezni dolžini ugotovimo, kateri algoritem je najboljši in to vnesemo
@@ -885,13 +890,13 @@ sledečih točkah.
   \item Če je $n$ manjši od $M$, potem $n$ zmanjšaj za trenutno razdaljo, saj
     tako razdaljo nastavimo na zadnjo vrednost, ko vemo, kateri algoritem je bil
     najboljši.
-  \item Naredi nove morebitne konfiguracije, tako da trenutni končni konfiguraciji dodaš
+  \item Naredi nove morebitne konfiguracije, tako, da trenutni končni konfiguraciji dodaš
     vsako izmed začetnih konfiguracij iz koraka \ref{step:init}.
   \item Ponovi korake od \ref{step:start} naprej.
 \end{enumerate}
 
-Ažman bo z veseljem dokazal da algoritem deluje pravilno. \smiley\  
-Jaz bom zraven in se bom čudil in trudil razumeti, tako da bom kasneje znal razložiti
+Ažman bo z veseljem dokazal, da algoritem deluje pravilno. \smiley\  
+Jaz bom zraven in se bom čudil in trudil razumeti, tako, da bom kasneje znal razložiti
 celoten postopek. \blacksmiley
 
 Funkcija, ki implementira algoritem za iskanje optimalne konfiguracije 
@@ -927,7 +932,7 @@ Objekt $Compare$ je definiran tako:
 
 
 \begin{itemize}
-  \item Parameter $iterations$ pomeni koliko iteracij posamezne sortirne metode bo naredil
+  \item Parameter $iterations$ pomeni, koliko iteracij posamezne sortirne metode bo naredil
     program, preden zabeleži njen rezultat. Večje kot je to število, bolj natančne so
     meritve.
   \item Parameter $limit$ pomeni število elementov, ki jih lahko hranimo v pomnilniku.
@@ -950,17 +955,35 @@ Vsi parametri so podani kot konstantni, saj se znotraj funkcije ne smejo spremin
 \subsection{Merjenje časa izvajanja posameznih algoritmov}
 Merjenje časa izvajanja posameznih sortirnih algoritmov je pravzaprav edini način za
 primerjanje njihove uspešnosti in zato temu delu naloge namenil veliko pozornosti.
-Zaželeno je, da se meri zgolj čas, ki ga algoritem porabi za urejanje polja in ne na
-primer tudi ustvarjanje ali njegovo mešanje. Da pa bi povečali natančnost meritve, se mora
-pri določeni dolžini polja opraviti več meritev, iz katerih se nato izračuna povprečno
-vrednost. Če pa želimo, da merimo zgolj čas, ko algoritem ureja, moramo pred tem shraniti
-zmešana polja shraniti v pomnilnik. Uporabnik nam poda 3 parametre, parameter, ki pove,
-koliko iteracij naj se naredi na vsaki dolžini, preden izračunamo rezultat posameznega
-algoritma, parameter limit, ki pove, koliko elementov nam je dovoljeno imeti v pomnilniku,
-in veliko podatkov, iz katerih bomo ustvarjali nova polja.
+
+Parametri, ki nam jih poda uporabnik, so v definirani v poglavju
+\ref{chapter:optimalconf}. Za merjenje časa sta pomembna le dva, to sta $iterations$ in
+$limit$. Parameter, ki ga še potrebujemo, pa je dolžina polja, ki ga bo sortirni algoritem
+urejal, imenujmo ga $n$.
+
+Najbolj naiven algoritem za merjenje časa bi verjetno izgledal podobno naslednjemu. 
+Naredimo polje dolžine $n$ in si zapomnimo trenuten čas. Premešamo polje in ga
+uredimo z želenih algoritmom. Ponovimo zadnje dva koraka tolikokrat, da je število
+ponovitev enako številu, ki ga je podal uporabnik. Nato si spet zapomnimo čas in kvocient
+med razliko in številom iteracij je naš željeni rezultat.
+
+Glavna napaka zgornjega algoritma je v tem, da v celoten čas šteje tudi tisti čas, ko
+mešamo polje, ne le tistega, ko se polje sortira. To bi lahko odpravili tako, da bi pred
+in po vsakem urejanju zabeležili čas, čase nato sešteli in jih delili z številom iteracij,
+vendar to ne bi bilo dovolj natančno, saj merjenje tako kratkih časovnih intervalov,
+še posebej, ko se sortirajo kratka polja, enostavno ni dovolj natančno, da bi bilo
+statistično zanesljivo. Zaželeno je torej, da se meri zgolj čas, ki ga algoritem porabi za
+urejanje polja, poleg tega pa je zaželeno tudi, da bi povečali natančnost meritve, da se mora
+pri določeni dolžini polja opraviti več urejanj hkrati, ki jim izmerimo skupni čas, iz katerih se nato izračuna povprečno
+vrednost. Ker želimo, da merimo zgolj čas, ko algoritem ureja, moramo pred tem shraniti
+premešana polja shraniti v pomnilnik. Tu nastopi parameter $limit$, ki pove, koliko
+elementov smemo imeti v pomnilniku. Večji ko je limit, več meritev se bo izvedlo naenkrat,
+in rezultat bo bolj natančen in statistično zanesljiv.
+
 Čas izvajanja bom meril z funkcijo \emph{clock\_gettime}, ki ima od vseh znanih
 funkcij največjo natančnost (meri do nanosekunde natančno), ki pa je tudi dovolj
 velika za naše potrebe.
+
 Algoritem, ki meri čas posameznega algoritma je sledeč.
 \begin{enumerate}
   \item Definirajmo spremenljivko $\check{c}as$ in $napredek$, ter ju nastavimo na 0.
@@ -993,10 +1016,10 @@ je tudi prav.
 \section{Rezultati}
 \section{Ugotovitve in razprava}
 \section{Sklep}
-Potrdili smo hipotezo. Lahko bi izboljšali z bolj optimizirano implementacijo.
+Potrdili smo hipotezo. Rezultate bi lahko izboljšali z bolj optimizirano implementacijo.
 \section{Zaključek}
 Zadeva je uporabna.
-\section{Viri in Literatura}
+\section{Viri}
 \subsection{Literatura}
 \vspace{-1cm}
 \begin{thebibliography}{99}
