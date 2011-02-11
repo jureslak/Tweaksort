@@ -1,4 +1,4 @@
-\documentclass[a4paper,oneside]{article}
+\documentclass[a4paper,oneside,10pt]{article}
 \usepackage[slovene]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{url}
@@ -53,8 +53,7 @@ menucolor=black, runcolor=black, urlcolor=black%
 \algnewcommand\algorithmicto{\textbf{to}}
 \algnewcommand\algorithmicswap{\textsc{swap}}
 \algnewcommand\Swap[2]{\State \ensuremath{\algorithmicswap(#1,\ #2)}}
-\algrenewtext{For}[3]%
-{$\algorithmicfor\ #1 \gets #2\ \algorithmicto\ #3\ \algorithmicdo$}
+\algrenewtext{For}[3]{$\algorithmicfor\ #1 \gets #2\ \algorithmicto\ #3\ \algorithmicdo$}
 
 \newenvironment{BNF}{
     \\
@@ -81,8 +80,11 @@ menucolor=black, runcolor=black, urlcolor=black%
 \newcommand{\ntm}[1]{\ensuremath{<\!\!\text{#1}\!\!>}}
 \newcommand{\bnf}[2]{\ensuremath{\ntm{#1} \: #2}}
 \newcommand{\abnf}[2]{\ensuremath{\ntm{#1} \bnfassign: #2}}
-\newcommand{\konfarrow}{\mbox{--}\ \mbox{--}\ \mbox{\ensuremath{>}}}
+\newcommand{\konfarrow}{\mbox{--}~\mbox{--}~\mbox{\ensuremath{>}}}
 \newcommand{\lra}{\ensuremath{\longrightarrow}}
+\newcommand{\subsubsubsection}[1]{\vspace*{1ex}\textbf{#1}\\}
+
+\floatname{algorithm}{Algoritem}
 
 % your definitions here ... 
 
@@ -91,8 +93,12 @@ menucolor=black, runcolor=black, urlcolor=black%
 \date{\today}
 
 \begin{document}
-\addto\captionsslovene {
-\renewcommand\bibname{}
+
+\renewcommand{\listfigurename}{Kazalo slik} 
+\renewcommand{\listalgorithmname}{Kazalo algoritmov}
+
+\addto\captionsslovene { %
+\renewcommand\bibname{} %
 }
 \renewcommand\refname{}
 
@@ -118,6 +124,12 @@ cmp_t, RAI}}
 \thispagestyle{empty}
 \tableofcontents
 \pagebreak
+\thispagestyle{empty}
+\listoffigures
+\pagebreak
+\thispagestyle{empty}
+\listofalgorithms
+\pagebreak
 
 \section{Uvod}
 \label{chapter:uvod}
@@ -136,7 +148,7 @@ aritmetike.
 Sortiranje je torej pogosto in pomembno opravilo in tudi zaradi tega se je je skozi čas
 razvilo veliko različnih postopkov za čimbolj učinkovito urejanje. Eden izmed razlogov za
 veliko število postopkov je tudi ta, da ima prav vsak od njih neko prednost pred ostalimi in je
-zaradi tega morda v nekem primeru boljši od ostalih. V nadaljevanju bom opisal nekaj najbolj znanih, 
+zaradi tega v določenih primerih boljši od ostalih. V nadaljevanju bom opisal nekaj najbolj znanih, 
 vendar jih obstaja še mnogo več. 
 
 \subsubsection{Definicija algoritma}
@@ -166,7 +178,7 @@ Naj bo dan končen vektor elementov $\vec{a} = \left(a_1, a_2, \ldots, a_n \righ
 relacija $\leq$ med elementi vektorja.
 Naj bo $f(a)$ \emph{ključ} elementa. Definirana mora biti relacija linearne urejenosti med 
 ključi elementov.V splošnem je dana relacija $\leq$ med elementi $\vec{a}$-ja, ki je definirana kot 
-\[a_i \leq a_j \overset{def}{\Longleftrightarrow} f(a_i) \leq f(a_j). \]
+\[a_i \leq a_j \overset{\text{def}}{\Longleftrightarrow} f(a_i) \leq f(a_j). \]
 
 $f$ je ponavadi trivialen, ker je $f(a)$ ponavadi kar del $\vec{a}$-ja in nam ga ni treba
 računati, lahko pa to ni res. 
@@ -186,20 +198,20 @@ struct item {
 
 Ostale komponente predstavljajo s stališča urejanja nepomembne podatke o elementih v
 polju.
-S stališča sortirnih algoritmov je ključ torej \emph{edini} pomemben podatek in torej ni treba
-podrobno definirati drugih komponent.
+S stališča sortirnih algoritmov je ključ torej \emph{edini} pomemben podatek in zato
+ostalih komponent ni treba podrobno definirati.
 
 \begin{definicija}
   \textbf{Sortirni algoritem} je algoritem, ki prejme neko podatkovno strukturo s podatki
-  in neko primerjalno relacijo med njimi ter jih uredi po vrstnem redu, ki ga določa ta
+  in neko relacijo linearne urejenosti med njimi ter jih uredi po vrstnem redu, ki ga določa ta
   relacija.
 \end{definicija}
 
 \begin{definicija}
-  Sortirnemu algoritmu pravimo, da je \textbf{stabilen}, če ostane po končanem sortiranju
+  Za sortirni algoritem pravimo, da je \textbf{stabilen}, če ostane po končanem sortiranju
   relativni vrstni red elementov z istim ključem nespremenjen.
   Stabilnost sortiranja je pogosto zaželena, če so elementi že urejeni po neki
-  sekundarni $\leq$ relaciji, torej glede lastnosti, ki jih (primarni) ključ ne izraža.
+  sekundarni $\leq$ relaciji, torej glede lastnosti, ki je (primarni) ključ ne izraža.
 \end{definicija}
 
 \begin{definicija}
@@ -220,9 +232,9 @@ $zadnji$, ki predstavljajo:
     uporabljamo operator $[\cdot]$. Zaradi časovne analize algoritmov zahtevamo, da operator 
     $[\cdot]$ deluje v konstantnem času. Indeksiranje elementov polja se začne z 0.
     V nadaljnjem opisovanju bom uporabljal besedo
-    polje za katerokoli podatkovno strukturo, ki ustreza zgornjim zahtevam.
+    \textbf{polje} za katerokoli podatkovno strukturo, ki ustreza zgornjim zahtevam.
   \item $prvi$: indeks prvega elementa, ki ga želimo sortirati.
-  \item $zadnji$: indeks elementa, ki je za zadnjim elementom, ki ga sortiramo. Lahko ni
+  \item $zadnji$: indeks elementa, ki je \emph{za} zadnjim elementom, ki ga sortiramo. Lahko ni
     veljaven indeks v $a$.
 \end{itemize}
 Vse procedure bodo spremenile polje $a$, nobena ne bo ničesar vrnila.
@@ -232,23 +244,23 @@ navedena zgolj dodatna poraba pomnilnika, saj vsi algoritmi porabijo $O(n)$ pomn
 shranjevanje celotnega polja, kjer $n$ predstavlja število elementov v polju, ali razliko
 $zadnji - prvi$. 
 
-% poravnava !!
+% poravnava
 \subsubsection{Rekurzija}
-Rekurzija je proces ponavljanja elementov na nek samopodoben način. V matematiki
-in računalništvu se nanaša na način definiranja funkcij.
-Rekurzivna funkcija je tista, ki se v svoji definiciji sklicuje sama nase.
-Če želimo da je taka definicija sploh smiselna, moramo podati vsaj en osnoven
-nerekurziven primer in še množico pravil, ki vse ostale primere prevedejo v osnovni
-primer.
+\label{chapter:rekurzija}
+Rekurzija je proces ponavljanja elementov na nek samopodoben način. V matematiki in 
+računalništvu se nanaša na način definiranja funkcij. Rekurzivna funkcija je tista, 
+ki se v svoji definiciji sklicuje sama nase. Če želimo da je taka definicija sploh 
+smiselna, moramo podati vsaj en osnoven nerekurziven primer in še množico pravil, 
+ki vse ostale primere prevedejo v osnovni primer.
 
 Poglejmo si primer definicije fakultete\footnote{Bolj običajno se fakulteto definira kot:
-$n! = \displaystyle\prod_{k=1}^{n} k$}. Fakulteta naravnega števila $n$ je v matematiki
-funkcija, ki določa zmnožek celih števil, manjših ali enakih $n$. Označi se jo z $n!$.
+$n! = \displaystyle\prod_{k=1}^{n} k = 1 \cdot 2 \cdot 3 \cdot \ \cdots\  \cdot n$}. Fakulteta naravnega števila $n$ je v matematiki
+funkcija, ki določa zmnožek vseh celih števil, manjših ali enakih $n$. Označi se jo z $n!$.
 \[
 n! = \left\{ 
 \begin{array}{rl}
-     1 &\mbox{ če $n = 1$} \\
-     n \cdot (n-1)!&
+     1             & \mbox{;če $n = 1$} \\
+     n \cdot (n-1)!& \mbox{;sicer}
 \end{array} \right.
 \]
 Pri fakulteti imamo definiran en osnovni primer ($1! = 1$), vsi ostali primeri pa se prej
@@ -266,7 +278,6 @@ ali slej pretvorijo v ta primer. Poglejmo si primer števila 4.
     1$. Zdaj lahko brez problemov izračunamo $4!$.
   \item Zmnožimo in dobimo rezultat $4! = 24$.
 \end{enumerate}
-
 \subsubsection{Psevdokoda}
 Psevdokoda je neformalen zapis nekega algoritma, ki uporablja strukture iz programskih
 jezikov in je pomensko pravilen, namenjen predvsem lažjemu razumevanju algoritma.
@@ -287,20 +298,20 @@ podobna tisti, ki jo na široko uporabljajo igralci kart. Je primerjalni sortirn
 Zaporedje $a_1, a_2, \ldots, a_n$ razdelimo na že urejeni del $a_1, a_2, \ldots, a_{i-1}$
 in še neurejeni del $a_i, \ldots a_n$. Na vsakem koraku, začenši z $i = 2$ in
 prirastkom ena, vstavimo $i$-ti element začetnega zaporedja na ustrezno mesto v končnem
-zaporedju. Ko je $i$ enak 2, je prvi del trivialno sortiran, saj vsebuje le en element
+zaporedju. Ko je $i$ enak 2, je prvi del trivialno sortiran, saj vsebuje le en element.
 
 \begin{figure}[h]
     \begin{center}
         \includegraphics[height=45mm]{slike/insertionsort.png}
     \end{center}
     \vspace{-0.7cm}
-    \caption{Grafična predstavitev urejanja z navadnim vstavljanjem.}
+    \caption[Urejanje z vstavljanjem]{Grafična predstavitev urejanja z navadnim vstavljanjem.}
     \label{fig:insertionsortimage}
 \end{figure}
 
-Postopek sortiranja z navadnim vstavljanjem je prikazan na primeru osmih naključno
-izbranih števil (glej sliko \ref{fig:insertionsortimage}). Algoritem navadnega
-vstavljanja lahko zapišemo v psevdokodi nekako tako:
+Na sliki \ref{fig:insertionsortimage} je prikazan postopek sortiranja z navadnim vstavljanjem na primeru osmih naključno
+izbranih števil. Algoritem navadnega
+vstavljanja je v psevdokodi napisan kot algoritem \ref{algo:insertionsort}.
 
 \begin{algorithm}
   \caption{Urejanje z vstavljanjem}\label{algo:insertionsort}
@@ -325,9 +336,9 @@ primerjamo z naslednjim elementom $a_j$ in ga bodisi vstavimo, če je ključ $a_
 ali enak $x$ ali pa $a_j$ premaknemo na desno ter nadaljujemo proti levi, če še nismo pri
 levem robu polja. Postopek ``pogrezanja'' lahko ustavita ta dva ločena
 pogoja, kot je prikazano v zgornji \emph{while} zanki.  Ko vstavimo še zadnji element v že 
-urejeno zaporedje, smo z urejanjem zaključili.\\
+urejeno zaporedje, smo z urejanjem zaključili.
 
-\textbf{Časovna in prostorska zahtevnost} \\
+\subsubsubsection{Časovna in prostorska zahtevnost}
 Časovna zahtevnost je v 
 \begin{itemize}
   \item najboljšem primeru $O(n)$
@@ -365,18 +376,18 @@ preostali del polja.
 
 Postopek urejanja z izbiranjem je prikazan na sliki \ref{fig:selectionsortimage}.
 Najmanjši elementi v drugem delu polja so obkroženi, puščica ponazarja, kako jih
-vstavimo na konec prvega dela. Dela sta ločena z navpično črto. % ne še
+vstavimo na konec prvega dela. Dela sta ločena z dvopičjem. % ne še
 
 \begin{figure}[h]
     \begin{center}
         \includegraphics[height=40mm]{slike/selectionsort.png}
     \end{center}
     \vspace{-0.7cm}
-    \caption{Grafična predstavitev urejanja z navadnim vstavljanjem.}
+    \caption[Urejanje z izbiranjem]{Grafična predstavitev urejanja z navadnim vstavljanjem.}
     \label{fig:selectionsortimage}
 \end{figure}
 
-V psevdokodi bi zapisali urejanje z izbiranjem tako:
+V psevdokodi je urejanje z izbiranjem zapisano kot algoritem \ref{algo:selectionsort}.
 
 \begin{algorithm}
   \caption{Urejanje z izbiranjem}\label{algo:selectionsort}
@@ -395,7 +406,7 @@ V psevdokodi bi zapisali urejanje z izbiranjem tako:
   \end{algorithmic}
 \end{algorithm}
 
-\textbf{Časovna in prostorska zahtevnost} \\
+\subsubsubsection{Časovna in prostorska zahtevnost}
 Časovna zahtevnost je v vsakem primeru enaka in sicer $O(n^2)$.
 
 Prostorska zahtevnost je v najboljšem, povprečnem in najslabšem primeru $O(1)$, 
@@ -412,7 +423,7 @@ primerno takrat, ko je premikanje elementov drago (imamo velike elemente).
 Hitro urejanje ali urejanje s porazdelitvami\footnote{vir: IJS-jev slovar računalniških izrazov
 \url{http://www.ijs.si/cgi-bin/rac-slovar}}(\emph{angl.} quicksort) je eden izmed
 najučinkovitejših sortirnih algoritmov, ki jih poznamo, razvil pa ga je C. A. R. Hoare.
-Je primerjalni sortirni algoritem, ki uporablja metodo deli in vladaj.
+Je primerjalni sortirni algoritem, ki je zgrajen na principu deli in vladaj.
 
 Sortiranje s porazdelitvami temelji na dejstvu, da moramo premene opravljati na večje
 razdalje, da bi bile učinkovitejše. Recimo, da imamo $n$ nasprotno urejenih elementov.
@@ -421,12 +432,13 @@ in zadnjega in se postopoma pomikamo proti sredini. Seveda je to možno le, če 
 elementi natanko nasprotno urejeni.
 
 Prejšnji primer nas napelje na naslednji algoritem: 
-zberemo poljuben element (recimo mu pivot in ga označimo z $x$), nato začnemo 
+izberemo poljuben element (recimo mu pivot in ga označimo z $x$), nato začnemo 
 polje $a$ pregledovati z leve, dokler ne najdemo elementa $a_i > x$ in nato z desne dokler ne 
 najdemo elementa $a_i < x$. Elementa sedaj medsebojno zamenjamo in nadaljujemo s 
 pregledovanjem in premenami, dokler se ne srečamo nekje na sredi polja.
 Polje je sedaj razdeljeno na levi del s ključi manjšimi od $x$ in na desni del
-s ključi večjimi od $x$. Metodo ponovimo na obeh delih dokler ne pridemo do že urejenih
+s ključi večjimi od $x$. Pivot nato umestimo med oba dela, kar je tudi njegovo končno
+mesto in metodo ponovimo na delih levo in desno od pivota dokler ne pridemo do že urejenih
 podpolj, torej tistih z dolžino manjšo ali enako 1. 
 
 Iz prejšnjega algoritma ugotovimo, da je izbira pivota zelo
@@ -444,13 +456,11 @@ Vsaka vrstica predstavlja svojo globino rekurzije.
         \includegraphics[height=45mm]{slike/quicksort.jpg}
     \end{center}
     \vspace{-0.7cm}
-    \caption{Grafična predstavitev urejanja s porazdelitvami.}
+    \caption[Hitro urejanje]{Grafična predstavitev urejanja s porazdelitvami.}
     \label{fig:quicksortimage}
 \end{figure}
 
-V psevdokodi bi zapisali algoritem urejanja s porazdelitvami nekako tako:
-
-%% pozicije algoritmov
+V psevdokodi je algoritem hitrega urejanja zapisan kot algoritem \ref{algo:quicksort}.
 
 \begin{algorithm}
   \caption{Hitro urejanje}\label{algo:quicksort}
@@ -463,12 +473,6 @@ V psevdokodi bi zapisali algoritem urejanja s porazdelitvami nekako tako:
         \If{$a[m] < a[s] < a[e] \vee a[e] < a[s] < a[m]$}
             \Swap{a[s]}{a[e]}
             \Comment{a[s] je mediana treh}
-         \algstore{quicksort}
-  \end{algorithmic}
-\end{algorithm}
-\begin{algorithm}
-  \begin{algorithmic}[1]
-    \algrestore{quicksort}
         \ElsIf{$a[e] < a[m] < a[s] \vee a[s] < a[m] < a[e]$}
             \Swap{a[m]}{a[e]}
             \Comment{a[m] je mediana treh}
@@ -498,7 +502,7 @@ V psevdokodi bi zapisali algoritem urejanja s porazdelitvami nekako tako:
   \end{algorithmic}
 \end{algorithm}
 
-\textbf{Časovna in prostorska zahtevnost} \\
+\subsubsubsection{Časovna in prostorska zahtevnost}
 Časovna zahtevnost je v 
 \begin{itemize}
   \item najboljšem primeru $O(n\log_2 n)$
@@ -567,12 +571,7 @@ V psevdokodi bi algoritem urejanja s kopico izgledal nekako tako:
             \State \textsc{pogrezni}$(a, prvi, prvi, zadnji)$
         \EndWhile
     \EndFunction
-%    \algstore{heaspsort1}
-%  \end{algorithmic}
-%\end{algorithm}
-%\begin{algorithm}
-%  \begin{algorithmic}[1]
-%    \algrestore{heaspsort1}
+    \\
     \Function{nakopiči}{a, prvi, zadnji}
         \State $zacetek \gets \lfloor(prvi + zadnji) / 2\rfloor - 1$
         \While{$zacetek \geq prvi$} \Comment{pogreznemo vse elemente, ki imajo otroke}
@@ -581,12 +580,7 @@ V psevdokodi bi algoritem urejanja s kopico izgledal nekako tako:
             \State $zadnji \gets zadnji - 1$
         \EndWhile
     \EndFunction
-%    \algstore{heaspsort2}
-%  \end{algorithmic}
-%\end{algorithm}
-%\begin{algorithm}
-%  \begin{algorithmic}[1]
-%    \algrestore{heaspsort2}
+    \\
     \Function{pogrezni}{a, prvi, koren, zadnji}
         \State $odmik \gets koren - prvi$
         \While{$koren + odmik < zadnji$} \Comment{dokler ima koren vsaj enega otroka}
@@ -611,7 +605,7 @@ V psevdokodi bi algoritem urejanja s kopico izgledal nekako tako:
   \end{algorithmic}
 \end{algorithm}
 
-\textbf{Časovna in prostorska zahtevnost} \\
+\subsubsubsection{Časovna in prostorska zahtevnost}
 Časovna zahtevnost je v najboljšem, povprečnem in najslabšem primeru $O(n\log_2 n)$.
 
 Prostorska zahtevnost je v vsakem primeru $O(1)$, saj je kopica predstavljena kar v
@@ -624,8 +618,8 @@ povečuje.
 
 \subsubsection{Urejanje z zlivanjem}
 \label{chapter:mergesort}
-Urejanje z zlivanjem (\emph{angl.} merge sort) je primerjalni sortirni algoritem, ki
-uporablja metodo deli in vladaj. Razvil ga je John von Neumann leta 1945.
+Urejanje z zlivanjem (\emph{angl.} merge sort) je primerjalni sortirni algoritem, 
+zgrajen na principu deli in vladaj. Razvil ga je John von Neumann leta 1945.
 Urejanje z zlivanjem uporablja idejo, da je v sortirano polje hitreje združiti dve že
 sortirani polji, kot pa dve še ne sortirani. 
 Algoritem urejanja z zlivanjem ureja tako:
@@ -647,11 +641,11 @@ nižje od črtkane črte, ki združi podpolja v sortirano polje.
         \includegraphics[height=50mm]{slike/merge_sort.png}
     \end{center}
     \vspace{-0.7cm}
-    \caption{Grafična predstavitev urejanja z zlivanjem.}
+    \caption[Urejanje z zlivanjem]{Grafična predstavitev urejanja z zlivanjem.}
     \label{fig:mergesortimage}
 \end{figure}
 
-V psevdokodi bi ta algoritem zapisali nekako tako:
+V psevdokodi je urejanje z zlivanjem zapisano kot algoritem \ref{algo:mergesort}. 
 
 \begin{algorithm}
   \caption{Urejanje z zlivanjem}\label{algo:mergesort}
@@ -663,12 +657,7 @@ V psevdokodi bi ta algoritem zapisali nekako tako:
         \State \textsc{mergesort}$(a, srednji + 1, zadnji)$
         \State \textsc{merge}$(a, prvi, srednji, zadnji)$
     \EndFunction
-%    \algstore{mergesort}
-%  \end{algorithmic}
-%\end{algorithm}
-%\begin{algorithm}
-%  \begin{algorithmic}[1]
-%    \algrestore{mergesort}
+    \\
     \Function{merge}{a, prvi, srednji, zadnji}
         \State $i \gets prvi$
         \State $j \gets srednji$
@@ -692,7 +681,7 @@ V psevdokodi bi ta algoritem zapisali nekako tako:
   \end{algorithmic}
 \end{algorithm}
 
-\textbf{Časovna in prostorska zahtevnost} \\
+\section{Časovna in prostorska zahtevnost}
 Časovna zahtevnost je v najboljšem, povprečnem in najslabšem primeru 
 $O(n\log_2 n)$. Časovna zahtevnost urejanja z zlivanjem ni odvisna od
 morebitne že delne urejenosti ali neurejenosti podatkov v polju. 
@@ -702,7 +691,6 @@ Prostorska zahtevnost je v vsakem primeru $O(n)$. % ker O(n + log n)
 V praksi je urejanje z zlivanjem najbolj učinkovito na
 sekvenčnih medijih, kot na primer tračnih enotah, ali na podatkovnih strukturah, ki nimajo hitrega
 neposrednega dostopa do nekega elementa z njegovim indeksom, kot na primer povezani seznami.
-
 
 \subsection{Nameni in cilji}
 \subsection{Hipoteze}
@@ -926,7 +914,7 @@ Objekt $Compare$ je definiran tako:
 \begin{lstlisting}
     Compare(const size_t iterations, 
             const size_t limit, 
-            const size_t acceleration, 
+            const double acceleration, 
             const container_t& data);
 \end{lstlisting}
 
@@ -942,7 +930,8 @@ Objekt $Compare$ je definiran tako:
   \item Parameter $acceleration$ pomeni pospešek povečevanja dolžine polj, ki jih bo
     program sortiral. Skok na naslednjo dolžino se bo vsakič povečal za vrednost tega
     parametra. Primer: če je $acceleration$ enak 2, se bo program učil na poljih dolžine
-    $1, 2, 5, 10, 17, 26$. Razdalja med elementi se vsakič poveča za 2.
+    $1, 2, 5, 10, 17, 26$. Razdalja med elementi se vsakič poveča za 2. Nuno mora biti
+    pozitiven ali enak $0$.
   \item Parameter $data$ predstavlja podatke, iz katerih bo program jemal naključne
     elemente za polja, ki jih bo sortiral. Polja bodo enakega tipa kot $data$, saj ima
     lahko tip podatkovne strukture velik vpliv na hitrost algoritmov. Podatki naj
