@@ -896,11 +896,37 @@ S tem smo definirali relacijo $a$ je $n$ boljši od $b$:
 od}\ b.\]
 Tako lahko problem rešimo kar s požrešno metodo: 
 pri posamezni dolžini ugotovimo, kateri algoritem je najboljši in to vnesemo
-v konfiguracijo. Glavni podatek, ki nam ga poda uporabnik, je meja učenja. To je zadnja
+v konfiguracijo. Glavni podatek, ki nam ga poda uporabnik, je meja učenja $M$. To je zadnja
 dolžina, za katero bo algoritem še iskal optimalno konfiguracijo. Od te dolžine naprej
 konfiguracija ni več nujno optimalna. Seveda v konfiguracijo pišemo le, če pride do 
 spremembe na vodilnem mestu. Algoritem za iskanje najboljše konfiguracije je opisan v
 sledečih točkah.
+
+\begin{algorithm}
+  \caption{Iskanje optimalne konfiguracije}\label{algo:conf}
+  \begin{algorithmic}[1]
+    \State $naj \gets $``''
+    \State $n \gets $ izbrana začetna vrednost
+    \State $razdalja \gets $ izbrana začetna vrednost
+    \While{$n < M$}
+      \State $nova \gets $\textsc{izberi\_najboljšo\_pri\_n}$(n, $\textsc{make\_alts}$(naj), cmp)$
+      \If{$naj = ""$}
+        \State $naj \gets nova$
+        \State $naj.$\textsc{set\_last\_limit}$(n)$
+      \ElsIf{$naj.last.algo = nova.last.algo$}
+        \State $naj.$\textsc{set\_last\_limit}$(n)$
+      \Else
+        \State $naj.$\textsc{set\_last\_limit}$(-1)$
+        \State $pres \gets $\textsc{presečišče}$(n-(razdalja-pospe\check{s}ek), n, naj, nova)$
+        \State $naj.$\textsc{set\_last\_limit}$(pres)$
+        \State $naj \gets naj + $``$:nova.last.algo \lra n;$''
+      \EndIf
+      \State $n \gets n + razdalja$
+      \State $razdalja \gets razdalja + pospe\check{s}ek$
+    \EndWhile
+  \end{algorithmic}
+\end{algorithm}
+
 \begin{enumerate}
   \item \label{step:init}Preveri, katera od začetnih možnosti konfiguracij je najboljša in
     si jo zapomni, imenujmo jo $za\check{c}etna$. Začetne možnosti konfiguracij so:
