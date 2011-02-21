@@ -834,7 +834,7 @@ sortirni algoritem naj bo uporabljen.
 Oglejmo si še nekaj realnih primerov, dobljenih za različne tipe podatkov.
 \[ :i \lra 142;:q \lra -1;\]
 \[ :m \lra -1; \]
-Tudi ta dva primera sta smiselna. V prvem vidimo da naj se uporablja urejanje z
+Tudi ta dva primera sta smiselna. V prvem vidimo, da naj se uporablja urejanje z
 vstavljanjem, če je dolžina polja manjša ali enaka 142, sicer naj se uporablja hitro
 urejanje. Pri drugem primeru, ki je tudi eden izmed najkrajših možnih primerov
 konfiguracije, se uporablja samo urejanje z zlivanjem.\\
@@ -902,15 +902,20 @@ za vsak $n$ od začetnega do $M$:
 \begin{enumerate}[1.)]
   \item ustvarimo kandidate
   \item primerjamo kandidate
+  \item zapišemo najboljšega v konfiguracijo
   \item nadaljujemo z naslednjim $n$.
 \end{enumerate}
+Zgornji štirje koraki so v algoritmu \ref{algo:conf} zapisani kot štiri zaporedne vrstice v
+\emph{while} zanki na vrsticah od \ref{line:beginwhile} do \ref{line:endwhile}.
+
 
 \noindent Ustvarjanje kandidatov poteka po sledečem algoritmu: \\
 za vsak sortirni algoritem $s$: \\
 \begin{quote} %% ugly
   \vspace{-4.8ex}
 kandidat je trenutni najboljši, ki pa namesto do $\infty$ z zadnjim sortirnim algoritmom
-sortira le do prejšnjega $n$, potem pa naprej s $s$.
+sortira le do prejšnjega $n$, potem pa naprej s $s$. V algoritmu \ref{algo:conf} se
+zgornji postopek izvede ob klicu funkcije \textsc{ustvari\_kandidate}.
 \end{quote}
 
 Primer: Recimo da je trenutni najboljši algoritem 
@@ -924,86 +929,38 @@ Vsi kandidati so pri danem najboljšem algoritmu torej:
    \mbox{``$:s \lra 10;:i \lra 47;:q \lra 131;:m \lra -1;$''}. 
 \end{align*}
 
-Ker je prejšnji postopek za iskanje optimalne konfiguracije precej dolgotrajen še posebej
-pri velikih $n$, se ga lahko pospeši. Določene $n$ izpustimo in to tako, da jih pri krajših
-poljih izpustimo manj, pri daljših, ki se urejajo dalj časa, pa več. Tako moramo uvesti še
-dve spremenljivki, $razmik$ in $pospe\check{s}ek$. $Razmik$ pove trenutno število $n$-jev, ki jih
-bomo preskočili, $pospe\check{s}ek$ pa pove za koliko naj se $razmik$ poveča pri vsaki iteraciji.
-
-%% še presečišče
-
-\begin{enumerate}
-  \item Ustvarimo prazno konfiguracijo, v kateri bomo shranjevali najboljšo najdeno
-    konfiguracijo do sedaj. Imenujmo jo $naj$. Nastavimo trenutno dolžino polja, na katerem testiramo
-    sortirne algoritme za poljubno začetno vrednost. Imenujmo to dolžino $n$. Pri svoji
-    implementaciji sem za to vrednost izbral 4, ker je ta vrednost dajala najboljše
-    rezultate. Prav tako nastavimo trenutno razdaljo med elementi na $1$. To prikazuje
-    algoritem \ref{algo:conf} na vrsticah \ref{line:confinit} -- \ref{line:endconflimit}.
-  \item Če je $n$ večji ali enak $M$, meji učenja, potem zaključi, saj smo se že našli
-    optimalno konfiguracijo do $M$. Na vrstici \ref{line:beginwhile} je to zapisano kot
-    pogoj v \emph{while} zanki.
-  \item Najdi najboljšo konfiguracijo pri trenutnem $n$ in si to vrednost shrani v
-    spremenljivko $nova$. To naredi funkcija \textsc{izberi\_najboljšo\_pri\_n}, na
-    vrstici \ref{line:bestatn}. 
-  \item Če je najboljša konfiguracija $naj$ prazna, je torej najboljša konfiguracija kar
-    $nova$. Nastaviti pa moramo tudi vrednost, do katere je najboljši ta algoritem, ki ga
-    konfiguracija opisuje, in sicer je to ravno $n$, naš trenutni napredek proti meji
-    učenja. V algoritmu \ref{algo:conf} je to opisano v \emph{if} bloku, na vrsticah od
-    \ref{line:ifconf} do \ref{line:endifconf}.
-  \item Če pa je algoritem, ki ga kot zadnjega uporablja $nova$, enak tistemu, ki ga kot
-    zadnjega uporablja $naj$, potem moramo samo spremeniti mejo uporabe algoritma pri
-    $naj$, povečati jo moramo na trenutni $n$. Ta del predstavlja \emph{else if} blok na
-    vrsticah \ref{line:elseifconf} in \ref{line:endelseifconf}. 
-  \item Če $nova$ zadnji algoritem, ki ga uporablja nova, ni enak zadnjemu, ki ga
-    uporablja $naj$ potem moramo ugotoviti kje je meja med tem, ki ga uporablja $nova$ in
-    tem, ki ga uporablja $naj$. To naredi funkcija \textsc{presečišče}. Ker pa morata biti
-    obe konfiguraciji, ki ju sprejme ta funkcija smiselni moramo pred nastaviti zadnjo
-    mejo konfiguracije $naj$ na $-1$. Vrednost, ki jo
-    vrne ta funkcija potem nastavimo za limit uporabe $naj$. Nato pa naj dodamo še en
-    vnos. Dodati moramo, da naj se nov sortirni algoritem uporablja do trenutnega $n$.
-    Zgornji del algoritma je prikazan na vrsticah \ref{line:elseconf} -- \ref{line:endelseconf}.
-  \item Nato $n$ povečamo za $razdaljo$ in $razdaljo$ za $pospe\check{s}ek$ (vrstici
-    \ref{line:n++} in \ref{line:razdalja++}). Tako
-    zagotovimo, da se bodo razmaki med testiranimi dolžinami povečevali s kvadratom
-    števila narejenih iteracij. S tem se sicer zmanjša natančnost na večjih poljih, vendar
-    se algoritem zato precej pospeši. Potem ponovimo vse korake od \ref{line:beginwhile}
-    naprej. To je prikazano kot \emph{while} zanka na vrsticah od \ref{line:beginwhile} do
-    \ref{line:endwhile}.
-\end{enumerate}
-
 \begin{algorithm}
   \caption{Iskanje optimalne konfiguracije}\label{algo:conf}
   \begin{algorithmic}[1]
     \State \label{line:confinit}$naj \gets $``''
     \State $n \gets $ izbrana začetna vrednost
-    \State \label{line:endconflimit}$razdalja \gets $ izbrana začetna vrednost
     \While{$n < M$} \label{line:beginwhile}
-        \State \label{line:bestatn} $nova \gets $\textsc{izberi\_najboljšo\_pri\_n}$(n,
-        $\textsc{naredi\_možnosti}$(naj), cmp)$
-      \If{$naj = ""$} \label{line:ifconf}
-        \State $naj \gets nova$
-        \State $naj.$\textsc{nastavi\_zadnjo\_mejo}$(n)$ \label{line:endifconf}
-      \ElsIf{$naj.last.algo = nova.last.algo$} \label{line:elseifconf}
-        \State $naj.$\textsc{nastavi\_zadnjo\_mejo}$(n)$ \label{line:endelseifconf}
-      \Else \label{line:elseconf}
-        \State $naj.$\textsc{nastavi\_zadnjo\_mejo}$(-1)$
-        \State $pres \gets $\textsc{presečišče}$(n-(razdalja-pospe\check{s}ek), n, naj, nova)$
-        \State $naj.$\textsc{nastavi\_zadnjo\_mejo}$(pres)$
-        \State $naj \gets naj\ + $``$:nova.last.algo \lra n;$''
-        \EndIf \label{line:endelseconf}
-      \State \label{line:n++} $n \gets n + razdalja$
-      \State \label{line:razdalja++} $razdalja \gets razdalja + pospe\check{s}ek$
+        \State \label{line:kanddati} $kandidati \gets $\textsc{ustvari\_kandidate}$(naj)$
+        \State \label{line:bestatn} $nova \gets $\textsc{izberi\_najboljšo\_pri\_n}$(n, kandidati, cmp)$
+        \State \label{line:addconf} $naj \gets naj + $``$:nova.$\textsc{zadnji\_algo} $\lra n;$''
+        \State \label{line:n++} $n \gets n + 1$
     \EndWhile \label{line:endwhile}
+    \State \textsc{nastavi\_zadnjo\_mejo}$(naj, -1)$
+    \State \Return $naj$
   \end{algorithmic}
 \end{algorithm}
 
-Funkcija \textsc{naredi\_možnosti} je funkcija, ki vrne množico možnih konfiguracij z dano
-osnovo. To naredi tako, da osnovi vsakič doda eno izmed osnovnih konfiguracij in vrne vse
-možnosti. Tako ustvari vse možne najboljše konfiguracije z dano osnovo.
+Ker je prejšnji postopek za iskanje optimalne konfiguracije precej dolgotrajen še posebej
+pri velikih $n$, se ga lahko pospeši. Določene $n$ izpustimo in to tako, da jih pri krajših
+poljih izpustimo manj, pri daljših, ki se urejajo dalj časa, pa več. Tako moramo uvesti še
+dve spremenljivki, $razmik$ in $pospe\check{s}ek$. $Razmik$ pove trenutno število $n$-jev, ki jih
+bomo preskočili, $pospe\check{s}ek$ pa pove za koliko naj se $razmik$ poveča pri vsaki iteraciji.
+Primer: če začnemo z $n = 4$ in $razmikom$ 1 ter $posp\check{s}ekom$ 2, potem bomo preverjali
+najboljši algoritem pri vrednostih \mbox{$n = 4, 5, 8, 13, 20, 29, 40, 53,\dots$}
 
-Funkcija \textsc{presečišče} je funkcija, ki vrne mejno točko med dvema sortirnima
-algoritmoma, opisani v poglavju %% \ref{chapter:bisekcija}.
-V psevdokodi je funkcija \textsc{presečišče} definirana kot algoritem \ref{algo:intersection}.
+S preskakovanjem nekaterih $n$-jev pridobimo na hitrosti algoritma, vendar izgubimo na
+natančnosti. Zdaj ob spremembi najboljšega algoritma ne vemo več, pri točno katerem $n$ je
+potrebno zamenjati na nov algoritem. Ob takem primeru pa lahko natančneje poiščemo točko
+presečišča z bisekcijo. Seveda moramo pri tem postopku predpostaviti, da imata kompozitna
+sortirna algoritma na intervalu med prejšnjim in trenutnim $n$ zgolj eno presečišče.
+Algoritem za iskanje presečišča med dvema kompozitnima sortirnima algoritmoma je zapisan v
+psevdokodi kot algoritem \ref{algo:intersection}.
+
 \begin{enumerate}
   \item Na vrsticah \ref{line:findlow} in \ref{line:findhigh} algoritma
     \ref{algo:intersection} ugotovimo, kateri sortirni
@@ -1032,12 +989,12 @@ V psevdokodi je funkcija \textsc{presečišče} definirana kot algoritem \ref{al
   \caption{Presečišče dveh kompozitnih sortirnih algoritmov}\label{algo:intersection}
   \begin{algorithmic}[1]
     \Function{presečišče}{m, M, alfa, beta, cmp}
-      \State $spodaj \gets alfa \leq_m beta$ \label{line:findlow}
+      \State $spodaj \gets alfa \leq_m beta$ \label{line:findlow} 
       \State $zgoraj \gets alfa \leq_M beta$ \label{line:findhigh}
       \If{$spodaj = zgoraj = \False$} \label{line:interif}
-         \Return m
+        \Return m \Comment{presečišče ni na}
       \ElsIf{$spodaj = zgoraj = \True$}
-        \Return M
+        \Return M \Comment{intervalu $[m, M]$}
       \EndIf \label{line:endinterif}
       \While{$M - m > 0$} \label{line:interwhile}
         \State $sredina \gets alfa \leq_{\lfloor\frac{m+M}{2}\rfloor} beta$
@@ -1053,6 +1010,12 @@ V psevdokodi je funkcija \textsc{presečišče} definirana kot algoritem \ref{al
   \end{algorithmic}
 \end{algorithm}
 
+\subsection{Implementacija algoritma za iskanje optimalne konfiguracije}
+\label{chapter:optimalconfimplementation}
+To poglavje je namenjeno predvsem predstavitvi implementacije algoritma opisanega v
+poglavju \ref{chapter:optimalconf}. Poglavje je namenjeno tudi opisu uporabe knjižnice, ki
+implementira algoritem za iskanje optimalne konfiguracije in ga lahko bralec, ki ga
+implementacija ne zanima, brez večje škode za nadaljnje razumevanje preskoči.
 
 Funkcija, ki implementira algoritem za iskanje optimalne konfiguracije 
 se imenuje \emph{learn} in je definirana tako:
@@ -1086,17 +1049,19 @@ Objekt $Compare$ je definiran tako:
 
 \begin{itemize}
   \item Parameter $iterations$ pomeni, koliko iteracij posamezne sortirne metode bo naredil
-    program, preden zabeleži njen rezultat. Večje kot je to število, bolj natančne so
-    meritve.
+    program, preden zabeleži njen rezultat. Večje kot je to število, bolj statistično
+    zanesljive so meritve.
   \item Parameter $limit$ pomeni število elementov, ki jih lahko hranimo v pomnilniku.
-    Večje ko je to število, hitrejši bo program. Mora biti najmanj $M$. Program bo v
+    Večje ko je to število, hitrejši bo program in bolj natančne bodo meritve. Mora biti najmanj $M$. Program bo v
     pomnilniku hranil največ $iterations \cdot M$ elementov, tudi če je dovoljen limit večji od
     tega.
   \item Parameter $acceleration$ pomeni pospešek povečevanja dolžine polj, ki jih bo
-    program sortiral. Skok na naslednjo dolžino se bo vsakič povečal za vrednost tega
-    parametra. Primer: če je $acceleration$ enak 2, se bo program učil na poljih dolžine
-    $1, 2, 5, 10, 17, 26$. Razdalja med elementi se vsakič poveča za 2. Nuno mora biti
-    pozitiven ali enak $0$.
+    program sortiral. Razmik med dolžinami se torej vsako iteracijo poveča za
+    $acceleration$. Nujno mora biti pozitiven ali enak $0$. Če je enak nič, potem se bo
+    algoritem obnašal kot osnovni algoritem za iskanje optimalne konfiguracije opisan kot
+    algoritem \ref{algo:conf}. Začetna vrednost razmika med elementi je 1, prva dolžina
+    pri kateri pa bo algoritem iskal najboljšo konfiguracijo pa bo 4. Ti dve vrednosti sem
+    izbral, ker sta ob testiranjih dajali najboljše rezultate.
   \item Parameter $data$ predstavlja podatke, iz katerih bo program jemal naključne
     elemente za polja, ki jih bo sortiral. Polja bodo enakega tipa kot $data$, saj ima
     lahko tip podatkovne strukture velik vpliv na hitrost algoritmov. Podatki naj
@@ -1108,18 +1073,18 @@ Vsi parametri so podani kot konstantni, saj se znotraj funkcije ne smejo spremin
 
 \subsection{Merjenje časa izvajanja posameznih algoritmov}
 Merjenje časa izvajanja posameznih sortirnih algoritmov je pravzaprav edini način za
-primerjanje njihove uspešnosti in zato temu delu naloge namenil veliko pozornosti.
+primerjanje njihove uspešnosti, zato se mu velja podrobneje posvetit.
 
 Parametri, ki nam jih poda uporabnik, so v definirani v poglavju
 \ref{chapter:optimalconf}. Za merjenje časa sta pomembna le dva, to sta $iterations$ in
 $limit$. Parameter, ki ga še potrebujemo, pa je dolžina polja, ki ga bo sortirni algoritem
 urejal, imenujmo ga $n$.
 
-Najbolj naiven algoritem za merjenje časa bi verjetno izgledal podobno naslednjemu. 
+Naiven algoritem za merjenje je naslednji:                                 
 Naredimo polje dolžine $n$ in si zapomnimo trenuten čas. Premešamo polje in ga
 uredimo z želenih algoritmom. Ponovimo zadnje dva koraka tolikokrat, da je število
 ponovitev enako številu, ki ga je podal uporabnik. Nato si spet zapomnimo čas in kvocient
-med razliko in številom iteracij je naš željeni rezultat.
+med razliko in številom iteracij je naš povprečen čas.
 
 Glavna napaka zgornjega algoritma je v tem, da v celoten čas šteje tudi tisti čas, ko
 mešamo polje, ne le tistega, ko se polje sortira. To bi lahko odpravili tako, da bi pred
@@ -1127,12 +1092,13 @@ in po vsakem urejanju zabeležili čas, čase nato sešteli in jih delili z šte
 vendar to ne bi bilo dovolj natančno, saj merjenje tako kratkih časovnih intervalov,
 še posebej, ko se sortirajo kratka polja, enostavno ni dovolj natančno, da bi bilo
 statistično zanesljivo. Zaželeno je torej, da se meri zgolj čas, ki ga algoritem porabi za
-urejanje polja, poleg tega pa je zaželeno tudi, da bi povečali natančnost meritve, da se mora
-pri določeni dolžini polja opraviti več urejanj hkrati, ki jim izmerimo skupni čas, iz katerih se nato izračuna povprečno
+urejanje polja in večja natančnost meritve, kar narekuje večkratno urejanje. To storimo
+tako, da uredimo več polj zaporedoma, izmerimo skupni čas urejanja, iz katerega nato
+izračunamo povprečno
 vrednost. Ker želimo, da merimo zgolj čas, ko algoritem ureja, moramo pred tem shraniti
 premešana polja shraniti v pomnilnik. Tu nastopi parameter $limit$, ki pove, koliko
-elementov smemo imeti v pomnilniku. Večji ko je limit, več meritev se bo izvedlo naenkrat,
-in rezultat bo bolj natančen in statistično zanesljiv.
+elementov smemo imeti naenkrat v pomnilniku. Večji ko je limit, več meritev se bo izvedlo naenkrat,
+in rezultat bo bolj natančen.
 
 Čas izvajanja bom meril z funkcijo \emph{clock\_gettime}, ki ima od vseh znanih
 funkcij največjo natančnost (meri do nanosekunde natančno), kar je dovolj
@@ -1145,10 +1111,9 @@ algoritem \ref{algo:time}.
   \item Definirajmo spremenljivko $\check{c}as$ in $napredek$, ter ju nastavimo na 0
     (vrstica \ref{line:init}, algoritem \ref{algo:time}).
   \item \label{time:start} Ugotovimo, koliko polj si lahko pripravimo za testiranje. To je seveda odvisno od
-    limita, ki nam ga je podal uporabnik. Pripravimo si največ $\lfloor limit/n \rfloor$
-    polj, kjer je $n$ dolžina polja. Naj bo $k$ število polj, ki jih bomo morali
-    pripraviti.
-    Če pripravimo samo $k$ polj zagotovo ne bomo prebili limita uporabnika.
+    limita, ki nam ga je podal uporabnik. Pripravimo si največ $k = \lfloor limit/n \rfloor$
+    polj, kjer je $n$ dolžina polj.
+    Če pripravimo samo $k$ polj, zagotovo ne bomo prebili limita uporabnika.
     Če pa je razlika med napredkom in želenim številom iteracij še manjša
     od $k$, potem si  moramo pripraviti le toliko polj, kot je še želenih iteracij.
     To naredi vrstica \ref{line:koliko}, kjer \textsc{min} predstavlja funkcijo, ki vrne
