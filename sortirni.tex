@@ -11,6 +11,7 @@
 \usepackage{fancybox}
 \usepackage{listings}
 \usepackage{enumerate}
+\usepackage{array}
 \usepackage[bookmarks, colorlinks=true, %
 linkcolor=black, anchorcolor=black, citecolor=black, filecolor=black,%
 menucolor=black, runcolor=black, urlcolor=black%
@@ -38,7 +39,6 @@ menucolor=black, runcolor=black, urlcolor=black%
 \newtheorem{definicija}{Definicija}
 }
 }
-
 
 \def\R{\mathbb R}
 \def\N{\mathbb N}
@@ -90,7 +90,8 @@ menucolor=black, runcolor=black, urlcolor=black%
 \floatname{algorithm}{Algoritem}
 
 \newcommand{\edot}{\;\;\;.}
-
+\newcommand{\bmu}{\ensuremath{\boldsymbol{\mu}}}
+\newcommand{\usec}{\ensuremath{\bmu}s}
 % your definitions here ... 
 
 \title{Iskanje optimalnega splošnega kompozitnega sortirnega algoritma}
@@ -310,7 +311,7 @@ zaporedju. Ko je $i$ enak 2, je prvi del trivialno sortiran, saj vsebuje le en e
 
 \begin{figure}[h]
     \begin{center}
-        \includegraphics[height=45mm]{slike/insertionsort.png}
+        \includegraphics[height=45mm]{slike/insertionsort.pdf}
     \end{center}
     \vspace{-0.7cm}
     \caption[Urejanje z vstavljanjem]{Grafična predstavitev urejanja z navadnim vstavljanjem.}
@@ -905,20 +906,19 @@ za vsak $n$ od začetnega do $M$:
   \item zapišemo najboljšega v konfiguracijo
   \item nadaljujemo z naslednjim $n$.
 \end{enumerate}
+
 Zgornji štirje koraki so v algoritmu \ref{algo:conf} zapisani kot štiri zaporedne vrstice v
 \emph{while} zanki na vrsticah od \ref{line:beginwhile} do \ref{line:endwhile}.
 
-
-\noindent Ustvarjanje kandidatov poteka po sledečem algoritmu: \\
-za vsak sortirni algoritem $s$: \\
-\begin{quote} %% ugly
-  \vspace{-4.8ex}
-kandidat je trenutni najboljši, ki pa namesto do $\infty$ z zadnjim sortirnim algoritmom
-sortira le do prejšnjega $n$, potem pa naprej s $s$. V algoritmu \ref{algo:conf} se
+Ustvarjanje kandidatov poteka po sledečem algoritmu: za vsak sortirni algoritem $s$
+izvedemo sledeči korak:
+kandidat je trenutni najboljši, ki pa namesto do $\infty$ z zadnjim sortirnim
+algoritmom sortira le do prejšnjega $n$, potem pa naprej s $s$. Tako ustvarimo množico
+vseh možnih kandidatov za trenutno najboljši sortirni algoritem.
+V algoritmu \ref{algo:conf} se
 zgornji postopek izvede ob klicu funkcije \textsc{ustvari\_kandidate}.
-\end{quote}
 
-Primer: Recimo da je trenutni najboljši algoritem 
+Primer: recimo da je trenutni najboljši algoritem 
 \[ \mbox{``$:s \lra 10;:i \lra 47;:q \lra -1;$''} \] in trenutni $n$ 132.
 Vsi kandidati so pri danem najboljšem algoritmu torej:
 \begin{align*}
@@ -959,28 +959,28 @@ potrebno zamenjati na nov algoritem. Ob takem primeru pa lahko natančneje poiš
 presečišča z bisekcijo. Seveda moramo pri tem postopku predpostaviti, da imata kompozitna
 sortirna algoritma na intervalu med prejšnjim in trenutnim $n$ zgolj eno presečišče.
 Algoritem za iskanje presečišča med dvema kompozitnima sortirnima algoritmoma je zapisan v
-psevdokodi kot algoritem \ref{algo:intersection}.
+psevdokodi kot algoritem \ref{algo:intersection} in opisan v sledečih korakih:
 
 \begin{enumerate}
-  \item Na vrsticah \ref{line:findlow} in \ref{line:findhigh} algoritma
+  \item \textbf{Najdemo začetno stanje.} Na vrsticah \ref{line:findlow} in \ref{line:findhigh} algoritma
     \ref{algo:intersection} ugotovimo, kateri sortirni
     algoritem je boljši pri $m$ in $M$, torej na mejah območja, na katerem se nahaja
     presečišče. Rezultat primerjave pri $m$ in $M$ je logična vrednost, ki jo shranimo v
     v spremenljivki $spodaj$ za $m$ in $zgoraj$ za $M$.
-  \item Če sta spodaj in zgoraj enaka, presečišča ni na intervalu $[m, M]$ in zato
+  \item \textbf{Preverimo pozicijo presečišča.} Če sta spodaj in zgoraj enaka, presečišča ni na intervalu $[m, M]$ in zato
     vrnemo ali zgornjo ali spodnjo mejo, tisto, ki je bližje pravemu presečišču. To ne
     naloga \emph{if} stavka na vrsticah \ref{line:interif} do \ref{line:endinterif}.
-  \item \label{line:intervalwidthcheck}Če je razlika med $m$ in $M$ manjša od 1, potem je $m$ enak $M$ in je tam tudi
+  \item \textbf{Preverimo, če smo našli presečišče.} \label{line:intervalwidthcheck}Če je razlika med $m$ in $M$ manjša od 1, potem je $m$ enak $M$ in je tam tudi
     presečišče. Našli smo rešitev in vrnemo vrednost $m$. Prejšnji pogoj je pravzaprav
     pogoj \emph{while} zanke na vrstici \ref{line:interwhile}
-  \item Preverimo, kateri algoritem je boljši pri srednji vrednosti $\frac{m+M}{2}$
+  \item \textbf{Najdemo sredinsko vrednost.} Preverimo, kateri algoritem je boljši pri srednji vrednosti $\frac{m+M}{2}$
     (vrstica \ref{line:getmiddle}).
     Če je enak kot pri spodnji, je presečišče na intervalu $\left[\frac{m+M}{2}, M\right]$. Če pa je
     enak kot zgornji, pa je presečišče na intervalu $\left[m, \frac{m+M}{2}\right]$.
     Zgornjo ali spodnjo mejo nato spremenimo tako, da ustreza želenemu intervalu. To
     nalogo opravlja \emph{if} stavek na vrsticah od \ref{line:bisectionif} do
     \ref{line:endbisectionif}.
-  \item Ponovimo korake od \ref{line:intervalwidthcheck} naprej. To ponavljanje je
+  \item \textbf{Ponovimo na želeni polovici.} Ponovimo korake od \ref{line:intervalwidthcheck} naprej. To ponavljanje je
     predstavljeno z \emph{while} zanko na vrsticah \ref{line:interwhile} --
     \ref{line:endinterwhile}.
 \end{enumerate}
@@ -1104,13 +1104,15 @@ in rezultat bo bolj natančen.
 funkcij največjo natančnost (meri do nanosekunde natančno), kar je dovolj
 za naše potrebe.
 
-Algoritem, ki meri čas posameznega algoritma je sledeč. Zapisan je v psevdokodi kot
-algoritem \ref{algo:time}.
+Algoritem, ki meri čas posameznega algoritma je zapisan je v psevdokodi kot
+algoritem \ref{algo:time} in opisan v sledečih korakih:
 
 \begin{enumerate}
-  \item Definirajmo spremenljivko $\check{c}as$ in $napredek$, ter ju nastavimo na 0
+  \item \textbf{Inicializacija.} Definirajmo spremenljivko $\check{c}as$ in $napredek$, ter ju nastavimo na 0
     (vrstica \ref{line:init}, algoritem \ref{algo:time}).
-  \item \label{time:start} Ugotovimo, koliko polj si lahko pripravimo za testiranje. To je seveda odvisno od
+  \item \textbf{Ugotovimo, koliko polj si lahko pripravimo.} \label{time:start} Ker pa
+    polja, ki si jih bomo pripravili za testiranje lahko zavzemajo precej veliko količino
+    pomnilnika, je njihovo število odvisno od
     limita, ki nam ga je podal uporabnik. Pripravimo si največ $k = \lfloor limit/n \rfloor$
     polj, kjer je $n$ dolžina polj.
     Če pripravimo samo $k$ polj, zagotovo ne bomo prebili limita uporabnika.
@@ -1118,7 +1120,7 @@ algoritem \ref{algo:time}.
     od $k$, potem si  moramo pripraviti le toliko polj, kot je še želenih iteracij.
     To naredi vrstica \ref{line:koliko}, kjer \textsc{min} predstavlja funkcijo, ki vrne
     manjšega od dveh parametrov.
-  \item Pripravimo si želeno število polj. To naredi na vrstici
+  \item \textbf{Pripravimo si želeno število polj.} To naredi na vrstici
     \ref{line:polja} klicana funkcija \textsc{naredi\_naključna\_polja}. Njeno obnašanje
     je sledeče: naredi vektor polj, ki so enakega tipa kot tisto, ki nam ga je podal 
     uporabnik kot parameter $data$. Nato polja napolni z
@@ -1127,16 +1129,16 @@ algoritem \ref{algo:time}.
     se lahko zgodilo če bi uporabnik na primer pozabil zmešati polje, preden ga poda, in bi se, če bi jemali 
     zolj rezine, vedno sortirala še urejena polja, kar bi dalo precej drugačne rezultate 
     kot sicer.
-  \item Zapomnimo si trenuten čas (vrstica \ref{line:getstarttime}), nato uredimo vsa 
+  \item \textbf{Izmerimo čas urejanja.} Zapomnimo si trenuten čas (vrstica \ref{line:getstarttime}), nato uredimo vsa 
     predpripravljena polja z želenim
     sortirnim algoritmom (vrstice \ref{line:beginsortfor} -- \ref{line:endsortfor}) in si
     nato spet zapomnimo čas (vrstica \ref{line:getendtime}).
-  \item Razliko v času prištejemo spremenljivki $\check{c}as$ in povečamo napredek za $k$. 
-  \item Če je napredek večji ali enak želenemu številu ponovitev, končaj. 
+  \item \textbf{Povečamo skupni čas urejanja in napredek.} Razliko v času prištejemo spremenljivki $\check{c}as$ in povečamo napredek za $k$. 
+  \item \textbf{Ponovimo do želenega števila iteracij.} Če je napredek večji ali enak želenemu številu ponovitev, končaj. 
     Drugače ponovi vse korake od \ref{time:start} naprej. To ponavljanje je prikazano v
     \emph{repeat} zanki med vrsticama \ref{line:repeattimestart} in
     \ref{line:repeattimeend}.
-  \item Deli $\check{c}as$ s številom iteracij, ki so bile izvedene (tako dobimo čas
+  \item \textbf{Izračunamo povprečje.} Delimo $\check{c}as$ s številom iteracij, ki so bile izvedene (tako dobimo čas
     izvajanja za urejanje enega samega polja) in to je iskana vrednost, ki jo vrnemo na
     vrstici \ref{line:returnaverage}.
 \end{enumerate}
@@ -1150,7 +1152,7 @@ algoritem \ref{algo:time}.
       \State \label{line:polja} $polja \gets $\textsc{naredi\_nalkjučna\_polja}$(koliko, data)$
       \State \label{line:getstarttime} $start \gets $\textsc{dobi\_čas}$()$
       \For{i}{0}{koliko} \label{line:beginsortfor}
-        \State Uredimo polje $polja[i]$ z želenih algoritmom
+        \State uredimo polje $polja[i]$ z želenih algoritmom
       \EndFor \label{line:endsortfor}
       \State \label{line:getendtime} $stop \gets $\textsc{dobi\_čas}$()$
       \State $\check{c}as \gets \check{c}as + stop - start$
@@ -1165,28 +1167,118 @@ je tudi prav.
 
 \section{Rezultati}
 Moj kompozitni sortirni algoritem sem primerjal z vsakim posameznim algoritmom izmed
-tistih, ki so bili opisani v teoretičnem uvodu v poglavju \ref{chapter:teoreticni}.
+tistih, ki so bili opisani v teoretičnem uvodu v poglavju \ref{chapter:teoreticni}. C++ algoritem
+je algoritem, ki je že vgrajen v C++, v knjižnici \emph{algoritm}. 
+Vse algoritme sem testiral na štirih različnih tipih podatkov.
+\begin{description}
+  \item[int]   \item[string]  \item[huge] 
+  \item[slow]
+\end{description}
 
+Pred testiranjem sem poiskal optimalno konfiguracijo za vsakega od tipov. Zgornja meja
+učenja $M$ je bila 10.000, za vsako testirano dolžino je program naredil 10 iteracij, v pomnilniku
+pa je bilo dovoljenih največ 100.000 elementov. Razmik med elementi se je pri vsaki iteraciji povečal za 20.
 
+\subsection{Tip \emph{int}}
+Tip \emph{int} predstavlja 32 bitno predznačeno celo število. Zavzame malo prostora v 
+pomnilniku. Primerjanje dveh objektov tega tipa je hitro v primerjavi z drugimi tipi.
 
-\begin{table}
-  \centering
-  \caption{Rezultati za tip \textbf{int}.}
+\begin{table}[h]
+  % \centering
+  \caption{Rezultati za tip \emph{int}.}
   \label{tab:rez:int} \vspace{1ex}
-  \begin{tabular}{|l|r|r|r|}
-    \hline
-    algoritem $\backslash$ št. elementov & 10   & 100         &        1.000  \\ \hline 
-    urejanje z vstavljanjem        &   27,48 ns &  3899,96 ns &  259741,30 ns \\ \hline
-    urejanje z izbiranjem          &  170,85 ns & 11163,06 ns & 1173386,60 ns \\ \hline
-    hitro urejanje                 &  352,55 ns &  6410,38 ns &   80817,60 ns \\ \hline
-    urejanje s kopico              &   85,92 ns &  7299,30 ns &   93082,60 ns \\ \hline
-    urejanje z zlivanjem           & 4532,12 ns & 57229,09 ns &  582053,60 ns \\ \hline
-    vgrajeni algoritem v C++       &   40,28 ns &  3532,53 ns &   59830,60 ns \\ \hline
-    moje urejanje                  &   43,01 ns &  3290,16 ns &   58692,90 ns \\ \hline
+  \begin{tabular}{l!{\vrule width 1pt}r|r|r|r|r}
+    \bf št. elementov    & \bf 10 el.& \bf 100 el.& \bf 1.000 el. & \bf 10.000 el. & \bf 100.000 el. \\ 
+    \bf št. iteracij     & \bf 100.000 it. & \bf 10.000 it. & \bf 1.000 it. & \bf 100 it. &  \bf 10 it.\\ \hline
+    \bf urejanje         & \bf čas [ns] & \bf čas [\usec] & \bf čas [\usec] & \bf čas[ms] & \bf čas[ms] \\ \noalign{\hrule height 1pt} 
+    z vstavljanjem       &    27,40 &  3,89 &  259,74  &  23.651,79  &  2.413,15 \\ \hline
+    z izbiranjem         &   170,80 & 11,16 & 1.173,38 & 120.852,69  & 12.686,12 \\ \hline
+    hitro urejanje       &   352,50 &  6,41 &   80,81  &   1.053,24  &     12,31 \\ \hline
+    s kopico             &   085,90 &  7,29 &   93,08  &   1.341,48  &     16,66 \\ \hline
+    z zlivanjem          &  4532,10 & 57,22 &  582,05  &   7.167,58  &     75,58 \\ \hline
+    C++ algoritem        &   40,20  &  3,53 &   59,83  &    698,215  &      8,82 \\ \hline
+    moje urejanje        &   43,01  &  3,29 &   58,69  &    749,768  &      9,35 \\ 
+  \end{tabular}
+\end{table}
+
+\subsection{Tip \emph{string}}
+Tip \emph{string} predstavlja niz znakov poljubne dolžine. Nizi, ki sem jih urejal so
+bili dolgi od enega do dvanajst znakov in so v pomnilniku zavzeli sorazmerno malo prostora
+vendar več kot \emph{int}. Primerjava dveh nizov znakov lahko traja sorazmerno dolgo, saj se
+nizi primerjajo leksikografsko, najprej po prvi črki, nato po drugi in tako vse do zadnje.
+Primerjanje črke z drugo traja tako dolgo, kot primerjanje dveh objektov tipa \emph{int}.
+Primerjava dveh nizov znakov tako traja najmanj tako dolgo kot primerjava dveh števil, lahko
+pa tudi veliko dlje, odvisno od števila enakih zaporednih črk med nizoma.
+
+\begin{table}[h]
+  % \centering
+  \caption{Rezultati za tip \emph{string}.}
+  \label{tab:rez:string} \vspace{1ex}
+  \begin{tabular}{l!{\vrule width 1pt}r|r|r|r|r}
+    \bf št. elementov     & \bf 10 el.& \bf 100 el.& \bf 1.000 el. & \bf 10.000 el. & \bf 100.000 el. \\ 
+    \bf št. iteracij      & \bf 100.000 it. & \bf 10.000 it. & \bf 1.000 it. & \bf 10 it. &  \bf 10 it.\\ \hline
+    \bf urejanje          & \bf čas [ns] & \bf čas [\usec] & \bf čas [\usec] & \bf čas[ms] & \bf čas[ms] \\ \noalign{\hrule height 1pt} 
+    z vstavljanjem        & 2.246,29 & 160,40 & 18.925,12 & 2.077,95 & \\ \hline
+    z izbiranjem          & 1.533,06 & 151,75 & 18.456,58 & 2.146,88 & \\ \hline
+    hitro urejanje        & 2.443,36 &  44,26 &    704,11 &   15,66 & \\ \hline
+    s kopico              & 1.716,74 &  40,82 &    736,21 &   10,81 & \\ \hline
+    z zlivanjem           & 8.661,42 & 168,17 &  2.358,61 &   38,04 & \\ \hline
+    C++ algoritem         & 2.816,51 &  42,44 &    573,08 &    6,09 & \\ \hline
+    moje urejanje         & 1.550,67 &  35,78 &    644,23 &    8,96 & \\ 
+  \end{tabular}
+\end{table}
+
+\subsection{Tip \emph{huge}}
+Tip \emph{huge} predstavlja uporabniški tip, katerega glavna lastnost je, da zavzame veliko pomnilnika.
+Primerjava dveh objektov tega tipa traja tako dolgo, kot primerjava dveh števil. Posamezen objekt
+zavzame v pomnilniku veliko več prostora kot povprečen \emph{string} in zato tudi njegovo kopiranje 
+traja dlje.
+
+\begin{table}[h]
+  % \centering
+  \caption{Rezultati za tip \emph{huge}.}
+  \label{tab:rez:huge} \vspace{1ex}
+  \begin{tabular}{l!{\vrule width 1pt}r|r|r|r|r}
+    \bf št. elementov  & \bf 10 el.& \bf 100 el.& \bf 1.000 el. & \bf 10.000 el. & \bf 100.000 el. \\ 
+    \bf št. iteracij   & \bf 10.000 it. & \bf 10.000 it. & \bf 1.000 it. & \bf 100 it. &  \bf 10 it.\\ \hline
+    \bf urejanje       & \bf čas [ns] & \bf čas [ns] & \bf čas [ns] & \bf čas[ns] & \bf čas[ms] \\ \noalign{\hrule height 1pt} 
+    z vstavljanjem     &  5320.81 & 306655.74 & 41567631.91 & 13789989837 & \\ \hline
+    z izbiranjem       &  5578.39 &  89485.56 &  2034524.21 &   177534113 & \\ \hline
+    hitro urejanje     &  6216.05 & 102771.02 &  1386039.97 &    23740070 & \\ \hline
+    s kopico           &  9091.45 & 233282.81 &  3845666.45 &    64870913 & \\ \hline
+    z zlivanjem        & 12264.73 & 364265.68 &  6311543.75 &   212215603 & \\ \hline
+    C++ algoritem      &  6537.61 & 123155.68 &  1898451.88 &    27993519 & \\ \hline
+    moje urejanje      &  5083.47 &  77413.86 &  1215610.87 &    21840794 & \\ 
+  \end{tabular}
+\end{table}
+
+\subsection{Tip \emph{slow}}
+Tip \emph{slow} predstavlja uporabniški tip, katerega glavna lastnost je, da primerjanje dveh objektov
+traja zelo dolgo. Primerjava dveh objektov tako traja veliko več časa kot primerjava dveh povprečnih
+nizov znakov. V pomnilniku zavzame zelo malo prostora, približno toliko kot \emph{int}.
+
+\begin{table}[h]
+  % \centering
+  \caption{Rezultati za tip \emph{slow}.}
+  \label{tab:rez:slow} \vspace{1ex}
+  \begin{tabular}{l!{\vrule width 1pt}r|r|r|r|r}
+    \bf št. elementov & \bf 10 el.& \bf 100 el.& \bf 1.000 el. & \bf 10.000 el. & \bf 100.000 el. \\ 
+    \bf št. iteracij  & \bf 100.000 it. & \bf 1.000 it. & \bf 100 it. & \bf 10 it. &  \bf 10 it.\\ \hline
+    \bf urejanje      & \bf čas [ns] & \bf čas [\usec] & \bf čas [\usec] & \bf čas[ms] & \bf čas[ms] \\ \noalign{\hrule height 1pt} 
+    z vstavljanjem    & & & & & \\ \hline
+    z izbiranjem      & & & & & \\ \hline
+    hitro urejanje    & & & & & \\ \hline
+    s kopico          & & & & & \\ \hline
+    z zlivanjem       & & & & & \\ \hline
+    C++ algoritem     & & & & & \\ \hline
+    moje urejanje     & & & & & \\ 
   \end{tabular}
 \end{table}
 
 \section{Ugotovitve in razprava}
+
+Uvodek bo še napisan.
+
 \section{Sklep}
 Potrdili smo hipotezo. Rezultate bi lahko izboljšali z bolj optimizirano implementacijo.
 \section{Zaključek}
