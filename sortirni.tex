@@ -1475,9 +1475,23 @@ Pri tisočih elementih je najbolj opazna sprememba močno zadnje mesto urejanja 
 vstavljanjem. K temu pripomore predvsem veliko kopiranja in kvadratna časovna
 zahtevnost v povprečnem primeru. Urejanje z zlivanjem je napredovalo na račun
 urejanja z vstavljanjem, vendar je še vedno na predzadnjem mestu, zaradi
-kopiranja celotnega polja v dodaten pomnilnik. 
+kopiranja celotnega polja v dodaten pomnilnik. Vidi se, da urejanje s
+konfiguracijo v večini uporablja hitro urejanje, ki je na skupnem drugem mestu, 
+sledi mu vgrajeni algoritem v C++, ki se mu sicer obrestuje njegova kompozitna
+narava, vendar ni optimiziran za uporabniške tipe. Malo nazadovalo, vendar še
+vedno boljše od urejanja s kopico, je kljub svoji kvadratni časovni zahtevnosti,
+urejanje z izbiranjem. Zelo malo kopiranj elementov se tudi pri poljih dolžine
+tisoč še vedno zelo obrestuje.
 
-
+Pri deset tisoč elementih zaradi kvadratne časovne zahtevnosti nazaduje urejanje
+z izbiranjem. Drug vrstni red se ne spremeni bistveno, poudarijo pa se
+razlike med algoritmi. Na zadnjem mestu, kar 630 krat slabše od urejanja s
+konfiguracijo, je urejanje z vstavljanjem. Urejanje z zlivanjem je močno zadnje
+med algoritmi s pričakovano časovno zahtevnostjo $\mathcal{O}n\log_2
+n$. Urejanje s kopico je malo boljše, najboljše pa je hitro urejanje, ki od teh
+očitno naredi najmanj kopiranj. Med urejanjem s kopico in hitrim urejanjem je
+C++-ov algoritem, urejanje s konfiguracijo pa je tudi kar močno zasidrano na
+prvem mestu.
 
 \subsection{Tip \emph{slow}}
 
