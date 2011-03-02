@@ -147,9 +147,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="341.74982"
-     inkscape:cy="908.26471"
+     inkscape:zoom="1.4"
+     inkscape:cx="147.25927"
+     inkscape:cy="809.9359"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -244,6 +244,13 @@
          id="tspan5206"
          x="127.7843"
          y="-1631.1082" /></text>
+    <rect
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:3.94986725000000005;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;fill-opacity:1"
+       id="rect3136"
+       width="376.87866"
+       height="285.89856"
+       x="31.77496"
+       y="78.760239" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot2985"

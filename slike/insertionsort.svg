@@ -189,9 +189,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="232.38104"
-     inkscape:cy="855.02712"
+     inkscape:zoom="0.9899495"
+     inkscape:cx="443.13618"
+     inkscape:cy="766.8439"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -260,7 +260,7 @@
        id="guide7917" />
     <sodipodi:guide
        orientation="0,1"
-       position="2.5253813,644.9824"
+       position="456.58895,571.74634"
        id="guide3348" />
   </sodipodi:namedview>
   <metadata
@@ -271,7 +271,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -290,6 +290,13 @@
          id="tspan5206"
          x="127.7843"
          y="-1631.1082" /></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.28411555;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3143"
+       width="377.98697"
+       height="330.14218"
+       x="38.290817"
+       y="87.571548" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot2985"
@@ -533,34 +540,6 @@
          x="251.52795"
          y="265.7963"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Consolas;-inkscape-font-specification:Consolas">:</tspan></text>
-    <rect
-       style="fill:none;stroke:#000000;stroke-width:2.44327807;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3314"
-       width="25.147934"
-       height="67.895752"
-       x="-24.642857"
-       y="133.62845" />
-    <rect
-       style="fill:none;stroke:#000000;stroke-width:2.44327807;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3314-7"
-       width="25.147934"
-       height="67.895752"
-       x="-24.642857"
-       y="201.81374" />
-    <rect
-       style="fill:none;stroke:#000000;stroke-width:2.44327807;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3314-75"
-       width="25.147934"
-       height="67.895752"
-       x="-24.642857"
-       y="271.00919" />
-    <rect
-       style="fill:none;stroke:#000000;stroke-width:2.44327807;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3314-4"
-       width="25.147934"
-       height="67.895752"
-       x="-24.642857"
-       y="339.19449" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot2985-9-1"
