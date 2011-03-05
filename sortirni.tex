@@ -1254,6 +1254,16 @@ Parameter \texttt{-O3} pomeni najvišjo stopnjo avtomatske optimizacije. Paramet
 pa pove, kateri dialekt jezika je uporabljen, v našem primeru je to osnutek novega standarda za C++.
 Ostali parametri niso tako pomembni, njihovi pomeni so pojasnjeni v strani z navodili za uporabo za program 
 \texttt{gcc}.\footnote{\emph{angl.} man page. Dostopna je preko ukaza \texttt{man gcc}.}
+
+Rezultati bodo vedno predstavljeni s tabelo, ki bo prikazovala čase urejanja
+posameznih algoritmov pri določenem številu elementov. Predstavljeni bodo tudi z
+grafi, na katerih bodo krivulje vseh sortirnih algoritmov. Najpomembnejše pa
+bodo vrednosti v tabeli, ki bo prikazovala vsoto časov sortirnih algoritmov za
+vse dolžine za določen tip. To je pravzaprav ploščina med krivuljo sortirnega
+algoritma in absciso osjo na določenem intervalu. Tako lahko vsak sortirni
+algoritem ocenimo kako dober je na nekem tipu, manjša kot je ploščina, boljši
+je. Ker je to najbolj splošna ocena vsakega algoritma, ji velja dati posebno
+težo.  
  
 \subsection{Tip \emph{int}}
 \label{chapter:rez:int}
@@ -1279,6 +1289,24 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
     z zlivanjem          & 5.142.34 & 59,73560 &  582,05  &   7.167,58  &     75,58 \\ \hline
     C++ algoritem        &   185.49 &  4,24863 &   59,83  &     698,21  &      8,82 \\ \hline
     s konfiguracijo      &   169.79 &  3,61435 &   58,69  &     749,76  &      9,35 \\ 
+  \end{tabular}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \caption[Skupen čas urejanja za tip \emph{int}]{Skupen čas urejanja za tip
+  \emph{int}. Vrednosti so zaradi preglednosti urejene naraščajoče.}
+  \label{tab:rez:intavegrage} \vspace{1ex}
+  \begin{tabular}{|l|r|}
+    \hline
+    \bf sortirni algoritem   & \bf čas[ns], $\mathbf{1 \leq n \leq 10.000}$ \\ \noalign{\hrule height 1pt} 
+    vgrajeni algoritem v C++ &   33.938.913 \\ \hline
+    urejanje s konfiguracijo &   35.476.846 \\ \hline 
+    hitro urejanje           &   50.638.687 \\ \hline
+    urejanje s kopico        &   59.057.953 \\ \hline
+    urejanje z zlivanjem     &  345.880.886 \\ \hline
+    urejanje z vstavljanjem  &  797.124.676 \\ \hline
+    urejanje z izbiranjem    & 3.874.923.520 \\ \hline
   \end{tabular}
 \end{table}
 
@@ -1312,6 +1340,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
     spodnji del grafa na sliki~\ref{fig:rez:int}.} 
     \label{fig:rez:intblizu}
 \end{figure}
+
 \pagebreak
 \subsection{Tip \emph{string}}
 \label{chapter:rez:string}
@@ -1342,6 +1371,24 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{st
     z zlivanjem           & 8,66 & 168,17 &  2.358,61 &    38.040,68 \\ \hline
     C++ algoritem         & 2,81 &  42,44 &    573,08 &     6.094,49 \\ \hline
     s konfiguracijo       & 1,55 &  35,78 &    644,23 &    10.576,94 \\ 
+  \end{tabular}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \caption[Skupen čas urejanja za tip \emph{string}]{Skupen čas urejanja za tip
+  \emph{string}. Vrednosti so zaradi preglednosti urejene naraščajoče.}
+  \label{tab:rez:stringavegrage} \vspace{1ex}
+  \begin{tabular}{|l|r|}
+    \hline
+    \bf sortirni algoritem   & \bf čas[ns], $\mathbf{1 \leq n \leq 10.000}$ \\ \noalign{\hrule height 1pt} 
+    vgrajeni algoritem v C++ &    331.908.132 \\ \hline
+    urejanje s konfiguracijo &    518.292.327 \\ \hline 
+    urejanje s kopico        &    540.306.780 \\ \hline
+    hitro urejanje           &    636.750.157 \\ \hline
+    urejanje z zlivanjem     &  1.752.806.479 \\ \hline
+    urejanje z vstavljanjem  & 72.328.942.517 \\ \hline
+    urejanje z izbiranjem    & 74.442.461.661 \\ \hline
   \end{tabular}
 \end{table}
 
@@ -1405,6 +1452,24 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{hu
   \end{tabular}
 \end{table}
 
+\begin{table}[h!]
+  \centering
+  \caption[Skupen čas urejanja za tip \emph{huge}]{Skupen čas urejanja za tip
+  \emph{huge}. Vrednosti so zaradi preglednosti urejene naraščajoče.}
+  \label{tab:rez:hugeavegrage} \vspace{1ex}
+  \begin{tabular}{|l|r|}
+    \hline
+    \bf sortirni algoritem   & \bf čas[ns], $\mathbf{1 \leq n \leq 1.000}$ \\ \noalign{\hrule height 1pt} 
+    urejanje s konfiguracijo &   58.426.372,19 \\ \hline 
+    hitro urejanje           &   67.858.490,70 \\ \hline
+    urejanje z izbiranjem    &   75.267.185,97 \\ \hline
+    vgrajeni algoritem v C++ &   81.821.545,08 \\ \hline
+    urejanje s kopico        &  177.185.498,27 \\ \hline
+    urejanje z zlivanjem     &  320.115.702,80 \\ \hline
+    urejanje z vstavljanjem  & 1.341.428.566,28 \\ \hline
+  \end{tabular}
+\end{table}
+
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/huge1000.pdf}
     \vspace{-0.7cm}
@@ -1452,6 +1517,33 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{sl
   \end{tabular}
 \end{table}
 
+t:    275.974.571,31
+m:    281.640.609,23
+c:    353.613.310,76
+q:    501.905.163,63
+h:    505.171.708,97
+i:  5.427.392.234,82
+s: 10.826.003.228,79
+
+\begin{table}[h!]
+  \centering
+  \caption[Skupen čas urejanja za tip \emph{slow}]{Skupen čas urejanja za tip
+  \emph{slow}. Vrednosti so zaradi preglednosti urejene naraščajoče.}
+  \label{tab:rez:slowavegrage} \vspace{1ex}
+  \begin{tabular}{|l|r|}
+    \hline
+    \bf sortirni algoritem   & \bf čas[ns], $\mathbf{1 \leq n \leq 1.000}$ \\ \noalign{\hrule height 1pt} 
+    urejanje s konfiguracijo &    275.974.571,31 \\ \hline 
+    urejanje z zlivanjem     &    281.640.609,23 \\ \hline
+    vgrajeni algoritem v C++ &    353.613.310,76 \\ \hline
+    hitro urejanje           &    501.905.163,63 \\ \hline
+    urejanje s kopico        &    505.171.708,97 \\ \hline
+    urejanje z vstavljanjem  &  5.427.392.234,82 \\ \hline
+    urejanje z izbiranjem    & 10.826.003.228,79 \\ \hline
+  \end{tabular}
+\end{table}
+
+
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/slow1000.pdf}
     \vspace{-0.7cm}
@@ -1470,8 +1562,6 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{sl
     boljšo primerjavo med učinkovitejšimi algoritmi. }
     \label{fig:rez:slowblizu}
 \end{figure}
-\pagebreak
-
 
 \section{Ugotovitve in razprava}
 \subsection{Tip \emph{int}}
@@ -1529,7 +1619,20 @@ Pri sto tisoč elementih se le dokončno potrdijo mesta algoritmov,
 algoritma s kvadratno časovno zahtevnostjo sta 32 krat
 in 170 krat slabša od urejanja z zlivanjem, ter kar 200 krat in kar 1000 krat slabša od hitrega 
 urejanja. Kompozitna algoritma sta na prvem mestu, s tem, da je urejanje s
-konfiguracijo na drugem mestu. 
+konfiguracijo na drugem mestu.
+
+V tabeli~\ref{tab:rez:intavegrage} vidimo seštevek vseh časov urejanja pri vseh
+dolžinah za vsak posamezen algoritem. Vidimo, da je najboljši C++-ov algoritem,
+tik za njim pa urejanje s konfiguracijo. Oba algoritma sta primerna za urejanje
+polj s števili, urejanje s konfiguracijo bi bilo celo boljše, če bi gledali
+ploščine pod grafi samo do 1.000 elementov. Če pa bi gledali ploščine do 100.000
+elementov pa bi bil C++-ov algoritem še boljši kot sedaj. 
+Algoritmu, vgrajenemu v C++ in urejanju s konfiguracijo sledita hitro urejanje in urejanje
+s kopico, nato pa urejanje zlivanjem. Urejanje z vstavljanjem, se je kljub svoji
+pričakovani kvadratni časovni zahtevnosti uvrstilo precej blizu urejanja z
+zlivanjem. Urejanje z izbiranjem je na zadnjem mestu in se je izkazalo skrajno 
+neprimerno za urejanje polj s števili. 
+
 
 \subsection{Tip \emph{string}}
 Konfiguracija za ta tip je $:s \lra 5;:q \lra 3454;:m \lra 3844;:q \lra 4948;:h
@@ -1592,6 +1695,22 @@ saj praktično 200 krat počasnejša od urejanja s kopico. To se tudi vidi na
 sliki~\ref{fig:rez:string10000}, saj se drugih algoritmov praktično ne vidi.
 Tak vrsti red bi se verjetno nadaljeval tudi naprej, razlike med algoritmi bi se
 samo povečevale.
+
+Poglejmo še splošno učinkovitost sortirnih algoritmov prikazano v
+tabeli~\ref{tab:rez:stringavegrage}. Vidimo, da je daleč najboljši vgrajeni
+algoritem v C++, sledi mu urejanje s konfiguracijo. Podobno kot pri tipu
+\emph{int}, bi bilo tudi tukaj urejanje s konfiguracijo boljše, če bi vzeli
+manjši interval dolžin, saj je bolj učinkovito na krajših poljih. Na daljših
+poljih je veliko bolj učinkovit C++-ov algoritem. Urejanju s konfiguracijo tesno
+sledi urejanje s kopico, ki ga urejanje s konfiguracijo tudi uporablja za velika
+polja. Ker velika polja prispevajo večji delež k skupnemu času, je torej
+razumljivo, da je urejanje s kopico tako blizu urejanju s konfiguracijo.
+Pravzaprav bi se njuna razlika pri večanju intervala zmanjševala.
+Hitro urejanje je pri poljih z nizi znakov malce manj učinkovito, veliko manj
+učinkovito pa je urejanje z zlivanjem. Urejanje z vstavljanjem in urejanje z
+izbiranjem sta na splošno zelo neprimerni za urejanje polj z nizi znakov, kar
+vidimo iz njunega skupnega časa, ki je kar 125 večji od časa, ki ga je porabilo
+urejanje s kopico.
 
 \subsection{Tip \emph{huge}}
 V konfiguraciji $:i \lra 12;:s \lra 68;:q \lra 100;:s \lra 148;:q \lra 189;:s
@@ -1656,7 +1775,7 @@ prvem mestu.
 
 \subsection{Tip \emph{slow}}
 V konfiguraciji
-$:i \lra 7;:m \lra -1;$, dobljeni za tip \emph{slow}, ki je sledeča: 
+$:i \lra 7;:m \lra -1;$, dobljeni za tip \emph{slow}, 
 vidimo, da se najprej uporablja urejanje z vstavljanjem, nato pa
 urejanje z zlivanjem. Ker primerjanje dveh elementov tipa \emph{slow} traja precej dolgo, so dobri algoritmi, ki
 naredijo sorazmerno malo primerjav in več kopiranj. 
@@ -1724,8 +1843,9 @@ tipu \emph{string}, kjer pa je čas urejanja v primerjavi s časom iskanja po
 konfiguraciji tako velik, da lahko slednjega zanemarimo. Tako je kompozitni
 algoritem praktično enako dober kot algoritem iz katerega je sestavljen.
 V takih primerih hipoteze~\ref{hip:komp:vs:nekomp} ne moremo potrditi, 
-lahko pa jo potrdimo, če pogledamo, kako so se 
-
+lahko pa pogledamo skupen čas urejanja posameznih algoritmov za vse dolžine.
+Pri skupnem času urejanja za vse dolžine je kompozitni algoritem vedno boljši od
+posameznih algoritmov. Zaradi tega lahko potrdimo hipotezo~\ref{hip:komp:vs:nekomp}.
 
 \section{Zaključek}
 Potrdili smo hipotez(o/e). Rezultate bi lahko izboljšali z bolj optimizirano implementacijo.
