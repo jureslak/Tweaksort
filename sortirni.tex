@@ -572,7 +572,10 @@ poznamo. Svojo hitrost dolguje arhitekturi današnjih procesorjev, ki imajo
 malo registrov in precej notranjega pomnilnika, saj lahko pivot ponavadi shranimo v
 register, kar prihrani veliko poizvedb do pomnilnika. Dober je na enakomerno
 porazdeljenih podatkih, a kljub pazljivemu izbiranju pivotov obstaja možnost neželenega
-najslabšega primera, čeprav je zelo neverjetna. 
+najslabšega primera, čeprav je zelo neverjetna. Znana izboljšava hitrega
+urejanja je tudi, da krajših polja ne uredimo spet z hitrim urejanjem temveč s
+kakšnim hitrejšim algoritmom za kratka polja, na primer z urejanjem z
+vstavljanjem.
 
 \subsubsection{Urejanje s kopico}
 \label{chapter:heapsort}
@@ -750,10 +753,30 @@ sekvenčnih medijih, kot na primer tračnih enotah, ali na podatkovnih struktura
 neposrednega dostopa do nekega elementa z njegovim indeksom, kot na primer povezani seznami.
 
 \subsection{Nameni in cilji}
+Problem urejanja me je zanimal že vse odkar sem se naučil osnov programiranja,
+verjetno zato, ker je bil program, ki je urejal koledar na moji spletni strani
+pravzaprav prvi uporaben program, ki sem ga napisal. Preden je bil koledar 
+avtomatsko sortiran sem moral vedno paziti, da bom novico ročno vstavil na pravo
+mesto. S tem programom, ki je bil sicer dolg le nekaj vrstic, saj je klical
+vgrajeno funkcijo \emph{sort} v PHP-ju, sem si precej olajšal dodajanje novic in dogodkov.  
+Tako sem iz zanimanja do urejanja spoznal veliko različnih sortirnih metod.
+Želja po čim učinkovitejšem urejanju pa izvira iz 
+priprav na tekmovanje iz programiranja, kjer je bilo seveda zaželeno da
+napisani program deluje hitro. Iskanje čim hitrejših rešitev in optimizacija 
+implementacije sta mi šli precej dobro in ko to združimo še z problemom
+urejanja dobimo razlog, zakaj sem napisal to nalogo: želel sem čim hitreje
+urejati.
+
+Glavni cilj naloge je poiskati čim hitrejši sortirni algoritem. Polet tega
+želimo, da lahko ta sortirni algoritem ureja vse vrste podatkov, na vsakem
+računalniku. Zaželeno je tudi, da je enostaven za uporabo, vendar ima uporabnik
+kljub temu nad njim dovolj nadzora.
 
 \subsection{Hipoteze}
 \begin{enumerate}
-  \item \label{hip:komp:vs:nekomp} Kompoziten algoritem se obnese boljše na različnih tipih podatkov kot vsak
+  \item \label{hip:dif:type:dif:algo} Učinkovitost sortirnega
+    algoritma je zelo odvisna od lastnosti elementov, ki jih urejamo.
+  \item \label{hip:komp:vs:nekomp} Kompoziten sortirni algoritem se obnese boljše na različnih tipih podatkov kot vsak
     posamezen algoritem.
     % kaj pa kakšna da bo beatov build-in sort
 \end{enumerate}
@@ -1244,7 +1267,11 @@ ustreza vsem zahtevanim kriterijem.
 Pred testiranjem sem poiskal optimalno konfiguracijo za vsakega od tipov. Zgornja meja
 učenja $M$ je bila 10.000, za vsako testirano dolžino je program naredil 10 iteracij, v pomnilniku
 pa je bilo dovoljenih največ 100.000 elementov. Razmik med elementi se je pri vsaki iteraciji povečal za 20.
-Limit je bil vedno dovolj velik, da je bilo možno v pomnilniku ustvariti vsa polja za testiranje.
+Limit je bil vedno dovolj velik, da je bilo možno v pomnilniku ustvariti vsa
+polja za testiranje. Za vsak tip sem konfiguracijo poiskal večkrat, vsakič so si
+bile med seboj zelo podobne, le mejne vrednosti posameznih algoritmov so se
+rahlo spreminjale. Izbral sem tisto, ki je bila najbolj povprečna in je
+izgledala najbolj smiselno.
 
 Testiranje je bilo izvedeno na računalniku s procesorjem Intel\textregistered{} Core\texttrademark{}
 2 Duo CPU T5870 @ 2.00GHz, 2 GB pomnilnika, na sistemu Kubuntu 10.10 z verzijo Linuxovega jedra 2.6.35-25-generic.
@@ -1256,7 +1283,13 @@ Ostali parametri niso tako pomembni, njihovi pomeni so pojasnjeni v strani z nav
 \texttt{gcc}.\footnote{\emph{angl.} man page. Dostopna je preko ukaza \texttt{man gcc}.}
 
 Rezultati bodo vedno predstavljeni s tabelo, ki bo prikazovala čase urejanja
-posameznih algoritmov pri določenem številu elementov. Predstavljeni bodo tudi z
+posameznih algoritmov pri določenem številu elementov. Ponavadi je to število
+10.000, saj je bil pri tem številu elementov razpored sortirnih algoritmov po
+učinkovitosti že močno določen in ne tudi pri večanju števila ne bi spreminjal.
+Drugi razlog je tudi, da urejanje polj večih dolžin traja tudi dalj časa, bi
+bilo s tem pridobivanje drugih rezultatov za dalj časa prekinjeno, še posebej
+dolgo časa traja izdelovanje grafov.
+Učinkovitost sortirnih algoritmov bo predstavljena tudi z 
 grafi, na katerih bodo krivulje vseh sortirnih algoritmov. Najpomembnejše pa
 bodo vrednosti v tabeli, ki bo prikazovala vsoto časov sortirnih algoritmov za
 vse dolžine za določen tip. To je pravzaprav ploščina med krivuljo sortirnega
@@ -1295,17 +1328,19 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
 \begin{table}[h!]
   \centering
   \caption[Skupen čas urejanja za tip \emph{int}]{Skupen čas urejanja za tip
-  \emph{int}. Vrednosti so zaradi preglednosti urejene naraščajoče.}
+  \emph{int}. Skupne čase urejanja sem dobil tako, da sem za posamezen algoritem 
+  seštel ordinate vseh točk na sliki~\ref{fig:rez:int}, ki prikazujejo čase tega
+  sortirnega algoritma.  Vrednosti so zaradi preglednosti urejene naraščajoče.}
   \label{tab:rez:intavegrage} \vspace{1ex}
   \begin{tabular}{|l|r|}
     \hline
     \bf sortirni algoritem   & \bf čas[ns], $\mathbf{1 \leq n \leq 10.000}$ \\ \noalign{\hrule height 1pt} 
-    vgrajeni algoritem v C++ &   33.938.913 \\ \hline
-    urejanje s konfiguracijo &   35.476.846 \\ \hline 
-    hitro urejanje           &   50.638.687 \\ \hline
-    urejanje s kopico        &   59.057.953 \\ \hline
-    urejanje z zlivanjem     &  345.880.886 \\ \hline
-    urejanje z vstavljanjem  &  797.124.676 \\ \hline
+    vgrajeni algoritem v C++ &    33.938.913 \\ \hline
+    urejanje s konfiguracijo &    35.476.846 \\ \hline 
+    hitro urejanje           &    50.638.687 \\ \hline
+    urejanje s kopico        &    59.057.953 \\ \hline
+    urejanje z zlivanjem     &   345.880.886 \\ \hline
+    urejanje z vstavljanjem  &   797.124.676 \\ \hline
     urejanje z izbiranjem    & 3.874.923.520 \\ \hline
   \end{tabular}
 \end{table}
@@ -1377,7 +1412,9 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{st
 \begin{table}[h!]
   \centering
   \caption[Skupen čas urejanja za tip \emph{string}]{Skupen čas urejanja za tip
-  \emph{string}. Vrednosti so zaradi preglednosti urejene naraščajoče.}
+  \emph{string}. Za vsak posamezen algoritem sem skupni čas dobil tako, da sem 
+  seštel ordinate vseh točk na sliki~\ref{fig:rez:string10000}, ki prikazujejo čase tega
+  sortirnega algoritma. Vrednosti so zaradi preglednosti urejene naraščajoče.}
   \label{tab:rez:stringavegrage} \vspace{1ex}
   \begin{tabular}{|l|r|}
     \hline
@@ -1455,7 +1492,9 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{hu
 \begin{table}[h!]
   \centering
   \caption[Skupen čas urejanja za tip \emph{huge}]{Skupen čas urejanja za tip
-  \emph{huge}. Vrednosti so zaradi preglednosti urejene naraščajoče.}
+  \emph{huge}. Skupen čas urejanja je pravzaprav vsota časov urejanja posameznega
+  algoritma, ki so prikazani na grafu na sliki~\ref{fig:rez:huge1000}. 
+  Vrednosti so zaradi preglednosti urejene naraščajoče.}
   \label{tab:rez:hugeavegrage} \vspace{1ex}
   \begin{tabular}{|l|r|}
     \hline
@@ -1517,18 +1556,14 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{sl
   \end{tabular}
 \end{table}
 
-t:    275.974.571,31
-m:    281.640.609,23
-c:    353.613.310,76
-q:    501.905.163,63
-h:    505.171.708,97
-i:  5.427.392.234,82
-s: 10.826.003.228,79
-
 \begin{table}[h!]
   \centering
   \caption[Skupen čas urejanja za tip \emph{slow}]{Skupen čas urejanja za tip
-  \emph{slow}. Vrednosti so zaradi preglednosti urejene naraščajoče.}
+  \emph{slow}. Skupen čas urejanja za vsak posamezen algoritem dobimo
+  tako, da seštejemo čase, ki jih je porabil pri vsakem $n$ posebej. Skupen čas
+  urejanja pravzaprav predstavlja ploščino, ki jo na določenem intervalu omejita
+  graf soritrnega algoritma in abscisna os na grafu na sliki~\ref{fig:rez:slow1000}.
+  Vrednosti so zaradi preglednosti urejene naraščajoče.}
   \label{tab:rez:slowavegrage} \vspace{1ex}
   \begin{tabular}{|l|r|}
     \hline
@@ -1773,6 +1808,21 @@ očitno naredi najmanj kopiranj. Med urejanjem s kopico in hitrim urejanjem je
 C++-ov algoritem, urejanje s konfiguracijo pa je tudi kar močno zasidrano na
 prvem mestu.
 
+Če pogledamo splošno učinkovitost sortirnih algoritmov prikazano v
+tabeli~\ref{tab:rez:hugeavegrage} pri tem tipu vidimo, da
+je v primerjavi s prejšnjimi tipi, tu precej nazadoval algoritem, vgrajen v C++.
+Najboljše je urejanje s konfiguracijo, s kar nekaj prednosti pred hitrim
+urejanjem. Hitremu urejanju presenetljivo sledu urejanje z izbiranjem, ki je
+bilo v prejšnjih tipih najslabše, tu pa je zaradi izredno malo premikov, ki jih
+naredi med urejanjem, doseglo odlično tretje mesto. Šele četrti je vgrajeni
+algoritem v C++, ki se mu vidi, da ni optimiziran za uporabniške tipe. Vsi
+štirje zgoraj omenjeni algoritmi so kar primerni za urejanje polj z elementi
+tipa \emph{huge}. Peto in šesto mesto sta zasedla urejanje s kopico in urejanje
+z zlivanjem, naredita kar veliko kopiranj elementov. Urejanje z vstavljanjem, ki
+prav tako naredi veliko kopiranj, poleg tega pa ima še pričakovano kvadratno časovno
+zahtevnost je daleč na zadnjem mestu in zelo neprimerno za uporabo na poljih z
+elementi tip \emph{huge}. 
+
 \subsection{Tip \emph{slow}}
 V konfiguraciji
 $:i \lra 7;:m \lra -1;$, dobljeni za tip \emph{slow}, 
@@ -1825,14 +1875,38 @@ rezultatom med nekompozitnimi algoritmi. Tretji je C++ algoritem, nato hitro ure
 urejanje s kopico, urejanje z vstavljanjem in na zadnje mesto prikovano urejanje z izbiranjem z
 ogromnim številom primerjav in kvadratno časovno zahtevnostjo v vsakem primeru.
 Pri večanju dolžine polja bi se verjetno vrstni red ohranjal, le razlike med
-algoritmi bi se povečevale.
+algoritmi bi se povečevale. Vidimo tudi, da urejanje polja z 10.000 elementi
+tipa \emph{slow} traja kar 35 krat dlje od urejanja polja z elementi tipa
+\emph{int} enake dolžine, če primerjamo najučinkovitejša algoritma. Če pa
+primerjamo najslabša algoritma, pa urejanje polja z elementi tipa \emph{slow}
+traja kar 2600 krat dlje kot urejanje polja z elementi tipa \emph{int}.
 
+Če pogledamo skupen čas urejanja algoritmov v tabeli~\ref{tab:rez:slowavegrage},
+je razvidno, da je na splošno najboljše je urejanje s konfiguracijo. Vidi se mu,
+da v veliki meri
+uporablja urejanje z zlivanjem, ki urejanju s konfiguracijo kar tesno sledi. 
+Urejanje z zlivanjem je zelo primerno, saj primerjava dveh objektov tipa
+\emph{slow} traja precej dolgo, urejanje z zlivanjem pa naredi malo primerjav.
+na naslednjem mestu  je C++-ov  algoritem, ki očitno ni optimiziran za 
+uporabniške tipe. Tesno skupaj mu sledita
+hitro urejanje in urejanje s kopico. Urejanje z vstavljanjem se pokaže za
+splošno precej neučinkovito, za popolnoma neučinkovito pa se izkaže urejanje z
+izbiranjem, ki naredi zelo veliko primerjav, poleg tega pa ima še kvadratno
+časovno zahtevnost v vsakem primeru.
 
 \section{Sklep}
-Iz vseh štirih dobljenih konfiguracijah smo dobili zelo grob vzorec. Na začetku
-je vedno nek nerekurziven sortirni algoritem s pričakovano kvadratno časovno zahtevnostjo,
-na koncu pa algoritem s pričakovano časovno zahtevnostjo
-$\mathcal{O}(n\log_2n)$.
+Ugotovili smo, da je učinkovitost posameznega sortiranega algoritma odvisna od
+lastnost elementov, ki ga sortiramo. To se je še posebej lepo vidi v primerjavi
+tipov \emph{huge} in \emph{slow}, ki sta namenoma zasnovana tako, da imata
+nasprotne lastnosti. Odvisnost algoritmov od lastnosti podatkov je posledica
+različnega števila primerjav in zamenjav, ki jih naredijo, prav tako pa je tudi
+posledica njihove časovne zahtevnosti. To se je lepo pokazalo tudi v precej
+raznolikih konfiguracijah, ki pa so vseeno kazale grob vzorec. Na začetku je bil
+vedno algoritem s pričakovano kvadratno časovno zahtevnostjo, na koncu pa
+najprimernejši algoritem s pričakovano časovno zahtevnostjo $\mathcal{O}(n\log_2
+n)$. Raznolikost dobljenih konfiguracij in različen vrstni red sortirnih
+algoritmov pri različnih tipih sta rezultata zaradi katerih lahko z gotovostjo
+potrdimo hipotezo~\ref{hip:dif:type:dif:algo}.
 
 Kompoziten algoritem je bil v veliko primerih boljši od posameznih
 algoritmov. Pravzaprav je bil malo slabši le v patoloških primerih, ko je bil
@@ -1843,16 +1917,29 @@ tipu \emph{string}, kjer pa je čas urejanja v primerjavi s časom iskanja po
 konfiguraciji tako velik, da lahko slednjega zanemarimo. Tako je kompozitni
 algoritem praktično enako dober kot algoritem iz katerega je sestavljen.
 V takih primerih hipoteze~\ref{hip:komp:vs:nekomp} ne moremo potrditi, 
-lahko pa pogledamo skupen čas urejanja posameznih algoritmov za vse dolžine.
-Pri skupnem času urejanja za vse dolžine je kompozitni algoritem vedno boljši od
-posameznih algoritmov. Zaradi tega lahko potrdimo hipotezo~\ref{hip:komp:vs:nekomp}.
+lahko pa primerjamo skupen čas urejanja posameznih algoritmov.
+Pri skupnem času urejanja je kompozitni algoritem vedno boljši od
+posameznih algoritmov in ravno skupni čas urejanja ima največjo težo, saj se v
+splošni uporabi urejajo pola različnih dolžin, torej mora biti sortirni
+algoritem učinkovit na vseh dolžinah. Ker se je kompozitni sortirni algoritem
+v tem pogledu najbolje obnesel, lahko potrdimo hipotezo~\ref{hip:komp:vs:nekomp}.
 
 \section{Zaključek}
-Potrdili smo hipotez(o/e). Rezultate bi lahko izboljšali z bolj optimizirano implementacijo.
-Zadeva je uporabna.
-
+Menim, da so bili doseženi vsi cilji naloge. Vsi algoritmi so implementirani v
+knjižnici, ki je priložena kot priloga~\ref{pril:koda}. Tako so prenosni in
+enostavni za uporabo. Zelo sem zadovoljen, ker je rezultat naloge uporaben v
+realnih situacijah. Zadovoljen sem tudi z metodo dela, eksperiment je bil
+izpeljan tako, da je bila podvrženost merskim napakam čim manjša. Lahko bi ga
+seveda izboljšali tako, da bi povečevali število iteracij in urejali tudi polja
+večjih dolžin. Rezultate bi lahko izboljšali tudi z bolj optimalno
+implementacijo. Obstaja tudi možnost nadaljnjih raziskav, lahko bi ugotavljali 
+odvisnost algoritmov od podatkovne strukture, ki jo urejamo.
 \pagebreak
+
 \section{Viri}
+
+% uno za sliko heapsorta
+% http://corte.si/posts/code/visualisingsorting/index.html
 
 \subsection{Literatura}
 \vspace{-1cm}
@@ -1867,7 +1954,9 @@ Zadeva je uporabna.
 \end{thebibliography}
 
 \subsection{Priloge}
-CD
+\begin{enumerate}
+  \item \label{pril:koda} CD s kodo
+\end{enumerate}
 
 \end{document}
 % vim: spell spelllang=sl
