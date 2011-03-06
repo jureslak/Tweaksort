@@ -500,20 +500,19 @@ najslabšo možnost izvajanja programa, če so elementi že urejeni. Zato sem v 
 implementaciji za pivot vzel mediano prvega, srednjega in zadnjega elementa oziroma t.i.
 mediano treh. Pogosta izbira je tudi naključni pivot. Postopek urejanja s
 porazdelitvami je prikazan na sliki~\ref{fig:quicksortimage}.
+V psevdokodi je algoritem hitrega urejanja zapisan kot algoritem~\ref{algo:quicksort}.
 
 \begin{figure}[ht]
     \begin{center}
-        \includegraphics[height=45mm]{slike/quicksort.jpg}
+        \includegraphics[height=50mm]{slike/quicksort.pdf}
     \end{center}
-    \vspace{-0.7cm}
+    \vspace{-0.6cm}
     \caption[Hitro urejanje]{Grafična predstavitev urejanja s porazdelitvami,
 prikazana na primeru devetih naključno razporejenih 
-števil. Izbrani pivoti so obarvani sivo.
+števil. Izbrani pivoti so obarvani.
 Vsaka vrstica predstavlja svojo globino rekurzije.}
     \label{fig:quicksortimage}
 \end{figure}
-
-V psevdokodi je algoritem hitrega urejanja zapisan kot algoritem~\ref{algo:quicksort}.
 
 \begin{algorithm}[h!t!]
   \caption{Hitro urejanje}\label{algo:quicksort}
