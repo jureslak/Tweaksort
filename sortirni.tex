@@ -814,9 +814,10 @@ Ker so sortirni algoritmi vsak zase dobri na zgolj nekaterih dolžinah polj in s
 lastnosti razlikujejo, nas to privede do zamisli, da bi pri dani dolžini $n$ uporabili tisti
 sortirni algoritem, ki je pri tem $n$ najboljši. Ta zamisel je prikazana na sliki~\ref{fig:tweaksortidea}.
 Torej moramo vedeti, pri katerem $n$ je
-potrebno uporabiti kateri sortirni algoritem, kar pa si bomo morali zapomniti. V ta
-namen sem definiral tip \emph{conf\_\!t}, v katerem je shranjena konfiguracija kompozitnega
-sortirnega algoritma. 
+potrebno uporabiti kateri sortirni algoritem, kar pa si bomo morali zapomniti
+v konfiguracijo.% V ta
+%namen sem definiral tip \emph{conf\_\!t}, v katerem je shranjena konfiguracija kompozitnega
+%sortirnega algoritma. 
 
 \begin{figure}[ht]
     \begin{center}
@@ -826,7 +827,7 @@ sortirnega algoritma.
     \caption[Ideja kompozitnega sortirnega algoritma.]{Ideja kompozitnega sortirnega algoritma.
     Sive krivulje prikazujejo algoritme, ki niso kompozitni, črna pa kompozitni algoritem.
     Krivulja kompozitnega algoritma ustreza spodnji meji ostalih krivulj, torej se vedno uporablja 
-    najhitrejši sortirni algoritem pri tistem $n$}
+    najhitrejši sortirni algoritem pri tistem $n$.}
     \label{fig:tweaksortidea}
 \end{figure}
 
@@ -886,6 +887,8 @@ Da je konfiguracija smiselna, mora biti sestavljena iz zaporedij oblike
 \begin{description}
   \item[$sort$] pove, kateri sortirni algoritem naj se uporablja na katerih poljih. Črka, ki
     prestavlja posamezen algoritem, je prva črka njegovega angleškega imena.
+%    ($\mbox{$i - $\text{insertion}},\, s - \text{selection},\, q - \text{quick},\, h
+%    - \text{heap},\, m - \text{merge}$)
   \item[$\check{s}tevilo$] predstavlja katerokoli možno dolžino polja, ki ga urejamo. Torej je lahko
     katerokoli nenegativno število. Dovoljeno je tudi število $-1$, ki predstavlja neskončno
 ($\infty$).
@@ -1253,7 +1256,7 @@ je tudi prav.
 Naš kompozitni sortirni algoritem smo primerjali z vsakim posameznim algoritmom izmed
 tistih, ki so bili opisani v teoretičnem uvodu v razdelku~\ref{chapter:teoreticni}. C++ algoritem
 je algoritem, ki je že vgrajen v C++, v knjižnici \emph{algorithm}. Ta algoritem
-man je predstavljal oceno učinkovitosti kompozitnega algoritma.
+nam je predstavljal oceno učinkovitosti kompozitnega algoritma.
 Imena sortirnih algoritmov so taka kot v teoretičnem uvodu, kompozitni sortirni algoritem se v tabelah 
 zaradi krajšega zapisa imenuje kar urejanje s konfiguracijo.
 Vse algoritme sem testiral na štirih različnih tipih podatkov: 
@@ -1350,7 +1353,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
     \caption[Rezultati za tip \emph{int}, 1000 el.]{Graf prikazuje čase
     urejanja različnih sortirnih algoritmov v odvisnosti od dolžine polja. Polja
     so dolga od 1 do 1000 elementov. Za vsako dolžino polja je program naredil
-    1000 iteracij. Graf je malo približan, da se vidi
+    1000 iteracij. Prikazan je le del grafa, da se vidi
     primerjava med učinkovitejšimi urejanji.}
     \label{fig:rez:int1000}
 \end{figure}
@@ -1361,7 +1364,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
     \caption[Rezultati za tip  \emph{int}, 10.000 el.]{Graf prikazuje čase
     urejanja različnih sortirnih algoritmov v odvisnosti od dolžine polja, vse
     od dolžine 1 do 10.000. Program je za vsako dolžino polja naredil 100
-    iteracij. Samo spodnji del grafa je približan na sliki~\ref{fig:rez:intblizu}.}
+    iteracij. Samo spodnji del grafa je prikazan na sliki~\ref{fig:rez:intblizu}.}
     \label{fig:rez:int}
 \end{figure}
 
@@ -1370,7 +1373,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
         \includegraphics[width=\textwidth]{slike/int10000zoom.pdf}
     \end{center}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{int}, 10.000 el. -- približano]{Približan
+    \caption[Rezultati za tip \emph{int}, 10.000 el. -- izrez]{Približan
     spodnji del grafa na sliki~\ref{fig:rez:int}.} 
     \label{fig:rez:intblizu}
 \end{figure}
@@ -1431,7 +1434,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{st
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/string1000zoom.pdf}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{string}, 1000 el. -- približano]{Graf prikazuje čase
+    \caption[Rezultati za tip \emph{string}, 1000 el. -- izrez]{Graf prikazuje čase
     urejanja različnih sortirnih algoritmov za tip \emph{string} v odvisnosti od dolžine polja, vse
     od dolžine 1 do 1000. Program je za vsako dolžino polja naredil 100
     iteracij. Približan je tako, da kaže zgolj popolne grafe učinkovitejših
@@ -1445,7 +1448,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{st
     \caption[Rezultati za tip \emph{string}, 10.000 el.]{Graf prikazuje čase
     urejanja različnih sortirnih algoritmov za tip \emph{string} v odvisnosti od dolžine polja, vse
     od dolžine 1 do 10.000. Program je za vsako dolžino polja naredil 10
-    iteracij. Spodnji del tega grafa je približan na
+    iteracij. Spodnji del tega grafa je prikazan na
     sliki~\ref{fig:rez:string10000zoom}}
     \label{fig:rez:string10000}
 \end{figure}
@@ -1453,8 +1456,8 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{st
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/string10000zoom.pdf}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{string}, 10.000 el. -- približano]
-    {Slika prikazuje približan spodnji del grafa na sliki~\ref{fig:rez:string10000},
+    \caption[Rezultati za tip \emph{string}, 10.000 el. -- izrez]
+    {Slika prikazuje le spodnji del grafa na sliki~\ref{fig:rez:string10000},
     za boljšo primerjavo med učinkovitejšimi algoritmi}
     \label{fig:rez:string10000zoom}
 \end{figure}
@@ -1514,15 +1517,15 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{hu
     \caption[Rezultati za tip \emph{huge}, 1000 el.]{Graf prikazuje čase
     urejanja različnih sortirnih algoritmov za tip \emph{huge} v odvisnosti od dolžine polja, vse
     od dolžine 1 do 1000. Za vsako dolžino polja je program naredil 100 iteracij.
-    Samo spodnji del grafa je približan na sliki~\ref{fig:rez:hugeblizu}.}
+    Samo spodnji del grafa je prikazan na sliki~\ref{fig:rez:hugeblizu}.}
     \label{fig:rez:huge1000}
 \end{figure}
 
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/huge1000zoom.pdf}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{huge}, 1000 el. -- približano]{Slika
-    prikazuje približan spodnji del grafa na sliki~\ref{fig:rez:huge1000}, za
+    \caption[Rezultati za tip \emph{huge}, 1000 el. -- izrez]{Slika
+    prikazuje samo spodnji del grafa na sliki~\ref{fig:rez:huge1000}, za
     boljšo primerjavo med učinkovitejšimi algoritmi. }
     \label{fig:rez:hugeblizu}
 \end{figure}
@@ -1584,15 +1587,15 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{sl
     \caption[Rezultati za tip \emph{slow}, 1000 el.]{Graf prikazuje čase
     urejanja različnih sortirnih algoritmov za tip \emph{slow} v odvisnosti od dolžine polja, vse
     od dolžine 1 do 1000. Za vsako dolžino polja je program naredil 10 iteracij.
-    Samo spodnji del grafa je približan na sliki~\ref{fig:rez:slowblizu}.}
+    Samo spodnji del grafa je prikazan na sliki~\ref{fig:rez:slowblizu}.}
     \label{fig:rez:slow1000}
 \end{figure}
 
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/slow1000zoom.pdf}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{slow}, 1000 el. -- približano]{Slika
-    prikazuje približan spodnji del grafa na sliki~\ref{fig:rez:slow1000}, za
+    \caption[Rezultati za tip \emph{slow}, 1000 el. -- izrez]{Slika
+    prikazuje zgolj spodnji del grafa na sliki~\ref{fig:rez:slow1000}, za
     boljšo primerjavo med učinkovitejšimi algoritmi. }
     \label{fig:rez:slowblizu}
 \end{figure}
@@ -1673,7 +1676,7 @@ Konfiguracija za ta tip je $:s \lra 5;:q \lra 3454;:m \lra 3844;:q \lra 4948;:h
 \lra 6154;:m \lra 6530;:h \lra -1;$
 in se precej razlikuje od tiste, dobljene za tip \emph{int}. Urejanje
 s pričakovano kvadratno časovno zahtevnostjo se pojavi zgolj na začetku in še to samo za 
-polja so pet elementov. Nato se vse do konca uporabljajo algoritmi s časovno zahtevnostjo 
+polja do pet elementov. Nato se vse do konca uporabljajo algoritmi s časovno zahtevnostjo 
 $\mathcal{O}(n\log_2n)$. Proti koncu se tudi hitro urejanje izkaže za manj učinkovito (ne 
 pozabimo, da ima kvadratno časovno zahtevnost v najslabšem primeru) in ga premagata urejanje
 z zlivanjem in urejanje s kopico, ki imata vedno časovno zahtevnost $\mathcal{O}(n\log_2n)$. 
@@ -1895,44 +1898,50 @@ izbiranjem, ki naredi zelo veliko primerjav, poleg tega pa ima še kvadratno
 
 \section{Sklep}
 Ugotovili smo, da je učinkovitost posameznega sortiranega algoritma odvisna od
-lastnost elementov, ki ga sortiramo. To se je še posebej lepo vidi v primerjavi
+lastnosti elementov, ki ga sortiramo. To se je še posebej lepo vidi v primerjavi
 tipov \emph{huge} in \emph{slow}, ki sta namenoma zasnovana tako, da imata
-nasprotne lastnosti. Odvisnost algoritmov od lastnosti podatkov je posledica
+precej različne lastnosti. Odvisnost algoritmov od lastnosti podatkov je posledica
 različnega števila primerjav in zamenjav, ki jih naredijo, prav tako pa je tudi
 posledica njihove časovne zahtevnosti. To se je lepo pokazalo tudi v precej
-raznolikih konfiguracijah, ki pa so vseeno kazale grob vzorec. Na začetku je bil
-vedno algoritem s pričakovano kvadratno časovno zahtevnostjo, na koncu pa
+raznolikih konfiguracijah, ki pa so vseeno kazale grob vzorec Pri majhnih $n$ se je
+vedno izkazal za najučinkovitejšega algoritem s pričakovano kvadratno časovno
+zahtevnostjo, pri velikih $n$ pa je bil vedno   
 najprimernejši algoritem s pričakovano časovno zahtevnostjo $\mathcal{O}(n\log_2
 n)$. Raznolikost dobljenih konfiguracij in različen vrstni red sortirnih
 algoritmov pri različnih tipih sta rezultata zaradi katerih lahko z gotovostjo
 potrdimo hipotezo~\ref{hip:dif:type:dif:algo}.
 
 Kompoziten algoritem je bil v veliko primerih boljši od posameznih
-algoritmov. Pravzaprav je bil malo slabši le v patoloških primerih, ko je bil
+algoritmov. Pravzaprav je bil malo slabši le v skrajnih primerih, ko je bil
 sestavljen le iz enega algoritma. To se je zgodilo pri zelo kratkih poljih, ko
-je bil čas urejanja tako zelo majhen, da je praktično nepomembno s katerih
-sortirnim algoritmom uredimo polje. Poleg tega se je tak primer pojavil tudi pri
-tipu \emph{string}, kjer pa je čas urejanja v primerjavi s časom iskanja po
-konfiguraciji tako velik, da lahko slednjega zanemarimo. Tako je kompozitni
-algoritem praktično enako dober kot algoritem iz katerega je sestavljen.
+je bil čas urejanja tako zelo majhen, da je praktično nepomembno, s katerih
+sortirnim algoritmom uredimo polje. Taka konfiguracija se je pojavila tudi pri
+tipu \emph{string}, kjer pa je čas urejanja tako dolg, da se je iskanje po
+konfiguraciji izkazalo za zanemarljivo, saj razlike ni bilo moč
+zaznati. Tako je tudi v skrajnih primerih
+algoritem praktično enako dober kot algoritem, iz katerega je sestavljen.
 V takih primerih hipoteze~\ref{hip:komp:vs:nekomp} ne moremo potrditi, 
 lahko pa primerjamo skupen čas urejanja posameznih algoritmov.
 Pri skupnem času urejanja je kompozitni algoritem vedno boljši od
-posameznih algoritmov in ravno skupni čas urejanja ima največjo težo, saj se v
-splošni uporabi urejajo pola različnih dolžin, torej mora biti sortirni
-algoritem učinkovit na vseh dolžinah. Ker se je kompozitni sortirni algoritem
+posameznih algoritmov in ravno skupni čas urejanja ima največjo težo, saj to
+uporabniku zagotavlja najučinkovitejše urejanje v povprečju. 
+Ker se je kompozitni sortirni algoritem
 v tem pogledu najbolje obnesel, lahko potrdimo hipotezo~\ref{hip:komp:vs:nekomp}.
 
 \section{Zaključek}
-Menim, da so bili doseženi vsi cilji naloge. Vsi algoritmi so implementirani v
-knjižnici, ki je priložena kot priloga~\ref{pril:koda}. Tako so prenosni in
-enostavni za uporabo. Zelo sem zadovoljen, ker je rezultat naloge uporaben v
-realnih situacijah. Zadovoljen sem tudi z metodo dela, eksperiment je bil
-izpeljan tako, da je bila podvrženost merskim napakam čim manjša. Lahko bi ga
-seveda izboljšali tako, da bi povečevali število iteracij in urejali tudi polja
-večjih dolžin. Rezultate bi lahko izboljšali tudi z bolj optimalno
-implementacijo. Obstaja tudi možnost nadaljnjih raziskav, lahko bi ugotavljali 
-odvisnost algoritmov od podatkovne strukture, ki jo urejamo.
+Menim, da so bili doseženi vsi cilji naloge. Kompozitni sortirni algoritem, z
+angleškim imenom \emph{tweaksort}, se je izkazal za odličen sortirni algoritem,
+ki je izjemno prilagodljiv. Prilagodi je lahko tako računalniku kot podatkom, ki
+jih ureja. Vsi v nalogi opisani algoritmi so implementirani v
+knjižnici, ki je priložena kot priloga~\ref{pril:koda}. 
+Knjižnica je tudi dejansko uporabna v realnih situacijah in javno dostopna na spletnem
+naslovu \url{http://gimvic.org/slak/tweaksort/} skupaj s primeri uporabe. Metoda dela se je izkazala za
+pravilno, eksperiment je bil izpeljan tako, da je bila podvrženost merskim 
+napakam čim manjša. Lahko bi ga seveda izboljšali tako, da bi povečevali 
+število iteracij in urejali tudi polja večjih dolžin. Neraziskana ostaja  
+odvisnost algoritmov od podatkovne strukture, če izpustimo
+zahtevo po naključnem dostopu v polju. Prav tako bi lahko raziskovali tudi
+odvisnost algoritmov od predhodnega vrstnega reda podatkov v polju.
 \pagebreak
 
 \section{Viri}
