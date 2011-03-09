@@ -133,21 +133,42 @@ cmp_t, RAI}}
 \pagebreak
 
 \noindent {\Large \bf Povzetek}\\[5mm]
-vlah blah
+Namen raziskovalne naloge je poiskati optimalen sortirni algoritem.
+V prvem delu raziskovalne naloge je opisana teorija urejanja, različni sortirni
+algoritmi in njihovo pričakovano obnašanje na dejanskih podatkih. Postavljeni sta tudi dve 
+hipotezi glede učinkovitosti sortirnih algoritmov. 
+V nadaljevanju je opisana ideja, na
+kateri temelji kompozitni sortirni algoritem in konfiguracija, s katero nadzorujemo
+njegovo delovanje. Pomemben del je teoretična izpeljava
+algoritma, ki s primerjanjem učinkovitosti posameznih sortirnih algoritmov poišče
+optimalno konfiguracijo za kompozitni sortirni algoritem. Podan je tudi opis 
+implementacije tega algoritma, ki mu sledi 
+predstavitev rezultatov. Rezultati prikazujejo primerjavo učinkovitosti posameznih 
+sortirnih algoritmov na različnih vrstah podatkov. 
+Dobljene rezultate razložimo z vidika teoretičnih osnov in na podlagi naših ugotovitev 
+ovrednotimo hipotezi. Rezultat raziskovalne naloge je učinkovit in izjemno prilagodljiv
+kompozitni sortirni algoritem, ki se lahko prilagodi tako zmogljivosti strojne opreme
+kot podatkom, ki jih ureja.
 
 \vfill
 
 \noindent {\Large \bf Abstract}\\[5mm]
-blah blah
+This is an abstract.
 
 \vfill
-\noindent \textbf{Ključne besede:} Tu tu ru tu tu. \\[2mm]
-\textbf{Keywords:} Tu tu ru tu tu.
+\noindent \textbf{Ključne besede:} kompozitni sortirni algoritem, prilagodljivo urejanje, optimizacija urejanja \\[2mm]
+\textbf{Keywords:} composite sorting algorithm, adaptive sorting, sorting optimization
 
 \pagebreak
 
 \noindent {\Large \bf Zahvale}\\[5mm]
-Blah blha
+Zahvaljujem se mojemu šolskemu mentorju Klemnu Bajcu za vso pomoč in podporo,
+ki mi jo je nudil ob izdelavi te seminarske naloge.  Posebna zahvala gre tudi zunanjemu
+mentorju Gašperju Ažmanu za vzpodbudo in vse koristne napotke pri nastajanju
+naloge, strokovno pomoč in veliko prizadevnost od začetka do konca. Zahvaljujem
+se tudi koordinatorici raziskovalne dejavnosti Majdi Šajn
+Stjepić za organizacijske napotke in knjižničarki Lidiji Vidmar za napotke pri
+navajanju virov.
 \pagebreak
 
 \thispagestyle{empty}
@@ -623,17 +644,16 @@ Maksimalna kopica je dvojiško drevo, pri katerem velja, da je ključ očeta
 vedno večji od ključa otroka. Privzemimo, da je levo poravnano.
 Maksimalno kopico lahko predstavimo v polju, kjer je koren kopice na mestu 
 1, in velja, da sta otroka elementa na mestu $i$ na mestih $2i$ in $2i + 1$.
-Maksimalno kopico tako predstavimo kot tako zaporedje elementov $a_i, a_{i+1}, \ldots,
+Maksimalno kopico, prikazano na sliki~\ref{fig:kopica}, tako predstavimo kot tako zaporedje elementov $a_i, a_{i+1}, \ldots,
 a_n$, da za njih velja:
 \begin{align*}
   a_i &\geq a_{2i} \\
   a_i &\geq a_{2i+1}
 \end{align*}
-pri vseh $i = 1 \ldots \lfloor ^n/_2 \rfloor$. 
-Maksimalna kopica je prikazana na sliki~\ref{fig:kopica}.
+pri vseh $i = 1 \ldots \lfloor ^n/_2 \rfloor$.
+(povz. po Kozak, 1986, str. 104.)
 
 \begin{figure}[ht]
-    \vspace{-0.4cm}
     \begin{center}
         \includegraphics[height=45mm]{slike/heap.pdf}
     \end{center}
@@ -646,7 +666,6 @@ Maksimalna kopica je prikazana na sliki~\ref{fig:kopica}.
     \label{fig:kopica}
 \end{figure}
 
-(povz. po Kozak, 1986, str. 104.)
 
 Urejanje s kopico podatke najprej preuredi v maksimalno kopico. To naredimo tako,
 da za vse elemente, ki imajo otroke, ponovimo naslednji postopek:
@@ -2059,7 +2078,8 @@ odvisnost uspešnosti sortirnih algoritmov od predhodnega vrstnega reda podatkov
 
 \section{Priloge}
 \begin{enumerate}
-  \item \label{pril:koda} CD s kodo
+  \item \label{pril:koda} Zgoščenka z knjižnicami, v katerih so implementirani
+    vsi algoritmi.
 \end{enumerate}
 
 \end{document}
