@@ -139,6 +139,11 @@ vlah blah
 
 \noindent {\Large \bf Abstract}\\[5mm]
 blah blah
+
+\vfill
+\noindent \textbf{Ključne besede:} Tu tu ru tu tu. \\[2mm]
+\textbf{Keywords:} Tu tu ru tu tu.
+
 \pagebreak
 
 \noindent {\Large \bf Zahvale}\\[5mm]
@@ -386,8 +391,8 @@ sliki~\ref{fig:insertionsortimage}.
     \end{center}
     \vspace{-0.7cm}
     \caption[Urejanje z vstavljanjem]{Grafična predstavitev urejanja z navadnim
-    vstavljanjem}
-    \caption*{{ \small Urejanje z zlivanjem je prikazano 
+    vstavljanjem.}
+    \caption*{{ \small Urejanje z vstavljanjem je prikazano 
     na petih naključno razporejenih številih.
     Urejeni del je od neurejenega ločen z dvopičjem, puščice nakazujejo mesto,
     na katerega smo vstavili trenutni element.}}
@@ -431,7 +436,7 @@ urejeno zaporedje, smo z urejanjem zaključili.
 \end{itemize}
 
 Prostorska zahtevnost je v vsakem primeru $\mathcal{O}(1)$, saj se vse premene dogajajo na
-mestu.\\
+mestu.
 (povz. po Wirth, 1985, str. 109.)
 
 Spodnja časovna meja ustreza primeru, ko so elementi na začetku že urejeni, zgornja pa primeru,
@@ -448,8 +453,8 @@ dolgih poljih, če ta niso že skoraj urejena.
 Urejanje z izbiranjem (\emph{angl.} selection sort) je eden najenostavnejših primerjalnih sortirnih
 algoritmov.
 
-Algoritem je sledeč:
-\begin{enumerate}
+Algoritem je sledeč:\vspace{-1ex}
+\begin{enumerate}\addtolength{\itemsep}{-0.65\baselineskip}
   \item najdi element z najmanjšim ključem
   \item zamenjaj ga s prvim elementom
   \item ponovi zgornja koraka za ostanek polja.
@@ -465,9 +470,8 @@ sliki~\ref{fig:selectionsortimage}. \\
         \includegraphics[height=40mm]{slike/selectionsort.pdf}
     \end{center}
     \vspace{-0.7cm}
-    \caption[Urejanje z izbiranjem]{Grafična predstavitev urejanja z navadnim
-    vstavljanjem.}
-    \caption*{{ \small Najmanjši elementi v drugem delu polja so obkroženi, puščica ponazarja, kako jih
+    \caption[Urejanje z izbiranjem]{Grafična predstavitev urejanja z izbiranjem.}
+    \caption*{{\small Najmanjši elementi v drugem delu polja so obkroženi, puščica ponazarja, kako jih
     vstavimo na konec prvega dela. Dela sta ločena z dvopičjem.}}
     \label{fig:selectionsortimage}
 \end{figure}
@@ -540,8 +544,8 @@ V psevdokodi je algoritem hitrega urejanja zapisan kot algoritem~\ref{algo:quick
         \includegraphics[height=50mm]{slike/quicksort.pdf}
     \end{center}
     \vspace{-0.6cm}
-    \caption[Hitro urejanje]{Grafična predstavitev urejanja s porazdelitvami.}
-    \caption*{{ \small Hitro urejanje je prikazano na primeru devetih naključno razporejenih 
+    \caption[Hitro urejanje]{Grafična predstavitev hitrega urejanja.}
+    \caption*{{\small Hitro urejanje je prikazano na primeru devetih naključno razporejenih 
 števil. Izbrani pivoti so obarvani. Vsaka vrstica predstavlja svojo globino rekurzije.}}
     \label{fig:quicksortimage}
 \end{figure}
@@ -586,8 +590,8 @@ V psevdokodi je algoritem hitrega urejanja zapisan kot algoritem~\ref{algo:quick
   \end{algorithmic}
 \end{algorithm}
 
-\subsubsubsection{Časovna in prostorska zahtevnost} \nopagebreak
-Časovna zahtevnost je v \nopagebreak
+\subsubsubsection{Časovna in prostorska zahtevnost}
+Časovna zahtevnost je v
 \begin{itemize}
   \item najboljšem primeru $\mathcal{O}(n\log_2 n)$
   \item povprečnem primeru $\mathcal{O}(n\log_2 n)$
@@ -634,7 +638,7 @@ Maksimalna kopica je prikazana na sliki~\ref{fig:kopica}.
         \includegraphics[height=45mm]{slike/heap.pdf}
     \end{center}
     \vspace{-0.7cm}
-    \caption{Kopica}
+    \caption[Kopica]{Kopica.}
     \caption*{{\small Predstavitev maksimalne kopice kot dvojiškega
     drevesa (zgoraj) in predstavitev maksimalne kopice v polju (spodaj). Vidimo,
     da je invarianta kopice vzpostavljena v obeh primerih. Pri predstavitvi
@@ -662,12 +666,11 @@ algoritem~\ref{algo:heapsort}. \\
     \end{center}
     \vspace{-0.7cm}
     \caption[Urejanje s kopico]{Grafična predstavitev urejanja s kopico.}
-    \caption*{ {\small Grafična predstavitev urejanja s kopico.
-Vsaka črta predstavlja svoj element; temnejša kot je črta, večji je element.
-Do pike na dnu slike poteka urejanje podatkov v kopico, nato pa odstranjevanje
-največjega elementa in ponovna vzpostavitev kopice vse do konca.
-Slika je bila ustvarjena s programsko kodo, dostopno na spletnem naslovu: 
-\url{http://corte.si/posts/code/visualisingsorting/index.html.}}}
+    \caption*{{\small Vsaka črta predstavlja svoj element; temnejša kot je črta,
+    večji je element. Do pike na dnu slike poteka urejanje podatkov v kopico, 
+    nato pa odstranjevanje največjega elementa in ponovna vzpostavitev kopice 
+    vse do konca. Slika je bila ustvarjena s programsko kodo, dostopno na spletnem
+    naslovu: \url{http://corte.si/posts/code/visualisingsorting/index.html.}}}
     \label{fig:heapsortimage}
 \end{figure}
 
@@ -720,12 +723,12 @@ Slika je bila ustvarjena s programsko kodo, dostopno na spletnem naslovu:
 
 Prostorska zahtevnost je v vsakem primeru $\mathcal{O}(1)$, saj je kopica predstavljena kar v
 polju, ki ga urejamo, in ker se vse premene dogajajo na mestu.
+(povz. po Wirth, 1985, str. 123.)
 
 Čas izvajanja urejanja s kopico je neodvisen od morebitne urejenosti podatkov v polju,
 kot lahko razberemo iz časovne zahtevnosti. Zaradi dokaj zapletenega postopka urejanja
 na manjših poljih ni tako hiter, je pa čedalje hitrejši, ko se dolžina polja
 povečuje.
-(povz. po Wirth, 1985, str. 123.)
 
 \subsubsection{Urejanje z zlivanjem}
 \label{chapter:mergesort}
@@ -750,10 +753,10 @@ V psevdokodi je urejanje z zlivanjem zapisano kot algoritem~\ref{algo:mergesort}
     \end{center}
     \vspace{-0.7cm}
     \caption[Urejanje z zlivanjem]{Grafična predstavitev urejanja z zlivanjem.}
-    \caption*{{ \small
-Vsaka vrstica števil predstavlja svojo globino rekurzije, vse dokler niso polja dolga le
-po en element. Nato se začne izvajati četrta točka algoritma, ponazorjena z vrsticami
-nižje od črtkane črte, ki združi podpolja v urejeno polje.}}
+    \caption*{{\small Vsaka vrstica števil predstavlja svojo 
+    globino rekurzije, vse dokler niso polja dolga le po en element.
+    Nato se začne izvajati četrta točka algoritma, ponazorjena z vrsticami
+    nižje od črtkane črte, ki združi podpolja v urejeno polje.}}
     \label{fig:mergesortimage}
 \end{figure}
 
@@ -881,8 +884,8 @@ v konfiguracijo.% V ta
         \includegraphics[width=80mm,height=45mm]{slike/tweaksortidea.pdf}
     \end{center}
     \vspace{-0.7cm}
-    \caption{Ideja kompozitnega sortirnega algoritma.}
-    \caption*{{ \small Sive krivulje prikazujejo algoritme, ki niso kompozitni, črna pa kompozitni algoritem.
+    \caption[Ideja kompozitnega sortirnega algoritma]{Ideja kompozitnega sortirnega algoritma.}
+    \caption*{{\small Sive krivulje prikazujejo algoritme, ki niso kompozitni, črna pa kompozitni algoritem.
     Krivulja kompozitnega algoritma ustreza spodnji meji ostalih krivulj, torej se vedno uporablja 
     najhitrejši sortirni algoritem pri tistem $n$.}}
     \label{fig:tweaksortidea}
@@ -1371,9 +1374,9 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
 
 \begin{table}[h!]
   % \centering
-  \caption{Rezultati za tip \emph{int}}
-  \caption*{\small Bralec naj bo pozoren na časovne enote
-  v stolpcih, saj se spreminjajo zaradi krajšega zapisa in natančnosti.}
+  \caption[Rezultati za tip \emph{int}]{Rezultati za tip \emph{int}.}
+  \caption*{{\small Bralec naj bo pozoren na časovne enote
+  v stolpcih, saj se spreminjajo zaradi krajšega zapisa in natančnosti.}}
   \label{tab:rez:int} \vspace{1ex}
   \begin{tabular}{l!{\vrule width 1pt}r|r|r|r|r}
     \bf št. elementov    & \bf 10 el.& \bf 100 el.& \bf 1.000 el. & \bf 10.000 el. & \bf 100.000 el. \\ 
@@ -1391,7 +1394,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
 
 \begin{table}[h!]
   \centering
-  \caption{Skupen čas urejanja za tip \emph{int}}
+  \caption[Skupen čas urejanja za tip \emph{int}]{Skupen čas urejanja za tip \emph{int.}}
   \caption*{{\small Skupne čase urejanja smo dobili tako, da za posamezen algoritem 
   seštejemo ordinate vseh točk na sliki~\ref{fig:rez:int}, ki prikazujejo čase tega
   sortirnega algoritma. Vrednosti so zaradi preglednosti urejene naraščajoče.}}
@@ -1412,12 +1415,12 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/int1000.pdf}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{int}, 1000 el.]{Rezultati za tip \emph{int},
-    1000 elementov.}
+    \caption[Rezultati za tip \emph{int}, 1.000 el.]{Rezultati za tip \emph{int},
+    1.000 elementov.}
     \caption*{{\small Graf prikazuje čase
     urejanja različnih sortirnih algoritmov v odvisnosti od dolžine polja. Polja
     so dolga od 1 do 1000 elementov. Za vsako dolžino polja je program naredil
-    1000 iteracij. Prikazan je le del grafa, da se vidi
+    1.000 iteracij. Prikazan je le del grafa, da se vidi
     primerjava med učinkovitejšimi urejanji.}}
     \label{fig:rez:int1000}
 \end{figure}
@@ -1465,7 +1468,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{st
 
 \begin{table}[h!]
   \centering
-  \caption{Rezultati za tip \emph{string}.}
+  \caption[Rezultati za tip \emph{string}]{Rezultati za tip \emph{string.}}
   \label{tab:rez:string} \vspace{1ex}
   \begin{tabular}{l!{\vrule width 1pt}r|r|r|r}
     \bf št. elementov     & \bf 10 el.& \bf 100 el.& \bf 1.000 el. & \bf 10.000 el. \\ 
@@ -1483,7 +1486,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{st
 
 \begin{table}[h!]
   \centering
-  \caption{Skupen čas urejanja za tip \emph{string}}
+  \caption[Skupen čas urejanja za tip \emph{string}]{Skupen čas urejanja za tip \emph{string.}}
   \caption*{{\small Skupne čase urejanja smo dobili tako, da za posamezen algoritem 
   seštejemo ordinate vseh točk na sliki~\ref{fig:rez:string10000}, ki prikazujejo čase tega
   sortirnega algoritma. Vrednosti so zaradi preglednosti urejene naraščajoče.}}
@@ -1504,11 +1507,11 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{st
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/string1000zoom.pdf}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{string}, 1000 el. -- izrez]{Rezultati za tip
-    \emph{string}, 1000 elementov.}
+    \caption[Rezultati za tip \emph{string}, 1.000 el. -- izrez]{Rezultati za tip
+    \emph{string}, 1.000 elementov.}
     \caption*{{\small Graf prikazuje čase
     urejanja različnih sortirnih algoritmov za tip \emph{string} v odvisnosti od dolžine polja, vse
-    od dolžine 1 do 1000. Program je za vsako dolžino polja naredil 100
+    od dolžine 1 do 1.000. Program je za vsako dolžino polja naredil 100
     iteracij. Približan je tako, da kaže zgolj popolne grafe učinkovitejših
     algoritmov, za boljšo primerjavo.}}
     \label{fig:rez:string1000}
@@ -1533,7 +1536,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{st
     \caption[Rezultati za tip \emph{string}, 10.000 el. -- izrez]{Rezultati za
     tip \emph{string}, 10.000 elementov.}
     \caption*{{\small Slika prikazuje le spodnji del grafa na sliki~\ref{fig:rez:string10000},
-    za boljšo primerjavo med učinkovitejšimi algoritmi}}
+    za boljšo primerjavo med učinkovitejšimi algoritmi.}}
     \label{fig:rez:string10000zoom}
 \end{figure}
 
@@ -1557,7 +1560,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{hu
 
 \begin{table}[h!]
   \centering
-  \caption{Rezultati za tip \emph{huge}.}
+  \caption[Rezultati za tip \emph{huge}]{Rezultati za tip \emph{huge.}}
   \label{tab:rez:huge} \vspace{1ex}
   \begin{tabular}{l!{\vrule width 1pt}r|r|r|r}
     \bf št. elementov  & \bf 10 el.& \bf 100 el.& \bf 1.000 el. & \bf 10.000 el. \\ 
@@ -1575,7 +1578,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{hu
 
 \begin{table}[h!]
   \centering
-  \caption{Skupen čas urejanja za tip \emph{huge}}
+  \caption[Skupen čas urejanja za tip \emph{huge}]{Skupen čas urejanja za tip \emph{huge.}}
   \caption*{{\small Skupen čas urejanja je pravzaprav vsota časov urejanja posameznega
   algoritma, ki so prikazani na grafu na sliki~\ref{fig:rez:huge1000}. 
   Vrednosti so zaradi preglednosti urejene naraščajoče.}}
@@ -1596,19 +1599,23 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{hu
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/huge1000.pdf}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{huge}, 1000 el.]{Graf prikazuje čase
-    urejanja različnih sortirnih algoritmov za tip \emph{huge} v odvisnosti od dolžine polja, vse
+    \caption[Rezultati za tip \emph{huge}, 1.000 el.]{Rezultati za tip
+    \emph{huge} za polja z dolžino manjšo od 1000.}
+    \caption*{{\small Graf prikazuje čase urejanja različnih sortirnih algoritmov
+    za tip \emph{huge} v odvisnosti od dolžine polja, vse
     od dolžine 1 do 1000. Za vsako dolžino polja je program naredil 100 iteracij.
-    Samo spodnji del grafa je prikazan na sliki~\ref{fig:rez:hugeblizu}.}
+    Samo spodnji del grafa je prikazan na sliki~\ref{fig:rez:hugeblizu}.}}
     \label{fig:rez:huge1000}
 \end{figure}
 
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/huge1000zoom.pdf}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{huge}, 1000 el. -- izrez]{Slika
+    \caption[Rezultati za tip \emph{huge}, 1.000 el. -- izrez]{Rezultati za tip
+    \emph{huge}, 1.000 elementov.}
+    \caption*{{\small Slika
     prikazuje samo spodnji del grafa na sliki~\ref{fig:rez:huge1000}, za
-    boljšo primerjavo med učinkovitejšimi algoritmi. }
+    boljšo primerjavo med učinkovitejšimi algoritmi.}}
     \label{fig:rez:hugeblizu}
 \end{figure}
 
@@ -1628,7 +1635,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{sl
 
 \begin{table}[h!]
   \centering
-  \caption{Rezultati za tip \emph{slow}.}
+  \caption[Rezultati za tip \emph{slow}]{Rezultati za tip \emph{slow.}}
   \label{tab:rez:slow} \vspace{1ex}
   \begin{tabular}{l!{\vrule width 1pt}r|r|r|r}
     \bf št. elementov & \bf 10 el.& \bf 100 el.& \bf 1.000 el. & \bf 10.000 el. \\ 
@@ -1647,11 +1654,12 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{sl
 \begin{table}[h!]
   \centering
   \caption[Skupen čas urejanja za tip \emph{slow}]{Skupen čas urejanja za tip
-  \emph{slow}. Skupen čas urejanja za vsak posamezen algoritem dobimo
+  \emph{slow}.}
+  \caption*{{\small Skupen čas urejanja za vsak posamezen algoritem dobimo
   tako, da seštejemo čase, ki jih je porabil pri vsakem $n$ posebej. Skupen čas
-  urejanja pravzaprav predstavlja ploščino, ki jo na določenem intervalu omejita
+  urejanja pravzaprav predstavlja približek ploščine, ki jo na določenem intervalu omejita
   graf soritrnega algoritma in abscisna os na grafu na sliki~\ref{fig:rez:slow1000}.
-  Vrednosti so zaradi preglednosti urejene naraščajoče.}
+  Vrednosti so zaradi preglednosti urejene naraščajoče.}}
   \label{tab:rez:slowavegrage} \vspace{1ex}
   \begin{tabular}{|l|r|}
     \hline
@@ -1670,17 +1678,19 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{sl
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/slow1000.pdf}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{slow}, 1000 el.]{Graf prikazuje čase
+    \caption[Rezultati za tip \emph{slow}, 1.000 el.]{Rezultati za tip
+    \emph{slow} za polja z dolžino manjšo od 1.000.}
+    \caption*{{\small Graf prikazuje čase
     urejanja različnih sortirnih algoritmov za tip \emph{slow} v odvisnosti od dolžine polja, vse
     od dolžine 1 do 1000. Za vsako dolžino polja je program naredil 10 iteracij.
-    Samo spodnji del grafa je prikazan na sliki~\ref{fig:rez:slowblizu}.}
+    Samo spodnji del grafa je prikazan na sliki~\ref{fig:rez:slowblizu}.}}
     \label{fig:rez:slow1000}
 \end{figure}
 
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/slow1000zoom.pdf}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{slow}, 1000 el. -- izrez]{Slika
+    \caption[Rezultati za tip \emph{slow}, 1.000 el. -- izrez]{Slika
     prikazuje zgolj spodnji del grafa na sliki~\ref{fig:rez:slow1000}, za
     boljšo primerjavo med učinkovitejšimi algoritmi. }
     \label{fig:rez:slowblizu}
@@ -2031,8 +2041,8 @@ pravilno, eksperiment je bil izpeljan tako, da je bila podvrženost merskim
 napakam čim manjša. Lahko bi ga seveda izboljšali tako, da bi povečevali 
 število iteracij in urejali tudi polja večjih dolžin. Neraziskana ostaja  
 odvisnost algoritmov od podatkovne strukture, če izpustimo
-zahtevo po naključnem dostopu v polju. Prav tako bi lahko raziskovali tudi
-odvisnost algoritmov od predhodnega vrstnega reda podatkov v polju.
+zahtevo po naključnem dostopu v polju. Prav tako bi lahko naprej raziskovali tudi
+odvisnost uspešnosti sortirnih algoritmov od predhodnega vrstnega reda podatkov v polju.
 \pagebreak
 
 \section{Viri}
