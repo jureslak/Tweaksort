@@ -153,7 +153,21 @@ kot podatkom, ki jih ureja.
 \vfill
 
 \noindent {\Large \bf Abstract}\\[5mm]
-This is an abstract.
+The purpose of the research paper is to find an optimal sorting algorithm. In
+the first part of the research paper the theory of sorting, various sorting
+algorithms and their expected behaviour on actual data are described. Two
+hypotheses regarding efficiency of sorting algorithms are also set.
+The next part describes the idea on which the composite sorting algorithm is based and
+configuration, which is used to control its functioning. An important part is the
+theoretical derivation of the algorithm which finds the optimal configuration
+for composite sorting algorithm by comparing efficiency of each sorting
+algorithm. The description of implementation of this algorithm is also given and
+followed by presentation of results. Results illustrate the comparison of
+efficiency for each sorting algorithm on different types of data. The obtained
+results are then explained in terms of theoretical basics and both hypotheses are evaluated on the basis
+of our findings. The result of the research paper is efficient and extremely
+adaptive composite sorting algorithm, which can adapt as well to the capabilities
+of hardware as to the data that is sorted.
 
 \vfill
 \noindent \textbf{Ključne besede:} kompozitni sortirni algoritem, prilagodljivo urejanje, optimizacija urejanja \\[2mm]
@@ -1381,8 +1395,8 @@ algoritma in absciso osjo na določenem intervalu. Tako lahko vsak sortirni
 algoritem ocenimo kako dober je na nekem tipu, manjša kot je ploščina, boljši
 je. Ker je to najbolj splošna ocena vsakega algoritma, ji velja dati posebno
 težo.
-
 \pagebreak
+
 \subsection{Tip \emph{int}}
 \label{chapter:rez:int}
 Tip \emph{int} predstavlja 32 bitno predznačeno celo število. Zavzame malo prostora v 
@@ -1462,8 +1476,11 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
         \includegraphics[width=\textwidth]{slike/int10000zoom.pdf}
     \end{center}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{int}, 10.000 el. -- izrez]{Prikazan
-    spodnji del grafa na sliki~\ref{fig:rez:int}.} 
+    \caption[Rezultati za tip \emph{int}, 10.000 el. -- izrez]{Rezulati za tip
+    \emph{int}, 10.000 elementov.}
+    \caption*{{\small Na sliki je prikazan
+    spodnji del grafa na sliki~\ref{fig:rez:int}, za boljšo primerjavo med
+    učinkovitejšimi algoritmi.}}
     \label{fig:rez:intblizu}
 \end{figure}
 
@@ -1481,10 +1498,16 @@ Primerjanje črke z drugo traja tako dolgo kot primerjanje dveh objektov tipa \e
 Primerjava dveh nizov znakov tako traja najmanj tako dolgo kot primerjava dveh števil, lahko
 pa tudi veliko dlje, odvisno od števila enakih zaporednih črk med nizoma.
 
-Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{string} je sledeča:
-\[ :s \lra 5;:q \lra 3454;:m \lra 3844;:q \lra 4948; \] 
-\[ :h \lra 6154;:m \lra 6530;:h \lra -1; \edot \]
+Najdena optimalna konfiguracija za tip \emph{string} je sledeča:
+\vspace{-0.3ex}
+\begin{center}
+  \begin{tabular}[h!]{c} 
+    $ :s \lra 5;:q \lra 3454;:m \lra 3844;:q \lra 4948; $ \\
+    $ :h \lra 6154;:m \lra 6530;:h \lra -1; \edot $ \\
+  \end{tabular}
+\end{center}
 
+\vspace{-1.0ex}
 \begin{table}[h!]
   \centering
   \caption[Rezultati za tip \emph{string}]{Rezultati za tip \emph{string.}}
@@ -1709,9 +1732,11 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{sl
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{slike/slow1000zoom.pdf}
     \vspace{-0.7cm}
-    \caption[Rezultati za tip \emph{slow}, 1.000 el. -- izrez]{Slika
+    \caption[Rezultati za tip \emph{slow}, 1.000 el. -- izrez]{Rezultati za tip
+    \emph{slow}, 1.000 elementov.}
+    \caption*{{\small Slika
     prikazuje zgolj spodnji del grafa na sliki~\ref{fig:rez:slow1000}, za
-    boljšo primerjavo med učinkovitejšimi algoritmi. }
+    boljšo primerjavo med učinkovitejšimi algoritmi.}}
     \label{fig:rez:slowblizu}
 \end{figure}
 
