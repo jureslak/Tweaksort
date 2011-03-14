@@ -154,20 +154,20 @@ kot podatkom, ki jih ureja.
 
 \noindent {\Large \bf Abstract}\\[5mm]
 The purpose of the research paper is to find an optimal sorting algorithm. In
-the first part of the research paper the theory of sorting, various sorting
+the first part of the paper the theory of sorting, various sorting
 algorithms and their expected behaviour on actual data are described. Two
 hypotheses regarding efficiency of sorting algorithms are also set.
 The next part describes the idea on which the composite sorting algorithm is based and
-configuration, which is used to control its functioning. An important part is the
+how it is configured. An important part is the
 theoretical derivation of the algorithm which finds the optimal configuration
-for composite sorting algorithm by comparing efficiency of each sorting
-algorithm. The description of implementation of this algorithm is also given and
+for the composite sorting algorithm by comparing efficiency of each sorting
+algorithm. The description of the implementation of this algorithm is also given and
 followed by presentation of results. Results illustrate the comparison of
 efficiency for each sorting algorithm on different types of data. The obtained
 results are then explained in terms of theoretical basics and both hypotheses are evaluated on the basis
-of our findings. The result of the research paper is efficient and extremely
-adaptive composite sorting algorithm, which can adapt as well to the capabilities
-of hardware as to the data that is sorted.
+of our findings. The result of the research paper is an efficient and extremely
+adaptive composite sorting algorithm, which can adapt to the capabilities
+of hardware as well to the data being sorted.
 
 \vfill
 \noindent \textbf{Ključne besede:} kompozitni sortirni algoritem, prilagodljivo urejanje, optimizacija urejanja \\[2mm]
@@ -176,13 +176,13 @@ of hardware as to the data that is sorted.
 \pagebreak
 
 \noindent {\Large \bf Zahvale}\\[5mm]
-Zahvaljujem se mojemu šolskemu mentorju Klemnu Bajcu za vso pomoč in podporo,
+Zahvaljujem se svojemu šolskemu mentorju Klemnu Bajcu za vso pomoč in podporo,
 ki mi jo je nudil ob izdelavi te seminarske naloge.  Posebna zahvala gre tudi zunanjemu
-mentorju Gašperju Ažmanu za vzpodbudo in vse koristne napotke pri nastajanju
+mentorju Gašperju Ažmanu za vzpodbudo, vse koristne napotke pri nastajanju
 naloge, strokovno pomoč in veliko prizadevnost od začetka do konca. Zahvaljujem
 se tudi koordinatorici raziskovalne dejavnosti Majdi Šajn
 Stjepić za organizacijske napotke in knjižničarki Lidiji Vidmar za napotke pri
-navajanju virov.
+navajanju virov. Hvala tudi Mateji Ban za temeljito lektoriranje naloge.
 \pagebreak
 
 \thispagestyle{empty}
@@ -201,8 +201,8 @@ navajanju virov.
 % kaj gre v uvod - nameni in ciji
 \section{Uvod}
 \label{chapter:uvod}
-Problem urejanja me je zanimal že vse odkar sem se naučil osnov programiranja,
-verjetno zato, ker je bil program, ki je urejal koledar na moji spletni strani
+Problem urejanja me je zanimal, odkar sem se naučil osnov programiranja.
+Verjetno zato, ker je bil program, ki je urejal koledar na moji spletni strani
 pravzaprav prvi uporaben program, ki sem ga napisal. Preden je bil koledar 
 avtomatsko sortiran sem moral vedno paziti, da bom novico ročno vstavil na pravo
 mesto. S tem programom, ki je bil sicer dolg le nekaj vrstic, saj je klical
@@ -211,19 +211,20 @@ Tako sem iz zanimanja do urejanja spoznal veliko različnih sortirnih metod.
 
 Urejanje ali sortiranje na splošno pomeni preurejanje dane množice objektov
 v nek določen vrstni red.
-Namen urejanja je ponavadi olajšati kasnejše iskanje pripadnikov take urejene množice. Kot tako je
+Namen urejanja je ponavadi olajšati kasnejše iskanje pripadnikov take urejene
+množice. Kot t\'{a}ko je
 v vsesplošni uporabi in ima velik pomen. Objekti so urejeni v telefonskih imenikih,
 davčnih registrih, stvarnih kazalih, knjižnicah, slovarjih, skladiščih in skoraj povsod tam,
 kjer moramo shranjene predmete iskati in dosegati. Že majhne otroke učimo, da stvari spravljajo
-``v red'', in tako z neke vrste urejanje prihajajo v stik daleč preden se naučijo kaj
+``v red'', in tako z neko vrsto urejanja prihajajo v stik daleč preden se naučijo kaj
 aritmetike.
 
 \subsection{Teoretični uvod}
 \label{chapter:teoreticni}
 Urejanje je torej pogosto in pomembno opravilo zaradi česar se je je skozi čas
 razvilo veliko različnih postopkov za čimbolj učinkovito urejanje. Eden izmed razlogov za
-veliko število postopkov je tudi ta, da ima prav vsak od njih neko prednost pred ostalimi in je
-zaradi tega v določenih primerih bolj primeren. V nadaljevanju bom opisal nekaj najbolj znanih, 
+veliko število postopkov je tudi ta, da ima prav vsak izmed njih neko prednost pred ostalimi in je
+zaradi tega v določenih primerih primernejši. V nadaljevanju bom opisal nekaj najbolj znanih, 
 vendar jih obstaja še mnogo več. 
 
 \subsubsection{Definicija algoritma}
@@ -241,26 +242,26 @@ Zanj velja:
     svinčnikom.
 \end{itemize}
 \end{definicija}
-(povz. po Kozak, 1986, str. 11.)
+(povz. po Kozak, 1986, str. 11)
 
 \begin{definicija}
-  Algoritem je \textbf{kompoziten} oziroma \textbf{sestavljen}, če je sestavljen iz večih
+  Algoritem je \textbf{kompoziten} oziroma \textbf{sestavljen}, če je sestavljen iz več
   drugih algoritmov.
 \end{definicija}
 
 \subsubsection{Definicija urejanja}
 \label{chapter:sortdef}
 Naj bo dan končen vektor elementov $\vec{a}$ z elementi iz $A$, linearno urejena množica ključev $(K,
-\leq)$ in funkcija $f\!\!: A \rightarrow K, f\!\!: a \mapsto k$\footnote{
+\leq)$ in funkcija $f\!\!: A \rightarrow K, f\!\!: a \mapsto k$,\footnote{
 $f$ je ponavadi trivialen, ker je $f(a)$ ponavadi kar del
-$a$-ja in nam ga ni treba računati, lahko pa to ni res.}, ki vsakemu $a \in A$ priredi
+$a$-ja in nam ga ni treba računati, lahko pa to ni res.} ki vsakemu $a \in A$ priredi
 njegov ključ $k \in K$.
 Tedaj lahko definiramo relacijo linearne urejenosti $\leq$ med elementi $A$.
 \[ a \leq a' \overset{\text{def}}{\Longleftrightarrow} f(a) \leq f(a') \hspace{3em} \forall\ a, a' \in A \]
 
-Urejanja pomeni permutiranje elementov vektorja $\vec{a}$ tako, da velja:
+Urejanje pomeni permutiranje elementov vektorja $\vec{a}$ tako, da velja:
 \[ a_1 \leq a_2 \leq \cdots \leq a_n.\]
-(povz. po Knuth, 1998, str. 4.) \\
+(povz. po Knuth, 1998, str. 4) \\
 
 Za potrebe psevdokode definirajmo še tip \emph{item}, ki naj ponazarja elemente
 \mbox{$A$-ja}.
@@ -277,7 +278,7 @@ struct item {
 
 Ostale komponente predstavljajo s stališča urejanja nepomembne podatke o elementih v
 polju.
-S stališča sortirnih algoritmov je ključ torej \emph{edini} pomemben podatek in zato
+S stališča sortirnih algoritmov je ključ torej \emph{edini} pomemben podatek, zato
 ostalih komponent ni treba podrobno definirati.
 
 \begin{definicija}
@@ -319,7 +320,7 @@ Vse procedure bodo spremenile polje $a$, nobena ne bo ničesar vrnila.
 
 Pri definiciji časovne in prostorske zahtevnosti algoritma bo za prostorsko zahtevnost 
 navedena zgolj dodatna poraba pomnilnika, saj vsi algoritmi porabijo $\mathcal{O}(n)$ pomnilnika za
-shranjevanje celotnega polja, kjer $n$ predstavlja število elementov v polju, ali razliko
+shranjevanje celotnega polja, kjer $n$ predstavlja število elementov v polju ali razliko
 $zadnji - prvi$.
 
 \subsubsection{Rekurzija}
@@ -330,8 +331,8 @@ ki se v svoji definiciji sklicuje sama nase. Če želimo, da je taka definicija 
 smiselna, moramo podati vsaj en osnoven nerekurziven primer in še množico pravil, 
 ki vse ostale primere prevedejo na osnovni primer.
 
-Poglejmo si primer definicije fakultete\footnote{Bolj običajno se fakulteto definira kot:
-$n! = \displaystyle\prod_{k=1}^{n} k = 1 \cdot 2 \cdot 3 \cdot \ \cdots\  \cdot n$}. Fakulteta naravnega števila $n$ je v matematiki
+Poglejmo si primer definicije fakultete.\footnote{Bolj običajno se fakulteto definira kot:
+$n! = \displaystyle\prod_{k=1}^{n} k = 1 \cdot 2 \cdot 3 \cdot \ \cdots\  \cdot n.$} Fakulteta naravnega števila $n$ je v matematiki
 funkcija, ki določa zmnožek vseh celih števil, manjših ali enakih $n$. Označi se jo z $n!$.
 \[
 n! = \left\{ 
@@ -363,8 +364,8 @@ jezikov in je pomensko pravilen, namenjen predvsem lažjemu razumevanju algoritm
 
 Pri opisu algoritmov v psevdokodi bom uporabljal prireditve (označene s $\gets$), 
 \emph{while} zanke, \emph{for} zanke, vejitve (\emph{if} stavke), klice 
-funkcij in osnovne  matematične ($+, -, \cdot, /$) in logične operatorje ($=, 
-\neq, \wedge, \vee, \neg, <, \leq, >, \geq$), oklepaje ($()$) ter simbol za zaokroževanje
+funkcij, osnovne  matematične ($+, -, \cdot, /$) in logične operatorje ($=, 
+\neq, \wedge, \vee, \neg, <, \leq, >, \geq$), oklepaje ($()$) in simbol za zaokroževanje
 navzdol ($\lfloor\rfloor$). 
 Za polja $a[i]$ pomeni element polja na indeksu $i$, polja se začnejo z indeksom $0$.
 Predpostavil bom tudi, da že obstaja funkcija \textsc{swap}, ki zamenja vrednosti dveh
@@ -376,18 +377,18 @@ da je zvezna funkcija $f\!\!: \R \rightarrow \R$ v krajiščih različno predzna
 Potem iz zveznosti sledi, da ima $f$ na
 intervalu $(a, b)$ vsaj eno ničlo. Če vzamemo sredinsko točko $s = \frac{a + b}{2}$, potem bo, razen,
 če je $f(s) = 0$, kar pomeni, da smo imeli srečo in zadeli ničlo, na enem izmed intervalov $[a, s]$
-ali $[s, b]$ funkcija spet različno predznačena v krajiščih in to vzamemo za nov interval $[a, b]$. 
+ali $[s, b]$ funkcija v krajiščih spet različno predznačena in to vzamemo za nov interval $[a, b]$. 
 Postopek rekurzivno ponavljamo in v vsakem koraku nadaljujemo z razpolovljenim intervalom,
 ki zagotovo vsebuje vsaj eno ničlo. Ko je interval dovolj majhen (manjši od želene vrednosti $\epsilon$), končamo in vrnemo točko s
 sredine intervala kot približek za ničlo funkcije $f$. Algoritem bisekcije je zapisan v psevdokodi kot 
 algoritem~\ref{algo:bisekcija}.
-(povz. po Plestenjak, 2010, str. 36.) 
+(povz. po Plestenjak, 2010, str. 36) 
 
 V našem primeru bomo iskali presečišče funkcij povprečnega časa izvajanja v odvisnosti od dolžine polja, $T_1(n)$ in 
 $T_2(n)$ dveh sortirnih algoritmov. Iskali bomo torej tisti $n$, pri katerem moramo zamenjati sortirni algoritem. 
 Tako za funkcijo $f$ lahko vzamemo kar razliko v času urejanja med tema algoritmoma.
 Ko sta razliki nasprotno predznačeni,
-smo dobili željeni interval $[a, b]$. Naš $\epsilon$ bo enak 1, saj so dolžine polj lahko le cela števila
+smo dobili želeni interval $[a, b]$. Naš $\epsilon$ bo enak 1, saj so dolžine polj lahko le cela števila
 in je ena najmanjša dolžina, pri kateri se predznaka še lahko razlikujeta.
 Možno je sicer, da imata algoritma na intervalu $[a, b]$ več kot eno ničlo. 
 Vemo le, da je ničel liho mnogo, bisekcija pa lahko najde katerokoli izmed njih.
@@ -415,10 +416,11 @@ podobna tisti, ki jo na široko uporabljajo igralci kart. Je primerjalni sortirn
 
 Zaporedje $a_1, a_2, \ldots, a_n$ razdelimo na že urejeni del $a_1, a_2, \ldots, a_{i-1}$
 in še neurejeni del $a_i, \ldots a_n$. Na vsakem koraku, začenši z $i = 2$ in
-prirastkom ena, vstavimo $i$-ti element začetnega zaporedja na ustrezno mesto v končnem
+prirastkom ena, vstavimo \mbox{$i$-ti} element začetnega zaporedja na ustrezno mesto v končnem
 zaporedju. Ko je $i$ enak 2, je prvi del trivialno urejen, saj vsebuje le en element.
 Postopek urejanja z vstavljanjem je prikazan na
 sliki~\ref{fig:insertionsortimage}.
+Algoritem navadnega vstavljanja je v psevdokodi napisan kot algoritem~\ref{algo:insertionsort}.
 
 \begin{figure}[ht]
     \begin{center}
@@ -434,7 +436,6 @@ sliki~\ref{fig:insertionsortimage}.
     \label{fig:insertionsortimage}
 \end{figure}
 
-Algoritem navadnega vstavljanja je v psevdokodi napisan kot algoritem~\ref{algo:insertionsort}.
 
 \begin{algorithm}[h!t!]
   \caption{Urejanje z vstavljanjem}\label{algo:insertionsort}
@@ -456,7 +457,7 @@ Algoritem navadnega vstavljanja je v psevdokodi napisan kot algoritem~\ref{algo:
 Med postopkom iskanja pravega mesta je dobro med izvajanji primerjanj 
 sproti premikati elemente. Z drugimi besedami pustiti $x$, da se ``pogrezne'' tako, da $x$
 primerjamo z naslednjim elementom $a_j$ in ga bodisi vstavimo, če je ključ $a_j$ manjši
-ali enak $x$ ali pa $a_j$ premaknemo na desno ter nadaljujemo proti levi, če še nismo pri
+ali enak $x$, bodisi $a_j$ premaknemo na desno ter nadaljujemo proti levi, če še nismo pri
 levem robu polja. Postopek ``pogrezanja'' lahko ustavita ta dva ločena
 pogoja, kot je prikazano v \emph{while} zanki v
 algoritmu~\ref{algo:insertionsort} na vrstici~\ref{line:insertionsortwhile}.  Ko vstavimo še zadnji element v že 
@@ -472,7 +473,7 @@ urejeno zaporedje, smo z urejanjem zaključili.
 
 Prostorska zahtevnost je v vsakem primeru $\mathcal{O}(1)$, saj se vse premene dogajajo na
 mestu.
-(povz. po Wirth, 1985, str. 109.)
+(povz. po Wirth, 1985, str. 109)
 
 Spodnja časovna meja ustreza primeru, ko so elementi na začetku že urejeni, zgornja pa primeru,
 ko so elementi na začetku nasprotno urejeni. Podani algoritem opisuje tudi stabilen postopek urejanja, kajti medsebojni
@@ -506,7 +507,7 @@ sliki~\ref{fig:selectionsortimage}. \\
     \end{center}
     \vspace{-0.7cm}
     \caption[Urejanje z izbiranjem]{Grafična predstavitev urejanja z izbiranjem.}
-    \caption*{{\small Najmanjši elementi v drugem delu polja so obkroženi, puščica ponazarja, kako jih
+    \caption*{{\small Najmanjši elementi v drugem delu polja so obkroženi. Puščica ponazarja, kako jih
     vstavimo na konec prvega dela. Dela sta ločena z dvopičjem.}}
     \label{fig:selectionsortimage}
 \end{figure}
@@ -535,7 +536,7 @@ V psevdokodi je urejanje z izbiranjem zapisano kot algoritem~\ref{algo:selection
 
 Prostorska zahtevnost je v najboljšem, povprečnem in najslabšem primeru $\mathcal{O}(1)$, 
 saj algoritem opravlja vse premene na mestu.
-(povz. po Wirth, 1985, str. 113.) 
+(povz. po Wirth, 1985, str. 113) 
 
 Ker ima urejanje z izbiranjem v vsakem primeru kvadratno časovno zahtevnost, je neprimerno
 za daljša polja. Urejanje z izbiranjem tudi ni odvisno od prvotnega vrstnega reda,
@@ -545,8 +546,8 @@ primerno takrat, ko je premikanje elementov drago (imamo velike elemente).
 
 \subsubsection{Hitro urejanje}
 \label{chapter:quicksort}
-Hitro urejanje ali urejanje s porazdelitvami\footnote{vir: IJS-jev slovar računalniških izrazov
-\url{http://www.ijs.si/cgi-bin/rac-slovar}}(\emph{angl.} quicksort) je eden izmed
+Hitro urejanje ali urejanje s porazdelitvami\footnote{Vir: IJS-jev slovar računalniških izrazov
+\url{http://www.ijs.si/cgi-bin/rac-slovar}.}(\emph{angl.} quicksort) je eden izmed
 najučinkovitejših sortirnih algoritmov, ki jih poznamo, razvil pa ga je C. A. R. Hoare.
 Je primerjalni sortirni algoritem, ki je zgrajen na principu deli in vladaj.
 
@@ -637,7 +638,7 @@ Prostorska zahtevnost je v najboljšem in povprečnem primeru $\mathcal{O}(\log_
 saj algoritem opravlja premene na mestu, vsak rekurziven klic pa zahteva $\mathcal{O}(1)$ prostora.
 V najslabšem primeru je rekurzivnih klicev $n$, zato zahteva algoritem
 $\mathcal{O}(n)$ prostora.
-(povz. po Wirth, 1985, str. 128.)
+(povz. po Wirth, 1985, str. 128)
 
 Hitro urejanje je eden najhitrejših sortirnih algoritmov, kar jih
 poznamo. Svojo hitrost dolguje arhitekturi današnjih procesorjev, ki imajo
@@ -645,7 +646,7 @@ malo registrov in precej notranjega pomnilnika, saj lahko pivot ponavadi shranim
 register, kar prihrani veliko poizvedb do pomnilnika. Dober je na enakomerno
 porazdeljenih podatkih, a kljub pazljivemu izbiranju pivotov obstaja možnost neželenega
 najslabšega primera, čeprav je zelo neverjetna. Znana izboljšava hitrega
-urejanja je tudi, da krajših polja ne uredimo spet z hitrim urejanjem temveč s
+urejanja je tudi, da krajših polj ne uredimo spet s hitrim urejanjem, temveč s
 kakšnim hitrejšim algoritmom za kratka polja, na primer z urejanjem z
 vstavljanjem.
 
@@ -658,14 +659,15 @@ Maksimalna kopica je dvojiško drevo, pri katerem velja, da je ključ očeta
 vedno večji od ključa otroka. Privzemimo, da je levo poravnano.
 Maksimalno kopico lahko predstavimo v polju, kjer je koren kopice na mestu 
 1, in velja, da sta otroka elementa na mestu $i$ na mestih $2i$ in $2i + 1$.
-Maksimalno kopico, prikazano na sliki~\ref{fig:kopica}, tako predstavimo kot tako zaporedje elementov $a_i, a_{i+1}, \ldots,
+Maksimalno kopico, prikazano na sliki~\ref{fig:kopica}, tako predstavimo kot
+t\'{a}ko zaporedje elementov $a_i, a_{i+1}, \ldots,
 a_n$, da za njih velja:
 \begin{align*}
   a_i &\geq a_{2i} \\
   a_i &\geq a_{2i+1}
 \end{align*}
 pri vseh $i = 1 \ldots \lfloor ^n/_2 \rfloor$.
-(povz. po Kozak, 1986, str. 104.)
+(povz. po Kozak, 1986, str. 104)
 
 \begin{figure}[ht]
     \begin{center}
@@ -683,8 +685,8 @@ pri vseh $i = 1 \ldots \lfloor ^n/_2 \rfloor$.
 
 Urejanje s kopico podatke najprej preuredi v maksimalno kopico. To naredimo tako,
 da za vse elemente, ki imajo otroke, ponovimo naslednji postopek:
-Če je katerih izmed otrok večji od očeta, potem očeta zamenjamo z večjim izmed
-obeh otrok, ter ponovimo postopek dokler ni zadoščeno invarianti kopice.
+če je kateri izmed otrok večji od očeta, potem očeta zamenjamo z večjim izmed
+obeh otrok ter ponovimo postopek dokler ni zadoščeno invarianti kopice.
 Nato odstranimo koren kopice -- največji element -- in ga zamenjamo z zadnjim
 elementom kopice. Potem ponovno vzpostavimo invarianto kopice na preostanku
 elementov in zopet odstranimo korenski element ter ga
@@ -756,7 +758,7 @@ algoritem~\ref{algo:heapsort}. \\
 
 Prostorska zahtevnost je v vsakem primeru $\mathcal{O}(1)$, saj je kopica predstavljena kar v
 polju, ki ga urejamo, in ker se vse premene dogajajo na mestu.
-(povz. po Wirth, 1985, str. 123.)
+(povz. po Wirth, 1985, str. 123)
 
 Čas izvajanja urejanja s kopico je neodvisen od morebitne urejenosti podatkov v polju,
 kot lahko razberemo iz časovne zahtevnosti. Zaradi dokaj zapletenega postopka urejanja
@@ -768,7 +770,7 @@ povečuje.
 Urejanje z zlivanjem (\emph{angl.} merge sort) je primerjalni sortirni algoritem, 
 zgrajen na principu deli in vladaj. Razvil ga je John von Neumann leta 1945.
 Urejanje z zlivanjem uporablja idejo, da je v urejeno polje hitreje združiti dve že
-urejeni polji, kot pa dve še ne urejeni. 
+urejeni polji, kot pa dve še neurejeni. 
 Algoritem urejanja z zlivanjem ureja tako:
 \begin{enumerate}
   \item če je polje dolgo 0 ali 1, je že urejeno, če ne:
@@ -838,7 +840,7 @@ $\mathcal{O}(n\log_2 n)$. Časovna zahtevnost urejanja z zlivanjem ni odvisna od
 morebitne že delne urejenosti ali neurejenosti podatkov v polju. 
 
 Prostorska zahtevnost je v vsakem primeru $\mathcal{O}(n)$.\\ % ker O(n + log n)
-(povz. po Knuth, 1998, str. 158.) \\
+(povz. po Knuth, 1998, str. 158) \\
 
 V praksi je urejanje z zlivanjem najbolj učinkovito na
 sekvenčnih medijih, kot na primer tračnih enotah, ali na podatkovnih strukturah, ki nimajo hitrega
@@ -849,13 +851,13 @@ Problem naloge je poiskati najučinkovitejši sortirni algoritem. Tak algoritem
 mora biti prilagodljiv, saj mora biti čim hitrejši na različnih računalnikih in
 različnih tipih podatkov. Prav to je problem sortirnih algoritmov, ki so
 trenutno dostopni v vgrajenih knjižnicah za urejanje, kot na primer
-\emph{algorithm} v C++. Algoritmi implementirani v knjižnicah so zelo
+\emph{algorithm} v C++. Algoritmi, implementirani v knjižnicah, so zelo
 optimizirani za že vgrajene tipe in so napisani tako, da so hitri na večini
 računalnikov. To pomeni, da vgrajeni algoritem odlično ureja vgrajene tipe na
 povprečnem računalniku, ko pa se oddaljujemo od povprečja ali pa algoritmu damo
-za urejati netipične podatke, se algoritem oddalji od optimalnosti. V tej nalogi
+urejati netipične podatke, se algoritem oddalji od optimalnosti. V tej nalogi
 želimo poiskati tak sortirni algoritem, ki se lahko prilagaja računalniku in
-podatkom, ter eksperimentalno ugotovi, kaj je pri trenutnih pogojih optimalen
+podatkom ter eksperimentalno ugotovi, kaj je pri trenutnih pogojih optimalen
 sortirni algoritem. Zaželeno je tudi, da je enostaven za uporabo, vendar ima uporabnik
 kljub temu nad njim dovolj nadzora.
 
@@ -878,9 +880,9 @@ Za preverjanje hipotez sem si izbral eksperiment. Hipotezi je z njim najlažje
 potrditi ali ovreči, drugih virov na to temo pa ni v izobilju. Pri pripravi eksperimenta
 sem potreboval tudi nekaj sekundarnih virov. Za izvedbo eksperimenta sem implementiral vse 
 v teoretičnem delu opisane sortirne algoritme. Za implementacijo sem si izbral programski 
-jezik C++, predvsem zato, ker se program prevede v strojno kodo, nad katero ima programer
+jezik C++, predvsem zato ker se program prevede v strojno kodo, nad katero ima programer
 veliko nadzora. Zmožen je optimizacije na najnižji ravni, medtem ko je pisanje kode kljub
-temu nezahtevno opravilo, kot pri drugih programskih jezikih tretje generacije.
+temu nezahtevno opravilo kot pri drugih programskih jezikih tretje generacije.
 
 \subsection{Implementacija sortirnih algoritmov}
 \label{chapter:sortimplementation}
@@ -892,7 +894,7 @@ Slednji je lahko neveljaven v polju (kaže preko njegovega konca).
 Tako obliko funkcij sem si izbral predvsem zato, ker je v skladu z zapisom, ki ga uporablja
 \mbox{C++-ova} knjižnica \emph{algorithm}. Drugi razlog je, da s tem zapisom dosežemo minimalno število
 parametrov pri želeni funkcionalnosti. Če bi želeli le en parameter, bi bilo to
-izvedljivo, vendar bi se morali odpovedati zmožnosti, da lahko sedaj uredimo le željeni
+izvedljivo, vendar bi se morali odpovedati zmožnosti, da lahko sedaj uredimo le želeni
 del polja. V primeru zgolj enega parametra to ne bi bilo možno, vedno bi se
 urejalo celotno polje.
 
@@ -973,16 +975,16 @@ $\mathcal{O}(n)$, kjer je $n$ število vnosov v konfiguracijo. Ker pa mora biti 
 smiselna, mora biti urejena naraščajoče. Torej lahko želeni dolžini priredimo sortirni
 algoritem v logaritemskem času, in ne v linearnem, z dvojiškim iskanjem po urejenem polju, 
 kot opisano v (Knuth, 1998, str. 409.). To je velika izboljšava še posebej za dolge konfiguracije, čeprav je lahko
-pri krajših dvojiško iskanje celo malo počasnejše od linearnega.
+pri krajših dvojiško iskanje cel\'{o} malo počasnejše od linearnega.
 
 \pagebreak
 Da je konfiguracija smiselna, mora biti sestavljena iz zaporedij oblike
 \[ :sort\ \konfarrow\ \check{s}tevilo; \edot\]
 \begin{description}
   \item[$sort$] pove, kateri sortirni algoritem naj se uporablja na katerih poljih. Črka, ki
-    prestavlja posamezen algoritem, je prva črka njegovega angleškega imena.
-%    ($\mbox{$i - $\text{insertion}},\, s - \text{selection},\, q - \text{quick},\, h
-%    - \text{heap},\, m - \text{merge}$)
+    predstavlja posamezen algoritem, je prva črka njegovega angleškega imena.
+    ($\mbox{$i - $\text{insertion}},\, s - \text{selection},\, q - \text{quick},\, h
+    - \text{heap},\, m - \text{merge}$)
   \item[$\check{s}tevilo$] predstavlja katerokoli možno dolžino polja, ki ga urejamo. Torej je lahko
     katerokoli nenegativno število. Dovoljeno je tudi število $-1$, ki predstavlja neskončno
 ($\infty$).
@@ -1130,10 +1132,10 @@ Vsi kandidati so pri danem najboljšem algoritmu torej:
 Ker je prejšnji postopek za iskanje optimalne konfiguracije precej dolgotrajen, še posebej
 pri velikih $n$, ga lahko pospešimo. Določene $n$ izpustimo in to tako, da jih pri krajših
 poljih izpustimo manj, pri daljših, ki se urejajo dalj časa, pa več. Tako moramo uvesti še
-dve spremenljivki, $razmik$ in $pospe\check{s}ek$. $Razmik$ pove trenutno število $n$-jev, ki jih
+dve spremenljivki: $razmik$ in $pospe\check{s}ek$. $Razmik$ pove trenutno število $n$-jev, ki jih
 bomo preskočili, $pospe\check{s}ek$ pa pove, za koliko naj se $razmik$ poveča pri vsaki iteraciji.
-Primer: če začnemo z $n = 4$ in $razmikom$ 1 ter $posp\check{s}ekom$ 2, potem bomo preverjali
-najboljši algoritem pri vrednostih \mbox{$n = 4, 5, 8, 13, 20, 29, 40, 53,\dots$}
+Primer: če začnemo z $n = 4$ in $razmikom$ 1 ter $pospe\check{s}kom$ 2, potem bomo preverjali
+najboljši algoritem pri vrednostih \mbox{$n = 4, 5, 8, 13, 20, 29, 40, 53 \dots$}
 
 S preskakovanjem nekaterih $n$-jev pridobimo na hitrosti algoritma, vendar izgubimo na
 natančnosti. Zdaj ob spremembi najboljšega algoritma ne vemo več, pri točno katerem $n$ je
@@ -1147,7 +1149,7 @@ psevdokodi kot algoritem~\ref{algo:intersection} in opisan v sledečih korakih:
   \item \textbf{Najdemo začetno stanje.} Na vrsticah~\ref{line:findlow} in~\ref{line:findhigh} algoritma
    \ref{algo:intersection} ugotovimo, kateri sortirni
     algoritem je boljši pri $m$ in $M$, torej na mejah območja, na katerem se nahaja
-    presečišče. Rezultat primerjave pri $m$ in $M$ je logična vrednost, ki jo shranimo v
+    presečišče. Rezultat primerjave pri $m$ in $M$ je logična vrednost, ki jo shranimo
     v spremenljivki $spodaj$ za $m$ in $zgoraj$ za $M$.
   \item \textbf{Preverimo obstoj presečišča.} Če sta spodaj in zgoraj enaka, presečišča ni na intervalu $[m, M]$ in zato
     vrnemo ali zgornjo ali spodnjo mejo, tisto, ki je bližje pravemu presečišču. To je
@@ -1158,12 +1160,11 @@ psevdokodi kot algoritem~\ref{algo:intersection} in opisan v sledečih korakih:
   \item \textbf{Najdemo podinterval s presečiščem.} Preverimo, kateri algoritem je boljši pri srednji vrednosti $\frac{m+M}{2}$
     (vrstica~\ref{line:getmiddle}).
     Če je enak kot pri spodnji, je presečišče na intervalu $\left[\frac{m+M}{2}, M\right]$. Če pa je
-    enak kot zgornji, pa je presečišče na intervalu $\left[m, \frac{m+M}{2}\right]$.
+    enak kot pri zgornji, pa je presečišče na intervalu $\left[m, \frac{m+M}{2}\right]$.
     Zgornjo ali spodnjo mejo nato spremenimo tako, da ustreza želenemu intervalu. To
     nalogo opravlja \emph{if} stavek na vrsticah od~\ref{line:bisectionif} do~\ref{line:endbisectionif}.
   \item \textbf{Ponovimo na želeni polovici.} Ponovimo korake od~\ref{line:intervalwidthcheck} naprej. To ponavljanje je
-    predstavljeno z \emph{while} zanko na vrsticah~\ref{line:interwhile} --
-   \ref{line:endinterwhile}.
+    predstavljeno z \emph{while} zanko na vrsticah~\ref{line:interwhile}--\ref{line:endinterwhile}.
 \end{enumerate}
 
 \begin{algorithm}[h!t!]
@@ -1193,7 +1194,7 @@ psevdokodi kot algoritem~\ref{algo:intersection} in opisan v sledečih korakih:
 
 \subsection{Implementacija algoritma za iskanje optimalne konfiguracije}
 \label{chapter:optimalconfimplementation}
-Ta razdelek je namenjeno predvsem predstavitvi implementacije algoritma opisanega v
+Ta razdelek je namenjen predvsem predstavitvi implementacije algoritma opisanega v
 razdelku~\ref{chapter:optimalconf}. Poglavje je namenjeno tudi opisu uporabe knjižnice, ki
 implementira algoritem za iskanje optimalne konfiguracije in ga lahko bralec, ki ga
 implementacija ne zanima, brez večje škode za nadaljnje razumevanje preskoči.
@@ -1214,7 +1215,7 @@ se imenuje \emph{learn} in je definirana tako:
   \item Parameter $cmp$ predstavlja objekt tipa $Compare$, ki pomaga pri primerjanju
     različnih sortirnih metod. Parameter je konstanten, funkcija ga ne spreminja.
     Parameter je podan kot referenca (označeno z \&), kar pomeni, da se ob klicu funkcije
-    ne bo kopirala njegova vrednost, ampak se bo podal kar točno ta objekt. To je precej
+    ne bo kopirala njegova vrednost, ampak se bo podal točno ta objekt. To je precej
     pomembno, saj je  ta parameter lahko precej velik in je zaradi tega
     kopiranje neprimerno. 
 \end{itemize}
@@ -1233,14 +1234,15 @@ Objekt $Compare$ je definiran tako:
     program, preden zabeleži njen rezultat. Večje kot je to število, bolj statistično
     zanesljive so meritve.
   \item Parameter $limit$ pomeni število elementov, ki jih lahko hkrati hranimo v pomnilniku.
-    Večje kot je to število, hitrejši bo program in bolj natančne bodo meritve. Biti mora najmanj $M$. Program bo v
+    Večje kot je to število, hitrejši bo program in bolj natančne bodo meritve.
+    Biti mora najmanj $M$\!. Program bo v
     pomnilniku hranil največ $iterations \cdot M$ elementov, tudi če je dovoljen limit večji od
     tega.
   \item Parameter $acceleration$ pomeni pospešek povečevanja dolžine polj, ki jih bo
     program urejal. Razmik med dolžinami se torej vsako iteracijo poveča za
     $acceleration$. Nujno mora biti pozitiven ali enak $0$. Če je enak nič, potem se bo
     algoritem obnašal kot osnovni algoritem za iskanje optimalne konfiguracije 
-    (algoritem~\ref{algo:conf}). Začetna vrednost razmika med elementi je 1, prva dolžina
+    (algoritem~\ref{algo:conf}). Začetna vrednost razmika med elementi je 1, prva dolžina,
     pri kateri pa bo algoritem iskal najboljšo konfiguracijo pa bo 4. Ti dve vrednosti sem
     izbral, ker sta ob testiranjih dajali najboljše rezultate.
   \item Parameter $data$ predstavlja podatke, iz katerih bo program jemal naključne
@@ -1256,7 +1258,7 @@ Vsi parametri so podani kot konstantni, saj se znotraj funkcije ne smejo spremin
 Merjenje časa izvajanja posameznih sortirnih algoritmov je pravzaprav edini način za
 primerjanje njihove učinkovitosti, zato se mu velja podrobneje posvetiti.
 
-Parametri, ki nam jih poda uporabnik, so v definirani v razdelku
+Parametri, ki nam jih poda uporabnik, so definirani v razdelku
 \ref{chapter:optimalconf}. Za merjenje časa sta pomembna le dva, to sta $iterations$ in
 $limit$. Parameter, ki ga še potrebujemo, pa je dolžina polja, ki ga bo sortirni algoritem
 urejal, imenujmo ga $n$.
@@ -1269,27 +1271,27 @@ med razliko in številom iteracij je naš povprečen čas.
 
 Glavna napaka zgornjega algoritma je v tem, da v celoten čas šteje tudi tisti čas, ko
 mešamo polje, ne le tistega, ko se polje ureja. To bi lahko odpravili tako, da bi pred
-in po vsakem urejanju zabeležili čas, čase nato sešteli in jih delili z številom iteracij,
+vsakim urejanjem in po njem zabeležili čas, čase nato sešteli in jih delili z številom iteracij,
 vendar to ne bi bilo dovolj natančno, saj merjenje tako kratkih časovnih intervalov,
-še posebej, ko se urejajo kratka polja, enostavno ni dovolj natančno, da bi bilo
+še posebej ko se urejajo kratka polja, enostavno ni dovolj natančno, da bi bilo
 statistično zanesljivo. Zaželeno je torej, da se meri zgolj čas, ki ga algoritem porabi za
 urejanje polja, in večja natančnost meritve, kar narekuje večkratno urejanje. To storimo
 tako, da uredimo več polj zaporedoma in izmerimo skupni čas urejanja, iz katerega nato
 izračunamo povprečno
 vrednost. Ker želimo, da merimo zgolj čas, ko algoritem ureja, moramo pred tem 
 premešana polja shraniti v pomnilnik. Tu nastopi parameter $limit$, ki pove, koliko
-elementov smemo imeti naenkrat v pomnilniku. Večji kot je limit, več meritev se bo izvedlo naenkrat,
+elementov smemo imeti naenkrat v pomnilniku. Večji kot je limit, več meritev se bo izvedlo naenkrat
 in rezultat bo bolj natančen.
 
 Čas izvajanja sem meril z funkcijo \emph{clock\_gettime}, ki ima od vseh znanih
 funkcij največjo natančnost (meri do nanosekunde natančno), kar je dovolj
 za naše potrebe.
 
-Algoritem, ki meri čas posameznega algoritma ,je zapisan je v psevdokodi kot
+Algoritem, ki meri čas posameznega algoritma, je zapisan je v psevdokodi kot
 algoritem~\ref{algo:time} in opisan v sledečih korakih:
 
 \begin{enumerate}
-  \item \textbf{Inicializacija.} Definirajmo spremenljivko $\check{c}as$ in $napredek$, ter ju nastavimo na 0
+  \item \textbf{Inicializacija.} Definirajmo spremenljivko $\check{c}as$ in $napredek$ ter ju nastavimo na 0
     (vrstica~\ref{line:init}, algoritem~\ref{algo:time}).
   \item \textbf{Ugotovimo, koliko polj si lahko pripravimo.} \label{time:start} Ker lahko 
     polja, ki si jih bomo pripravili za testiranje, zavzemajo precej veliko količino
@@ -1312,7 +1314,7 @@ algoritem~\ref{algo:time} in opisan v sledečih korakih:
     kot sicer.
   \item \textbf{Izmerimo čas urejanja.} Zapomnimo si trenuten čas (vrstica~\ref{line:getstarttime}), nato uredimo vsa 
     predpripravljena polja z želenim
-    sortirnim algoritmom (vrstice~\ref{line:beginsortfor}~--~\ref{line:endsortfor}) in si
+    sortirnim algoritmom (vrstice~\ref{line:beginsortfor}--\ref{line:endsortfor}) in si
     nato spet zapomnimo čas (vrstica~\ref{line:getendtime}).
   \item \textbf{Povečamo skupni čas urejanja in napredek.} Razliko v času prištejemo spremenljivki $\check{c}as$ in povečamo napredek za $k$. 
   \item \textbf{Ponavljamo do želenega števila iteracij.} Če je napredek večji ali enak želenemu številu ponovitev, končajmo. 
@@ -1345,9 +1347,9 @@ algoritem~\ref{algo:time} in opisan v sledečih korakih:
 Tako merimo zgolj čas, ko algoritmi urejajo, hkrati pa se držimo limita v pomnilniku, ki
 nam ga je določil uporabnik. Časa ustvarjanja polj tako ne upoštevamo k rezultatu, kot
 je tudi prav.
-
-
 \pagebreak
+
+
 \section{Rezultati}
 Naš kompozitni sortirni algoritem smo primerjali z vsakim posameznim algoritmom izmed
 tistih, ki so bili opisani v teoretičnem uvodu v razdelku~\ref{chapter:teoreticni}. C++ algoritem
@@ -1357,9 +1359,9 @@ Imena sortirnih algoritmov so taka kot v teoretičnem uvodu, kompozitni sortirni
 zaradi krajšega zapisa imenuje kar urejanje s konfiguracijo.
 Vse algoritme sem testiral na štirih različnih tipih podatkov: 
 \emph{int}, \emph{string}, \emph{huge} in \emph{slow}, ki so opisani v nadaljevanju.
-Podatkovna struktura, ki sem jo urejal, je bila vektor\footnote{del STL
+Podatkovna struktura, ki sem jo urejal, je bila vektor,\footnote{Del STL
 (\emph{angl.} standard template library) v C++,
-implementirana v knjižnici \emph{vector}.}, torej podatkovna struktrura, ki
+implementirana v knjižnici \emph{vector}.} torej podatkovna struktrura, ki
 ustreza vsem zahtevanim kriterijem.
 
 Pred testiranjem sem poiskal optimalno konfiguracijo za vsakega od tipov. Zgornja meja
@@ -1378,21 +1380,21 @@ Program je bil preveden s prevajalnikov \texttt{gcc} verzije 4.4.5 parametri \te
 Parameter \texttt{-O3} pomeni najvišjo stopnjo avtomatske optimizacije. Parameter \texttt{-std=gnu++0x} 
 pa pove, kateri dialekt jezika je uporabljen, v našem primeru je to osnutek novega standarda za C++.
 Ostali parametri niso tako pomembni, njihovi pomeni so pojasnjeni v strani z navodili za uporabo za program 
-\texttt{gcc}.\footnote{\emph{angl.} man page. Dostopna je preko ukaza \texttt{man gcc}.}
+\texttt{gcc}.\footnote{\emph{Angl.} man page. Dostopna je preko ukaza \texttt{man gcc}.}
 
 Rezultati bodo vedno predstavljeni s tabelo, ki bo prikazovala čase urejanja
 posameznih algoritmov pri določenem številu elementov. Ponavadi je to število
 10.000, saj je bil pri tem številu elementov razpored sortirnih algoritmov po
-učinkovitosti že močno določen in ne tudi pri večanju števila ne bi spreminjal.
-Drugi razlog je tudi, da urejanje polj večih dolžin traja tudi dalj časa, bi
-bilo s tem pridobivanje drugih rezultatov za dalj časa prekinjeno, še posebej
+učinkovitosti že močno določen in se tudi pri večanju števila ne bi spreminjal.
+Drugi razlog je tudi, da urejanje polj večih dolžin traja tudi dalj časa, s tem
+pa bi bilo pridobivanje drugih rezultatov za dalj časa prekinjeno, še posebej
 dolgo časa traja izdelovanje grafov.
 Učinkovitost sortirnih algoritmov bo predstavljena tudi z 
 grafi, na katerih bodo krivulje vseh sortirnih algoritmov. Najpomembnejše pa
 bodo vrednosti v tabeli, ki bo prikazovala vsoto časov sortirnih algoritmov za
-vse dolžine za določen tip. To je pravzaprav ploščina med krivuljo sortirnega
-algoritma in absciso osjo na določenem intervalu. Tako lahko vsak sortirni
-algoritem ocenimo kako dober je na nekem tipu, manjša kot je ploščina, boljši
+vse dolžine za določen tip. To je pravzaprav približek ploščine med krivuljo sortirnega
+algoritma in abscisno osjo na določenem intervalu. Tako lahko vsak sortirni
+algoritem ocenim,o kako dober je na nekem tipu --- manjša kot je ploščina, boljši
 je. Ker je to najbolj splošna ocena vsakega algoritma, ji velja dati posebno
 težo.
 \pagebreak
@@ -1479,7 +1481,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
     \caption[Rezultati za tip \emph{int}, 10.000 el. -- izrez]{Rezulati za tip
     \emph{int}, 10.000 elementov.}
     \caption*{{\small Na sliki je prikazan
-    spodnji del grafa na sliki~\ref{fig:rez:int}, za boljšo primerjavo med
+    spodnji del grafa na sliki~\ref{fig:rez:int} za boljšo primerjavo med
     učinkovitejšimi algoritmi.}}
     \label{fig:rez:intblizu}
 \end{figure}
@@ -1491,7 +1493,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
 \subsection{Tip \emph{string}}
 \label{chapter:rez:string}
 Tip \emph{string} predstavlja niz znakov poljubne dolžine. Nizi, ki sem jih urejal, so
-bili dolgi od enega do dvanajst znakov in so v pomnilniku zavzeli sorazmerno malo prostora
+bili dolgi od enega do dvanajst znakov in so v pomnilniku zavzeli sorazmerno malo prostora,
 vendar več kot \emph{int}. Primerjava dveh nizov znakov lahko traja sorazmerno dolgo, saj se
 nizi primerjajo leksikografsko, najprej po prvi črki, nato po drugi in tako vse do zadnje.
 Primerjanje črke z drugo traja tako dolgo kot primerjanje dveh objektov tipa \emph{int}.
@@ -1555,7 +1557,7 @@ Najdena optimalna konfiguracija za tip \emph{string} je sledeča:
     urejanja različnih sortirnih algoritmov za tip \emph{string} v odvisnosti od dolžine polja, vse
     od dolžine 1 do 1.000. Program je za vsako dolžino polja naredil 100
     iteracij. Približan je tako, da kaže zgolj popolne grafe učinkovitejših
-    algoritmov, za boljšo primerjavo.}}
+    algoritmov za boljšo primerjavo.}}
     \label{fig:rez:string1000}
 \end{figure}
 
@@ -1577,7 +1579,7 @@ Najdena optimalna konfiguracija za tip \emph{string} je sledeča:
     \vspace{-0.7cm}
     \caption[Rezultati za tip \emph{string}, 10.000 el. -- izrez]{Rezultati za
     tip \emph{string}, 10.000 elementov.}
-    \caption*{{\small Slika prikazuje le spodnji del grafa na sliki~\ref{fig:rez:string10000},
+    \caption*{{\small Slika prikazuje le spodnji del grafa na sliki~\ref{fig:rez:string10000}
     za boljšo primerjavo med učinkovitejšimi algoritmi.}}
     \label{fig:rez:string10000zoom}
 \end{figure}
@@ -1656,7 +1658,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{hu
     \caption[Rezultati za tip \emph{huge}, 1.000 el. -- izrez]{Rezultati za tip
     \emph{huge}, 1.000 elementov.}
     \caption*{{\small Slika
-    prikazuje samo spodnji del grafa na sliki~\ref{fig:rez:huge1000}, za
+    prikazuje samo spodnji del grafa na sliki~\ref{fig:rez:huge1000} za
     boljšo primerjavo med učinkovitejšimi algoritmi.}}
     \label{fig:rez:hugeblizu}
 \end{figure}
@@ -1735,7 +1737,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{sl
     \caption[Rezultati za tip \emph{slow}, 1.000 el. -- izrez]{Rezultati za tip
     \emph{slow}, 1.000 elementov.}
     \caption*{{\small Slika
-    prikazuje zgolj spodnji del grafa na sliki~\ref{fig:rez:slow1000}, za
+    prikazuje zgolj spodnji del grafa na sliki~\ref{fig:rez:slow1000} za
     boljšo primerjavo med učinkovitejšimi algoritmi.}}
     \label{fig:rez:slowblizu}
 \end{figure}
@@ -1749,7 +1751,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{sl
 \subsection{Tip \emph{int}}
 Dobljena konfiguracija $:s \lra 5;:i \lra 67;:q \lra -1;$
 se ujema s teoretičnim delom. Urejanje z izbiranjem in urejanje z vstavljanjem sta 
-dobra na kratkih poljih, na daljših poljih pa je boljše hitro urejanje, kot zelo hiter algoritem na naključno
+dobra na kratkih poljih, na daljših poljih pa je boljše hitro urejanje kot zelo hiter algoritem na naključno
 porazdeljenih podatkih. 
 
 Rezultati v tabeli~\ref{tab:rez:int} za dolžino 10 kažejo podobno sliko. Urejanje z izbiranjem in urejanje 
@@ -1770,8 +1772,8 @@ vedno na zadnjem mestu, saj število elementov še ni dovolj veliko, da bi se vs
 in kopiranje elementov splačali. Tudi na sliki~\ref{fig:rez:int1000} se vidijo
 podobne ugotovitve. Urejanje z zlivanjem in urejanje z izbiranjem sta zelo
 počasna (na sliki ravno ujamemo njuno presečišče), 
-sledi jima urejanje z izbiranjem, sledita urejanje s kopico in tik na
-njih hitro urejanje.  \mbox{C++-ov} algoritem in urejanje s konfiguracijo se praktično
+sledi jima urejanje z izbiranjem, nato urejanje s kopico in tik za
+njim hitro urejanje.  \mbox{C++-ov} algoritem in urejanje s konfiguracijo se praktično
 prekrivata, vendar je urejanje s konfiguracijo za približno $n < 600$ zagotovo
 boljše od \mbox{C++-ovega} algoritma, za $n$-je večje od 600 pa v večini primerov, a že
 vidimo, da se približuje njuno presečišče.
@@ -1798,8 +1800,8 @@ poljih, ker ima boljšo implementacijo osnovnih algoritmov in je tudi
 prilagojen za vgrajene tipe v C++. 
 
 Pri sto tisoč elementih se le dokončno potrdijo mesta algoritmov,
-algoritma s kvadratno časovno zahtevnostjo sta 32 krat
-in 170 krat slabša od urejanja z zlivanjem, ter kar 200 krat in kar 1000 krat slabša od hitrega 
+algoritma s kvadratno časovno zahtevnostjo sta 32-krat
+in 170-krat slabša od urejanja z zlivanjem, ter kar 200-krat in kar 1000-krat slabša od hitrega 
 urejanja. Kompozitna algoritma sta na prvem mestu, s tem, da je urejanje s
 konfiguracijo na drugem mestu.
 
@@ -1807,10 +1809,10 @@ V tabeli~\ref{tab:rez:intavegrage} vidimo seštevek vseh časov urejanja pri vse
 dolžinah za vsak posamezen algoritem. Vidimo, da je najboljši \mbox{C++-ov} algoritem,
 tik za njim pa urejanje s konfiguracijo. Oba algoritma sta primerna za urejanje
 polj s števili, urejanje s konfiguracijo bi bilo celo boljše, če bi gledali
-ploščine pod grafi samo do 1.000 elementov. Če pa bi gledali ploščine do 100.000
-elementov pa bi bil \mbox{C++-ov} algoritem še boljši kot sedaj. 
-Algoritmu, vgrajenemu v C++ in urejanju s konfiguracijo sledita hitro urejanje in urejanje
-s kopico, nato pa urejanje zlivanjem. Urejanje z vstavljanjem, se je kljub svoji
+ploščine pod grafi samo do 1.000 elementov. Če bi gledali ploščine do 100.000
+elementov, pa bi bil \mbox{C++-ov} algoritem še boljši kot sedaj. 
+Algoritmu, vgrajenemu v C++, in urejanju s konfiguracijo sledita hitro urejanje in urejanje
+s kopico, nato pa urejanje z zlivanjem. Urejanje z vstavljanjem se je kljub svoji
 pričakovani kvadratni časovni zahtevnosti uvrstilo precej blizu urejanja z
 zlivanjem. Urejanje z izbiranjem je na zadnjem mestu in se je izkazalo skrajno 
 neprimerno za urejanje polj s števili. 
@@ -1835,21 +1837,21 @@ nizih znakov, ki so nekajkrat večji od števil, ne splača. Urejanje z zlivanje
 kot pri tipu \emph{int} najslabše, saj se veliko kopiranja in rekurzivnih klicev pri tako 
 kratkih poljih ne splača. Zelo dober rezultat je doseglo tudi urejanje s kopico, kar kaže 
 na večjo učinkovitost nerekurzivnih algoritmov pri kratkih poljih. Urejanje s konfiguracijo
-je sicer že sestavljeno in sicer iz hitrega urejanja in urejanja z izbiranjem. Malo počasnejše 
+je sicer že sestavljeno, in sicer iz hitrega urejanja in urejanja z izbiranjem. Malo počasnejše 
 je le od slednjega, zaradi iskanja po konfiguraciji in rekurzivnih klicev.
 V primerjavi s poljem števil traja v povprečju približno desetkrat dlje, da uredimo polje nizov,
 kar potrjuje, da se nizi počasneje primerjajo in kopirajo.
 
 Pri stotih elementih obe urejanji s kvadratno časovno zahtevnostjo že nazadujeta, slabše je le urejanje z zlivanjem,
 ki se mu vse kopiranje v dodaten pomnilnik in rekurzivni klici 
-še vedno ne splačajo. Urejanje s kopico, kot nerezkurziven algoritem
-z ustreznim razmerjem med primerjavami in zamenjavami, je na prvem mestu med nekompozitnimi algoritmi.
+še vedno ne splačajo. Urejanje s kopico kot nerezkurziven algoritem
+z ustreznim razmerjem med primerjavami in zamenjavami je na prvem mestu med nekompozitnimi algoritmi.
 Urejanje s konfiguracijo že pokaže svoje prednosti, saj prehiti vse algoritme, tudi vgrajeni 
 algoritem v C++. Pri hitrem urejanju je število rekurzivnih klicev še vedno preveliko, da bi se splačalo.
 Na sliki~\ref{fig:rez:string1000} vidimo, kako je urejanje s konfiguracijo do
 malo manj kot 600 elementov v polju boljše od vgrajenega algoritma v C++, potem
 pa se situacija obrne. Oba algoritma s kvadratno časovno zahtevnostjo precej
-hitro izgineta iz slike, saj sta že pri pri 100 elementih v polju popolnoma
+hitro izgineta s slike, saj sta že pri pri 100 elementih v polju popolnoma
 nekonkurenčna ostalim. Prav tako je s svojim izdatnim kopiranjem elementov
 počasno tudi urejanje z zlivanjem.
 
@@ -1857,28 +1859,29 @@ Pri tisočih elementih močno napredujeta algoritem, vgrajen v C++, in hitro ure
 se vidi njegova splošna optimizirana implementacija za vgrajene tipe in za daljša polja. Hitremu urejanju se 
 rekurzivni klici splačajo, saj je malo boljši od še vedno odličnega urejanja s kopico. Urejanje s konfiguracijo 
 je sicer malo slabše od vgrajenega algoritma v C++, a še vedno bolje od vseh nekompozitnih algoritmov.
-Oba algoritma s kvadratno časovno zahtevnostjo sta močno na zadnjih dveh mestih urejanje z izbiranjem 
+Oba algoritma s kvadratno časovno zahtevnostjo sta močno na zadnjih dveh mestih, urejanje z izbiranjem 
 še vedno malo boljše od urejanja z vstavljanjem kljub kvadratni časovni zahtevnosti v vsakem primeru.
 
 Pri deset tisoč elementih je \mbox{C++-ov} algoritem še vedno zanesljivo na prvem mestu. Urejanje s 
 konfiguracijo ni več kompozitno, uporablja le urejanje s kopico, zato je tudi
 njegov rezultat malce slabši od urejanja s kopico samega (kot vidno na
-sliki~\ref{fig:rez:string10000zoom}), zaradi branja
+sliki~\ref{fig:rez:string10000zoom}) zaradi branja
 konfiguracije. Za polja z dolžinami od 6155 do 6530 urejanje s konfiguracijo uporablja
 urejanje z zlivanjem, čeprav je precej slabše od ostalih algoritmov s podobno časovno zahtevnostjo. Urejanje s
 konfiguracijo ga kljub temu uporablja, ker izkorišča njegovo rekurzivno naravo in krajša polja uredi s
 primernejšim algoritmom. Urejanje z zlivanjem pa tudi krajša polja uredi z zlivanjem, kar se, kot smo 
-videli pri desetih ali stotih elementih, ne splača, in je zato precej počasno.
+videli pri desetih ali stotih elementih, ne splača in je zato precej počasno.
 Pri poljih z deset tisoč elementi je torej najboljši nekompozitni algoritem 
 urejanje s kopico, sledi hitro urejanje. Tudi na zadnjem mestu se zgodi zamenjava, urejanje z izbiranjem
-postane, zaradi kvadratne časovne zahtevnosti v vseh primerih, slabše od % tukaj morajo biti vejice, ker se drugače spremeni pomen stavka 
-urejanja z vstavljanjem. Oba algoritma sta popolnoma neprimerna za dolga polja,
-saj praktično 200 krat počasnejša od urejanja s kopico. To se tudi vidi na
+postane slabše od
+urejanja z vstavljanjem.  Zadnje mesto lahko pripiše svoji kvadratni časovni
+zahtevnosti v vseh primerih. Oba algoritma sta popolnoma neprimerna za dolga polja,
+saj sta kar približno 200-krat počasnejša od urejanja s kopico. To se tudi vidi na
 sliki~\ref{fig:rez:string10000}, saj se drugih algoritmov praktično ne vidi.
 Tak vrsti red bi se verjetno nadaljeval tudi naprej, razlike med algoritmi bi se
 samo povečevale.
 
-Poglejmo še splošno učinkovitost sortirnih algoritmov prikazano v
+Poglejmo še splošno učinkovitost sortirnih algoritmov, prikazano v
 tabeli~\ref{tab:rez:stringavegrage}. Vidimo, da je daleč najboljši vgrajeni
 algoritem v C++, sledi mu urejanje s konfiguracijo. Podobno kot pri tipu
 \emph{int}, bi bilo tudi tukaj urejanje s konfiguracijo boljše, če bi vzeli
@@ -1901,11 +1904,11 @@ V konfiguraciji $:i \lra 12;:s \lra 68;:q \lra 100;:s \lra 148;:q \lra 189;:s
 urejanje, ki se na koncu tudi izkaže za učinkovitejše. To izmenjevanje ni
 posledica eksperimentalnih napak, pomeni le, da sta takrat urejanje z izbiranjem
 in urejanje z vstavljanjem približno enako dobra. Ker sta njuni krivulji zelo
-skupaj imata zelo veliko presečišč, ki se tudi kažejo v konfiguraciji in lahko
+skupaj imata zelo veliko presečišč, ki se kažejo tudi v konfiguraciji in so lahko
 tudi posledica obnašanja hitrega urejanja, ki je odvisno od vhodnih podatkov.
 
-Pri desetih elementih v polju sta najboljši urejanje z vstavljanjem in urejanje
-z izbiranjem kot lahko vidimo v tabeli~\ref{tab:rez:huge}.
+Pri desetih elementih v polju sta najboljša urejanje z vstavljanjem in urejanje
+z izbiranjem, kot lahko vidimo v tabeli~\ref{tab:rez:huge}.
 Urejanje s konfiguracijo se ne obnaša kompozitno, saj ureja le z
 vstavljanjem. Slabše je tako od urejanja z vstavljanjem kot od urejanja z
 izbiranjem, saj ne more pridobivati hitrosti na kompozitnosti, temveč jo
@@ -1919,19 +1922,19 @@ poljih dolžine 100 se lepo
 vidi, kako velikost elementov vpliva na učinkovitosti sortirnih algoritmov.
 Urejanje z zlivanjem je še vedno zadnje, saj se kopiranje veliki elementov ne
 splača kljub časovni zahtevnosti $\mathcal{O}(n\log_2 n)$. Urejanje z
-vstavljanjem, ki prav tako veliko kopira, je na drugem mestu. Po drugi strani
-urejanje z izbiranjem, ki kopira zelo malo, primerja pa zelo veliko, je
-klub svoji kvadratni časovni zahtevnosti na prvem mestu med nesestavljenimi
+vstavljanjem, ki prav tako veliko kopira, je na drugem mestu. Po drugi strani je 
+urejanje z izbiranjem, ki kopira zelo malo, primerja pa zelo veliko, 
+kljub svoji kvadratni časovni zahtevnosti na prvem mestu med nesestavljenimi
 algoritmi. Dobro je tudi hitro urejanje, slabše pa je urejanje s kopico, ki
-elemente veliko kopira, saj jih preureja v kopico, ter nato zamenja koren in spet
-naredi kopico\dots \mbox{C++-ov} algoritem je nekje na sredini. Tudi na sliki
+elemente veliko kopira, saj jih preureja v kopico ter nato zamenja koren in spet
+naredi kopico, nato step zamenja koren \dots\ \mbox{C++-ov} algoritem je nekje na sredini. Tudi na sliki
 \ref{fig:rez:hugeblizu} se vidi, da je to
 uporabniški tip, za katerega ni optimiziran.
 Pri tisočih elementih je najbolj opazna sprememba močno zadnje mesto urejanja z
 vstavljanjem (presečišče z urejanjem z zlivanjem ima na
 sliki~\ref{fig:rez:hugeblizu} približno pri $n = 110$). K temu pripomore predvsem veliko kopiranja in kvadratna časovna
 zahtevnost v povprečnem primeru. Urejanje z zlivanjem je napredovalo na račun
-urejanja z vstavljanjem, vendar je še vedno na predzadnjem mestu, zaradi
+urejanja z vstavljanjem, vendar je še vedno na predzadnjem mestu zaradi
 kopiranja celotnega polja v dodaten pomnilnik. To se vidi na
 sliki~\ref{fig:rez:huge1000}, saj so zadnji trije algoritmi praktično edini
 vidni na sliki.
@@ -1939,15 +1942,15 @@ Vidi se (slika \ref{fig:rez:hugeblizu}), da urejanje s
 konfiguracijo v večini uporablja hitro urejanje, ki je na skupnem drugem mestu, 
 sledi mu vgrajeni algoritem v C++, ki se mu sicer obrestuje njegova kompozitna
 narava, vendar ni optimiziran za uporabniške tipe. 
-Urejanje z izbiranjem je malo nazadovalo, vendar je, kljub svoji kvadratni
-časovni zahtevnosti, še vedno boljše od urejanja s kopico.
+Urejanje z izbiranjem je malo nazadovalo, vendar je kljub svoji kvadratni
+časovni zahtevnosti še vedno boljše od urejanja s kopico.
 Zelo malo kopiranj elementov se tudi pri poljih dolžine
 tisoč še vedno zelo obrestuje.
 
 Pri deset tisoč elementih zaradi kvadratne časovne zahtevnosti nazaduje urejanje
 z izbiranjem. Vrstni red ostalih se ne spremeni bistveno, poudarijo pa se
 razlike med algoritmi. 
-Urejanje z vstavljanjem je na zadnjem mestu, kar 630 krat slabše od urejanja s
+Urejanje z vstavljanjem je na zadnjem mestu, kar 630-krat slabše od urejanja s
 konfiguracijo. Urejanje z zlivanjem je močno zadnje
 med algoritmi s pričakovano časovno zahtevnostjo $\mathcal{O}(n\log_2n)$. 
 Urejanje s kopico je malo boljše, najboljše pa je hitro urejanje, ki od teh
@@ -1955,38 +1958,39 @@ očitno naredi najmanj kopiranj. Med urejanjem s kopico in hitrim urejanjem je
 \mbox{C++-ov} algoritem, urejanje s konfiguracijo pa je tudi kar močno zasidrano na
 prvem mestu.
 
-Če pogledamo splošno učinkovitost sortirnih algoritmov prikazano v
-tabeli~\ref{tab:rez:hugeavegrage} pri tem tipu vidimo, da
-je v primerjavi s prejšnjimi tipi, tu precej nazadoval algoritem, vgrajen v C++.
+Če pogledamo splošno učinkovitost sortirnih algoritmov, prikazano v
+tabeli~\ref{tab:rez:hugeavegrage}, pri tem tipu vidimo, da
+je v primerjavi s prejšnjimi tipi tu precej nazadoval algoritem, vgrajen v C++.
 Najboljše je urejanje s konfiguracijo, s kar nekaj prednosti pred hitrim
-urejanjem. Hitremu urejanju presenetljivo sledu urejanje z izbiranjem, ki je
+urejanjem. Hitremu urejanju presenetljivo sledi urejanje z izbiranjem, ki je
 bilo v prejšnjih tipih najslabše, tu pa je zaradi izredno malo premikov, ki jih
 naredi med urejanjem, doseglo odlično tretje mesto. Šele četrti je vgrajeni
 algoritem v C++, ki se mu vidi, da ni optimiziran za uporabniške tipe. Vsi
 štirje zgoraj omenjeni algoritmi so kar primerni za urejanje polj z elementi
 tipa \emph{huge}. Peto in šesto mesto sta zasedla urejanje s kopico in urejanje
-z zlivanjem, naredita kar veliko kopiranj elementov. Urejanje z vstavljanjem, ki
+z zlivanjem, ki naredita kar veliko kopiranj elementov. Urejanje z vstavljanjem, ki
 prav tako naredi veliko kopiranj, poleg tega pa ima še pričakovano kvadratno časovno
-zahtevnost je daleč na zadnjem mestu in zelo neprimerno za uporabo na poljih z
+zahtevnost, je daleč na zadnjem mestu in zelo neprimerno za uporabo na poljih z
 elementi tip \emph{huge}. 
 
 \subsection{Tip \emph{slow}}
 V konfiguraciji
 $:i \lra 7;:m \lra -1;$, dobljeni za tip \emph{slow}, 
 vidimo, da se najprej uporablja urejanje z vstavljanjem, nato pa
-urejanje z zlivanjem. Ker primerjanje dveh elementov tipa \emph{slow} traja precej dolgo, so dobri algoritmi, ki
+urejanje z zlivanjem. Ker primerjanje dveh elementov tipa \emph{slow} traja 
+precej dolgo, so dobri tisti algoritmi, ki
 naredijo sorazmerno malo primerjav in več kopiranj. 
 
 V tabeli~\ref{tab:rez:slow} vidimo, da je pri desetih elementih najboljši nekompozitni algoritem urejanje z
-vstavljanjem, sledi mu sledi urejanje z zlivanjem. Situacija je ravno
+vstavljanjem, sledi mu urejanje z zlivanjem. Situacija je ravno
 obratna kot pri tipu \emph{huge}. Ti dve urejanji naredita najmanj primerjanj
-elementov, zato sta tudi najhitrejši, kljub rekurzivni naravi urejanja z
+elementov, zato sta tudi najhitrejši kljub rekurzivni naravi urejanja z
 zlivanjem. Urejanje s konfiguracijo uporablja obe
 najboljši nekompozitni urejanji in je z malo prednosti na prvem mestu. Najslabše
 je presenetljivo hitro urejanje, drugo najslabše pa urejanje z izbiranjem, ki
 naredi ogromno primerjav in zelo malo premikov. Hitro urejanje tudi naredi
 precej veliko primerjav in je poleg tega še rekurzivno, kar se, kot smo videli tudi
-na prejšnjih primerih, ne splača na tako krakih poljih. Urejanje s kopico je kot
+na prejšnjih primerih, ne splača na tako kratkih poljih. Urejanje s kopico je kot
 nerekurziven algoritem na tretjem mestu med nekompozitnimi. V širši
 konkurenci ga je premagal tudi vgrajeni algoritem v C++, ki se mu zapletena
 implementacija in optimizacija pri tako kratkih poljih ne splačata.
@@ -1998,8 +2002,8 @@ Pri poljih dolgih sto elementov najprej opazimo, da je urejanje z vstavljanjem
 nazadovalo iz drugega mesta na predzadnje. To lahko v celoti pripišemo njegovi
 kvadratni časovni zahtevnosti. Urejanje z zlivanjem je najboljše med
 nekompozitnimi algoritmi, saj naredi zelo malo primerjanj elementov in se mu
-splača celo kopiranje celotnega polja v dodaten pomnilnik. Drugače je urejanje z
-izbiranjem močno na zadnjem mestu zaradi ogromnega števila primerjav in
+splača cel\'{o} kopiranje celotnega polja v dodaten pomnilnik. Urejanje z
+izbiranjem je močno na zadnjem mestu zaradi ogromnega števila primerjav in
 kvadratne časovne zahtevnosti, hitro urejanje pa je še vedno slabše od urejanja s
 kopico. \mbox{C++-ov} algoritem je še vedno na tretjem mestu s kar velikim zaostankom.
 Enak vrstni red se vidi tudi na
@@ -2015,32 +2019,33 @@ principa deli in vladaj, torej se je rekurzivnost hitremu urejanju obrestovala
 pri malce daljših poljih. Ostali vrstni red algoritmov ostane popolnoma enak,
 razlike med algoritmi se samo povečajo.
 
-Pri poljih dolgih deseti tisoč elementov vrstni red algoritmov ostane enak,
+Pri poljih dolgih deset tisoč elementov vrstni red algoritmov ostane enak,
 povečajo se zgolj razlike med njimi. Daleč spredaj sta urejanje s konfiguracijo,
-ki mu tesno sledi urejanje z zlivanjem z najmanj izvedenimi primerjavami in zato najboljših
+ki mu tesno sledi urejanje z zlivanjem z najmanj izvedenimi primerjavami in zato najboljšim
 rezultatom med nekompozitnimi algoritmi. Tretji je C++ algoritem, nato hitro urejanje,
 urejanje s kopico, urejanje z vstavljanjem in na zadnje mesto prikovano urejanje z izbiranjem z
 ogromnim številom primerjav in kvadratno časovno zahtevnostjo v vsakem primeru.
 Pri večanju dolžine polja bi se verjetno vrstni red ohranjal, le razlike med
 algoritmi bi se povečevale. Vidimo tudi, da urejanje polja z 10.000 elementi
-tipa \emph{slow} traja kar 35 krat dlje od urejanja polja z elementi tipa
+tipa \emph{slow} traja kar 35-krat dlje od urejanja polja z elementi tipa
 \emph{int} enake dolžine, če primerjamo najučinkovitejša algoritma. Če pa
 primerjamo najslabša algoritma, pa urejanje polja z elementi tipa \emph{slow}
-traja kar 2600 krat dlje kot urejanje polja z elementi tipa \emph{int}.
+traja kar 2600-krat dlje kot urejanje polja z elementi tipa \emph{int}.
 
 Če pogledamo skupen čas urejanja algoritmov v tabeli~\ref{tab:rez:slowavegrage},
-je razvidno, da je na splošno najboljše je urejanje s konfiguracijo. Vidi se mu,
+je razvidno, da je na splošno najboljše urejanje s konfiguracijo. Vidi se mu,
 da v veliki meri
 uporablja urejanje z zlivanjem, ki urejanju s konfiguracijo kar tesno sledi. 
 Urejanje z zlivanjem je zelo primerno, saj primerjava dveh objektov tipa
 \emph{slow} traja precej dolgo, urejanje z zlivanjem pa naredi malo primerjav.
-na naslednjem mestu  je \mbox{C++-ov}  algoritem, ki očitno ni optimiziran za 
+Na naslednjem mestu  je \mbox{C++-ov}  algoritem, ki očitno ni optimiziran za 
 uporabniške tipe. Tesno skupaj mu sledita
 hitro urejanje in urejanje s kopico. Urejanje z vstavljanjem se pokaže za
 splošno precej neučinkovito, za popolnoma neučinkovito pa se izkaže urejanje z
 izbiranjem, ki naredi zelo veliko primerjav, poleg tega pa ima še kvadratno
 časovno zahtevnost v vsakem primeru.
 
+\pagebreak
 \section{Sklep}
 Ugotovili smo, da je učinkovitost posameznega sortiranega algoritma odvisna od
 lastnosti elementov, ki ga sortiramo. To se je še posebej lepo vidi v primerjavi
@@ -2048,18 +2053,18 @@ tipov \emph{huge} in \emph{slow}, ki sta namenoma zasnovana tako, da imata
 precej različne lastnosti. Odvisnost algoritmov od lastnosti podatkov je posledica
 različnega števila primerjav in zamenjav, ki jih naredijo, prav tako pa je tudi
 posledica njihove časovne zahtevnosti. To se je lepo pokazalo tudi v precej
-raznolikih konfiguracijah, ki pa so vseeno kazale grob vzorec Pri majhnih $n$ se je
+raznolikih konfiguracijah, ki pa so vseeno kazale grob vzorec. Pri majhnih $n$ se je
 vedno izkazal za najučinkovitejšega algoritem s pričakovano kvadratno časovno
 zahtevnostjo, pri velikih $n$ pa je bil vedno   
 najprimernejši algoritem s pričakovano časovno zahtevnostjo $\mathcal{O}(n\log_2
 n)$. Raznolikost dobljenih konfiguracij in različen vrstni red sortirnih
-algoritmov pri različnih tipih sta rezultata zaradi katerih lahko z gotovostjo
+algoritmov pri različnih tipih sta rezultata, zaradi katerih lahko z gotovostjo
 potrdimo hipotezo~\ref{hip:dif:type:dif:algo}.
 
 Kompoziten algoritem je bil v veliko primerih boljši od posameznih
 algoritmov. Pravzaprav je bil malo slabši le v skrajnih primerih, ko je bil
 sestavljen le iz enega algoritma. To se je zgodilo pri zelo kratkih poljih, ko
-je bil čas urejanja tako zelo majhen, da je praktično nepomembno, s katerih
+je bil čas urejanja tako zelo majhen, da je praktično nepomembno, s katerim
 sortirnim algoritmom uredimo polje. Taka konfiguracija se je pojavila tudi pri
 tipu \emph{string}, kjer pa je čas urejanja tako dolg, da se je iskanje po
 konfiguraciji izkazalo za zanemarljivo, saj razlike ni bilo moč
@@ -2072,21 +2077,32 @@ posameznih algoritmov in ravno skupni čas urejanja ima največjo težo, saj to
 uporabniku zagotavlja najučinkovitejše urejanje v povprečju. 
 Ker se je kompozitni sortirni algoritem
 v tem pogledu najbolje obnesel, lahko potrdimo hipotezo~\ref{hip:komp:vs:nekomp}.
+\pagebreak
 
 \section{Zaključek}
 Menim, da so bili doseženi vsi cilji naloge. Kompozitni sortirni algoritem, z
 angleškim imenom \emph{tweaksort}, se je izkazal za odličen sortirni algoritem,
-ki je izjemno prilagodljiv. Prilagodi je lahko tako računalniku kot podatkom, ki
+ki je izjemno prilagodljiv. Prilagodi se lahko tako računalniku kot podatkom, ki
 jih ureja. Vsi v nalogi opisani algoritmi so implementirani v
-knjižnici, ki je priložena kot priloga~\ref{pril:koda}. 
+knjižnici, ki je, skupaj s primeri priložena kot priloga~\ref{pril:koda}. 
+
 Knjižnica je tudi dejansko uporabna v realnih situacijah in javno dostopna na spletnem
-naslovu \url{http://gimvic.org/slak/tweaksort/} skupaj s primeri uporabe. Metoda dela se je izkazala za
-pravilno, eksperiment je bil izpeljan tako, da je bila podvrženost merskim 
-napakam čim manjša. Lahko bi ga seveda izboljšali tako, da bi povečevali 
-število iteracij in urejali tudi polja večjih dolžin. Neraziskana ostaja  
-odvisnost algoritmov od podatkovne strukture, če izpustimo
-zahtevo po naključnem dostopu v polju. Prav tako bi lahko naprej raziskovali tudi
-odvisnost uspešnosti sortirnih algoritmov od predhodnega vrstnega reda podatkov v polju.
+naslovu \url{http://gimvic.org/slak/tweaksort/} skupaj s primeri uporabe.
+Metoda dela se je izkazala za pravilno, eksperiment je bil izpeljan tako,
+da je bila podvrženost merskim napakam čim manjša. Lahko bi ga seveda 
+izboljšali tako, da bi povečevali število iteracij in urejali tudi 
+polja večjih dolžin. Dejansko hitrost algoritma bi lahko izboljšali z bolj
+optimizirano implementacijo. Poleg tega bi lahko v naš osnovni nabor sortirnih
+algoritmov dodali še kakšen algoritem in tako povečali raznovrstnost izbora
+najboljšega izmed njih. S povečevanjem števila izhodiščnih nekompozitnih
+algoritmov bi lahko precej izboljšali hitrost algoritma, bi pa tudi precej
+podaljšali čas učenja, saj bi se povečalo število kandidatov za optimalno
+konfiguracijo.
+
+Neraziskana ostaja odvisnost algoritmov od podatkovne 
+strukture, če izpustimo zahtevo po naključnem dostopu v polju. Prav tako
+bi lahko naprej raziskovali tudi odvisnost uspešnosti sortirnih algoritmov 
+od predhodnega vrstnega reda podatkov v polju.
 \pagebreak
 
 \section{Viri}
@@ -2094,17 +2110,17 @@ odvisnost uspešnosti sortirnih algoritmov od predhodnega vrstnega reda podatkov
   \item KOZAK, Jernej. 1986. \emph{Podatkovne strukture in algoritmi}. Ljubljana: DMFA SRS.
   \item WIRTH, Niklaus. 1985. \emph{Računalniško programiranje, 2. del}. Ljubljana: DMFA SRS.
   \item PLESTENJAK, Bor. 2010. \emph{Uvod v numerične
-    metode} (v pripravi, vrezija: 4. marec 2010).
+    metode} (v pripravi, verzija 4. marec 2010).
     Dostopno na spletnem naslovu: \url{http://www-lp.fmf.uni-lj.si/plestenjak/vaje/nafgg/Predavanja/Knjiga_NM.pdf}
   \item KNUTH, Donald. 1998. \emph{The Art of Computer Programming, Volume 3: Sorting and
     Searching}. Addison-Wesley. ISBN 0-201-89685-0.
 \end{enumerate}
-
+\pagebreak
 
 \section{Priloge}
 \begin{enumerate}
   \item \label{pril:koda} Zgoščenka z knjižnicami, v katerih so implementirani
-    vsi algoritmi.
+    vsi v nalogi opisani algoritmi.
 \end{enumerate}
 
 \end{document}
