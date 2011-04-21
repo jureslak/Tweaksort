@@ -14,7 +14,7 @@
 \usepackage{array}
 \usepackage{textcomp}
 \usepackage{caption}
-
+\usepackage{icomma}
 \usepackage[bookmarks, colorlinks=true, %
 linkcolor=black, anchorcolor=black, citecolor=black, filecolor=black,%
 menucolor=black, runcolor=black, urlcolor=black%
@@ -121,11 +121,11 @@ cmp_t, RAI}}
 \begin{center}{\large
   Gimnazija Vič
   \vfill
-  {\Large Jure Slak}\\[20mm]
+  {\Large Jure Slak, 3. letnik}\\[20mm]
   {\bf \huge Iskanje optimalnega splošnega kompozitnega sortirnega algoritma}\\[10mm]
-  raziskovalna naloga na področju računalništva in telekomunikacij\\[1cm]
-  mentor: Klemen Bajec, prof.  \\[2mm]
-  mentor: Gašper Ažman, dipl. mat. (UN)}
+  raziskovalna naloga na področju računalništva in informatike\\[1cm]
+  mentor: Klemen Bajec, prof. mat. \\[2mm]
+  somentor: Gašper Ažman, dipl. mat. (UN)}
   \vfill
   \vfill
   {\large Ljubljana, 2011}
@@ -280,6 +280,7 @@ Ostale komponente predstavljajo s stališča urejanja nepomembne podatke o eleme
 polju.
 S stališča sortirnih algoritmov je ključ torej \emph{edini} pomemben podatek, zato
 ostalih komponent ni treba podrobno definirati.
+(povz. po Wirth, 1985, str. 107)
 
 \begin{definicija}
   \textbf{Sortirni algoritem} je algoritem, ki prejme neko podatkovno strukturo s podatki
@@ -1048,8 +1049,7 @@ sortirni algoritem ni kompoziten, torej
 Ker se procedura \emph{sort} uporablja kot knjižnica, potebujemo tudi pretvornik
 konfiguracije v niz znakov in obratno, zaradi česar je potrebno formalno definirati slovnico
 konfiguracije, ki je (v notaciji BNF)\footnote{
-Backus--Naur Form, standardna notacija za kontekstno-neodvisne slovnice.\\
-vir: \url{http://www.cui.unige.ch/db-research/Enseignement/analyseinfo/AboutBNF.html}} 
+Backus--Naur Form, standardna notacija za kontekstno-neodvisne slovnice.} 
 sledeča:
 \\
 \begin{BNF}
@@ -1375,12 +1375,12 @@ izgledala najbolj smiselno.
 
 Testiranje je bilo izvedeno na računalniku s procesorjem Intel\textregistered{} Core\texttrademark{}
 2 Duo CPU T5870 @ 2.00GHz, 2 GB pomnilnika, na sistemu Kubuntu 10.10 z verzijo Linuxovega jedra 2.6.35-25-generic.
-Program je bil preveden s prevajalnikov \texttt{gcc} verzije 4.4.5 parametri \texttt{-O3},
+Program je bil preveden s prevajalnikom \texttt{gcc} verzije 4.4.5 parametri \texttt{-O3},
 \texttt{-Wall}, \texttt{-Weffc++}, \texttt{-pedantic} in \texttt{-std=gnu++0x}.
 Parameter \texttt{-O3} pomeni najvišjo stopnjo avtomatske optimizacije. Parameter \texttt{-std=gnu++0x} 
 pa pove, kateri dialekt jezika je uporabljen, v našem primeru je to osnutek novega standarda za C++.
 Ostali parametri niso tako pomembni, njihovi pomeni so pojasnjeni v strani z navodili za uporabo za program 
-\texttt{gcc}.\footnote{\emph{Angl.} man page. Dostopna je preko ukaza \texttt{man gcc}.}
+\texttt{gcc}.\footnote{\emph{Angl.} man page. Stran z navodili je dostopna preko ukaza \texttt{man gcc}.}
 
 Rezultati bodo vedno predstavljeni s tabelo, ki bo prikazovala čase urejanja
 posameznih algoritmov pri določenem številu elementov. Ponavadi je to število
@@ -1394,7 +1394,7 @@ grafi, na katerih bodo krivulje vseh sortirnih algoritmov. Najpomembnejše pa
 bodo vrednosti v tabeli, ki bo prikazovala vsoto časov sortirnih algoritmov za
 vse dolžine za določen tip. To je pravzaprav približek ploščine med krivuljo sortirnega
 algoritma in abscisno osjo na določenem intervalu. Tako lahko vsak sortirni
-algoritem ocenim,o kako dober je na nekem tipu --- manjša kot je ploščina, boljši
+algoritem ocenimo, kako dober je na nekem tipu --- manjša kot je ploščina, boljši
 je. Ker je to najbolj splošna ocena vsakega algoritma, ji velja dati posebno
 težo.
 \pagebreak
@@ -1417,13 +1417,13 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
     \bf št. elementov    & \bf 10 el.& \bf 100 el.& \bf 1.000 el. & \bf 10.000 el. & \bf 100.000 el. \\ 
     \bf št. iteracij     & \bf 100.000 it. & \bf 10.000 it. & \bf 1.000 it. & \bf 100 it. &  \bf 10 it.\\ \hline
     \bf urejanje         & \bf čas [ns] & \bf čas [\usec] & \bf čas [\usec] & \bf čas[ms] & \bf čas[ms] \\ \noalign{\hrule height 1pt} 
-    z vstavljanjem       &   153.71 &  3,87536 &  259,74  &  23.651,79  &  2.413,15 \\ \hline
-    z izbiranjem         &   162.25 & 11,52539 & 1.173,38 & 120.852,69  & 12.686,12 \\ \hline
-    hitro urejanje       &   418.77 &  6,06326 &   80,81  &   1.053,24  &     12,31 \\ \hline
-    s kopico             &   356.11 &  6,63458 &   93,08  &   1.341,48  &     16,66 \\ \hline
-    z zlivanjem          & 5.142.34 & 59,73560 &  582,05  &   7.167,58  &     75,58 \\ \hline
-    C++ algoritem        &   185.49 &  4,24863 &   59,83  &     698,21  &      8,82 \\ \hline
-    s konfiguracijo      &   169.79 &  3,61435 &   58,69  &     749,76  &      9,35 \\ 
+    z vstavljanjem       &   153,71 &  3,87536 &  259,74  &  23.651,79  &  2.413,15 \\ \hline
+    z izbiranjem         &   162,25 & 11,52539 & 1.173,38 & 120.852,69  & 12.686,12 \\ \hline
+    hitro urejanje       &   418,77 &  6,06326 &   80,81  &   1.053,24  &     12,31 \\ \hline
+    s kopico             &   356,11 &  6,63458 &   93,08  &   1.341,48  &     16,66 \\ \hline
+    z zlivanjem          & 5.142,34 & 59,73560 &  582,05  &   7.167,58  &     75,58 \\ \hline
+    C++ algoritem        &   185,49 &  4,24863 &   59,83  &     698,21  &      8,82 \\ \hline
+    s konfiguracijo      &   169,79 &  3,61435 &   58,69  &     749,76  &      9,35 \\ 
   \end{tabular}
 \end{table}
 
@@ -1454,7 +1454,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{in
     1.000 elementov.}
     \caption*{{\small Graf prikazuje čase
     urejanja različnih sortirnih algoritmov v odvisnosti od dolžine polja. Polja
-    so dolga od 1 do 1000 elementov. Za vsako dolžino polja je program naredil
+    so dolga od 1 do 1.000 elementov. Za vsako dolžino polja je program naredil
     1.000 iteracij. Prikazan je le del grafa, da se vidi
     primerjava med učinkovitejšimi urejanji.}}
     \label{fig:rez:int1000}
@@ -1644,10 +1644,10 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{hu
     \includegraphics[width=\textwidth]{slike/huge1000.pdf}
     \vspace{-0.7cm}
     \caption[Rezultati za tip \emph{huge}, 1.000 el.]{Rezultati za tip
-    \emph{huge} za polja z dolžino manjšo od 1000.}
+    \emph{huge} za polja z dolžino manjšo od 1.000.}
     \caption*{{\small Graf prikazuje čase urejanja različnih sortirnih algoritmov
     za tip \emph{huge} v odvisnosti od dolžine polja, vse
-    od dolžine 1 do 1000. Za vsako dolžino polja je program naredil 100 iteracij.
+    od dolžine 1 do 1.000. Za vsako dolžino polja je program naredil 100 iteracij.
     Samo spodnji del grafa je prikazan na sliki~\ref{fig:rez:hugeblizu}.}}
     \label{fig:rez:huge1000}
 \end{figure}
@@ -1726,7 +1726,7 @@ Najdena optimalna konfiguracija za kompozitni sortirni algoritem za tip \emph{sl
     \emph{slow} za polja z dolžino manjšo od 1.000.}
     \caption*{{\small Graf prikazuje čase
     urejanja različnih sortirnih algoritmov za tip \emph{slow} v odvisnosti od dolžine polja, vse
-    od dolžine 1 do 1000. Za vsako dolžino polja je program naredil 10 iteracij.
+    od dolžine 1 do 1.000. Za vsako dolžino polja je program naredil 10 iteracij.
     Samo spodnji del grafa je prikazan na sliki~\ref{fig:rez:slowblizu}.}}
     \label{fig:rez:slow1000}
 \end{figure}
@@ -1771,7 +1771,7 @@ Tako dosežemo hitrejše urejanje, kar se pozna že pri 100 elementih. Urejanje 
 vedno na zadnjem mestu, saj število elementov še ni dovolj veliko, da bi se vsi rekurzivni klici 
 in kopiranje elementov splačali. Tudi na sliki~\ref{fig:rez:int1000} se vidijo
 podobne ugotovitve. Urejanje z zlivanjem in urejanje z izbiranjem sta zelo
-počasna (na sliki ravno ujamemo njuno presečišče), 
+počasna, 
 sledi jima urejanje z izbiranjem, nato urejanje s kopico in tik za
 njim hitro urejanje.  \mbox{C++-ov} algoritem in urejanje s konfiguracijo se praktično
 prekrivata, vendar je urejanje s konfiguracijo za približno $n < 600$ zagotovo
@@ -1801,7 +1801,7 @@ prilagojen za vgrajene tipe v C++.
 
 Pri sto tisoč elementih se le dokončno potrdijo mesta algoritmov,
 algoritma s kvadratno časovno zahtevnostjo sta 32-krat
-in 170-krat slabša od urejanja z zlivanjem, ter kar 200-krat in kar 1000-krat slabša od hitrega 
+in 170-krat slabša od urejanja z zlivanjem, ter kar 200-krat in kar 1.000-krat slabša od hitrega 
 urejanja. Kompozitna algoritma sta na prvem mestu, s tem, da je urejanje s
 konfiguracijo na drugem mestu.
 
@@ -1866,7 +1866,7 @@ Pri deset tisoč elementih je \mbox{C++-ov} algoritem še vedno zanesljivo na pr
 konfiguracijo ni več kompozitno, uporablja le urejanje s kopico, zato je tudi
 njegov rezultat malce slabši od urejanja s kopico samega (kot vidno na
 sliki~\ref{fig:rez:string10000zoom}) zaradi branja
-konfiguracije. Za polja z dolžinami od 6155 do 6530 urejanje s konfiguracijo uporablja
+konfiguracije. Za polja z dolžinami od 6.155 do 6.530 urejanje s konfiguracijo uporablja
 urejanje z zlivanjem, čeprav je precej slabše od ostalih algoritmov s podobno časovno zahtevnostjo. Urejanje s
 konfiguracijo ga kljub temu uporablja, ker izkorišča njegovo rekurzivno naravo in krajša polja uredi s
 primernejšim algoritmom. Urejanje z zlivanjem pa tudi krajša polja uredi z zlivanjem, kar se, kot smo 
@@ -2030,7 +2030,7 @@ algoritmi bi se povečevale. Vidimo tudi, da urejanje polja z 10.000 elementi
 tipa \emph{slow} traja kar 35-krat dlje od urejanja polja z elementi tipa
 \emph{int} enake dolžine, če primerjamo najučinkovitejša algoritma. Če pa
 primerjamo najslabša algoritma, pa urejanje polja z elementi tipa \emph{slow}
-traja kar 2600-krat dlje kot urejanje polja z elementi tipa \emph{int}.
+traja kar 2.600-krat dlje kot urejanje polja z elementi tipa \emph{int}.
 
 Če pogledamo skupen čas urejanja algoritmov v tabeli~\ref{tab:rez:slowavegrage},
 je razvidno, da je na splošno najboljše urejanje s konfiguracijo. Vidi se mu,
