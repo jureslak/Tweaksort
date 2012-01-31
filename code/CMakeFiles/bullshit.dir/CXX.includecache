@@ -1,0 +1,116 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jureslak/c++/raziskovalna naloga/all-i-need.h
+q.hpp
+/home/jureslak/c++/raziskovalna naloga/q.hpp
+m.hpp
+/home/jureslak/c++/raziskovalna naloga/m.hpp
+i.hpp
+/home/jureslak/c++/raziskovalna naloga/i.hpp
+h.hpp
+/home/jureslak/c++/raziskovalna naloga/h.hpp
+s.hpp
+/home/jureslak/c++/raziskovalna naloga/s.hpp
+sort.hpp
+/home/jureslak/c++/raziskovalna naloga/sort.hpp
+learn.hpp
+/home/jureslak/c++/raziskovalna naloga/learn.hpp
+structs.hpp
+/home/jureslak/c++/raziskovalna naloga/structs.hpp
+time.h
+-
+vector
+-
+iostream
+-
+algorithm
+-
+cstdlib
+-
+cstdio
+-
+cassert
+-
+cstring
+-
+utility
+-
+cerrno
+-
+fstream
+-
+
+/home/jureslak/c++/raziskovalna naloga/bullshit.cpp
+all-i-need.h
+/home/jureslak/c++/raziskovalna naloga/all-i-need.h
+
+/home/jureslak/c++/raziskovalna naloga/conf.hpp
+exceptions.hpp
+/home/jureslak/c++/raziskovalna naloga/exceptions.hpp
+iostream
+-
+sstream
+-
+string
+-
+vector
+-
+
+/home/jureslak/c++/raziskovalna naloga/exceptions.hpp
+stdexcept
+-
+
+/home/jureslak/c++/raziskovalna naloga/h.hpp
+algorithm
+-
+
+/home/jureslak/c++/raziskovalna naloga/i.hpp
+
+/home/jureslak/c++/raziskovalna naloga/learn.hpp
+conf.hpp
+/home/jureslak/c++/raziskovalna naloga/conf.hpp
+sort.hpp
+/home/jureslak/c++/raziskovalna naloga/sort.hpp
+iostream
+-
+cstdlib
+-
+vector
+-
+cassert
+-
+time.h
+-
+
+/home/jureslak/c++/raziskovalna naloga/m.hpp
+vector
+-
+
+/home/jureslak/c++/raziskovalna naloga/q.hpp
+algorithm
+-
+
+/home/jureslak/c++/raziskovalna naloga/s.hpp
+algorithm
+-
+
+/home/jureslak/c++/raziskovalna naloga/sort.hpp
+conf.hpp
+/home/jureslak/c++/raziskovalna naloga/conf.hpp
+vector
+-
+
+/home/jureslak/c++/raziskovalna naloga/structs.hpp
+iostream
+-
+time.h
+-
+cmath
+-
+

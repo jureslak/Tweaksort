@@ -1,0 +1,70 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/slak/c++/raziskovalna naloga/conf.hpp
+exceptions.hpp
+/home/slak/c++/raziskovalna naloga/exceptions.hpp
+iostream
+-
+sstream
+-
+string
+-
+vector
+-
+
+/home/slak/c++/raziskovalna naloga/exceptions.hpp
+stdexcept
+-
+
+/home/slak/c++/raziskovalna naloga/learn.cpp
+structs.hpp
+/home/slak/c++/raziskovalna naloga/structs.hpp
+conf.hpp
+/home/slak/c++/raziskovalna naloga/conf.hpp
+learn.hpp
+/home/slak/c++/raziskovalna naloga/learn.hpp
+iostream
+-
+cassert
+-
+fstream
+-
+algorithm
+-
+
+/home/slak/c++/raziskovalna naloga/learn.hpp
+conf.hpp
+/home/slak/c++/raziskovalna naloga/conf.hpp
+sort.hpp
+/home/slak/c++/raziskovalna naloga/sort.hpp
+iostream
+-
+cstdlib
+-
+vector
+-
+cassert
+-
+time.h
+-
+
+/home/slak/c++/raziskovalna naloga/sort.hpp
+conf.hpp
+/home/slak/c++/raziskovalna naloga/conf.hpp
+vector
+-
+
+/home/slak/c++/raziskovalna naloga/structs.hpp
+iostream
+-
+time.h
+-
+cmath
+-
+

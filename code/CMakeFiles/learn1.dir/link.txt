@@ -1,0 +1,1 @@
+/usr/bin/c++      -lrt CMakeFiles/learn1.dir/learn1.cpp.o  -o learn1 -rdynamic 

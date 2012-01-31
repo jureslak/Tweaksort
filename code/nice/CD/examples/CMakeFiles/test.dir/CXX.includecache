@@ -1,0 +1,88 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/slak/c++/raziskovalna naloga/nice/examples/conf.hpp
+exceptions.hpp
+/home/slak/c++/raziskovalna naloga/nice/examples/exceptions.hpp
+iostream
+-
+sstream
+-
+string
+-
+vector
+-
+
+/home/slak/c++/raziskovalna naloga/nice/examples/exceptions.hpp
+stdexcept
+-
+
+/home/slak/c++/raziskovalna naloga/nice/examples/h.hpp
+algorithm
+-
+
+/home/slak/c++/raziskovalna naloga/nice/examples/i.hpp
+
+/home/slak/c++/raziskovalna naloga/nice/examples/m.hpp
+vector
+-
+
+/home/slak/c++/raziskovalna naloga/nice/examples/q.hpp
+algorithm
+-
+
+/home/slak/c++/raziskovalna naloga/nice/examples/s.hpp
+algorithm
+-
+
+/home/slak/c++/raziskovalna naloga/nice/examples/sort.hpp
+conf.hpp
+/home/slak/c++/raziskovalna naloga/nice/examples/conf.hpp
+vector
+-
+
+/home/slak/c++/raziskovalna naloga/nice/examples/structs.hpp
+iostream
+-
+time.h
+-
+cmath
+-
+
+/home/slak/c++/raziskovalna naloga/nice/examples/test.cpp
+structs.hpp
+/home/slak/c++/raziskovalna naloga/nice/examples/structs.hpp
+sort.hpp
+/home/slak/c++/raziskovalna naloga/nice/examples/sort.hpp
+m.hpp
+/home/slak/c++/raziskovalna naloga/nice/examples/m.hpp
+q.hpp
+/home/slak/c++/raziskovalna naloga/nice/examples/q.hpp
+i.hpp
+/home/slak/c++/raziskovalna naloga/nice/examples/i.hpp
+s.hpp
+/home/slak/c++/raziskovalna naloga/nice/examples/s.hpp
+h.hpp
+/home/slak/c++/raziskovalna naloga/nice/examples/h.hpp
+iostream
+-
+algorithm
+-
+ctime
+-
+list
+-
+cassert
+-
+fstream
+-
+sys/time.h
+-
+cstdlib
+-
+

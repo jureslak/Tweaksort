@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/slak/c++/raziskovalna naloga/graph.cpp
+cstdio
+-
+string
+-
+vector
+-
+utility
+-
+sstream
+-
+

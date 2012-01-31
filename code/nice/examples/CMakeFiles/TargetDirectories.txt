@@ -1,0 +1,2 @@
+/home/slak/c++/raziskovalna naloga/nice/examples/CMakeFiles/learn.dir
+/home/slak/c++/raziskovalna naloga/nice/examples/CMakeFiles/test.dir
