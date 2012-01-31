@@ -13,4 +13,7 @@ sort.
 They are composited in a composite tweaksort, based on experimental data, all of that
 happening in learn.cpp
 
-The tweaksort code is located in sort.hpp file.
+The only files you need if you want to try the project out are located in the libtweaksort
+folder. All 4 files are needed, but nothing else is.
+
+Jure Slak
