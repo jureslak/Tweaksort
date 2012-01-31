@@ -1,4 +1,0 @@
-/home/jureslak/c++/raziskovalna naloga/CMakeFiles/bullshit.dir
-/home/jureslak/c++/raziskovalna naloga/CMakeFiles/learn.dir
-/home/jureslak/c++/raziskovalna naloga/CMakeFiles/log.dir
-/home/jureslak/c++/raziskovalna naloga/CMakeFiles/test.dir

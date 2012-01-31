@@ -1,1 +1,0 @@
-/usr/bin/c++       -lrt CMakeFiles/bullshit.dir/bullshit.cpp.o  -o bullshit -rdynamic 
